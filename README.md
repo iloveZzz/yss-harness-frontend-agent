@@ -19,3 +19,7 @@ node scripts/instantiate-harness --target /absolute/path/to/project
 修改 canonical `.agents/skills` 后运行 `scripts/sync-skills`、`scripts/update-skill-lock` 和 `scripts/verify-template-fast`。共享接力工具由综合模板源同步，避免分别维护。同一业务切片须由统一管理方汇总战略、接口、部署及前端版本的端到端证据；本端完成不能替代整体业务验收。
 
 旧 `create-yss-harness-dev` 仍服务原通用项目。本专职模板尚不提供原地 sync/迁移；升级先生成同 profile 新目录，核对差异后迁移已登记资产，保留旧目录作为回滚点。
+
+## 用户手册
+
+首次使用请从 [本仓手册](docs/user-guide/前端子项目用户手册.md) 开始；练习见 [设备借用贯穿案例](docs/user-guide/设备借用贯穿案例.md)，其他入口见 [索引](docs/user-guide/用户手册索引.md)。
