@@ -1,0 +1,41 @@
+cleared CONTEXT.md: '| 需求经理 | 主责 Discovery'
+cleared CONTEXT.md: '| 产品经理 | 主责优先级'
+cleared CONTEXT.md: '| 商务 | 主责机会调研'
+cleared CONTEXT.md: '为 `shadow`，Router 与生命周期不得按其裁剪发现面'
+cleared AGENTS.md: '仍由主控数字人按编排器规则决定'
+cleared docs/agents/README.md: '（shadow，不替代锁文件）'
+cleared .agents/skills/yss-tactical-design/references/output-template.md: 'stage: system-data-engineering'
+cleared .agents/skills/yss-tactical-design/SKILL.md: '也不替代 `yss-stage-decision`'
+cleared README.md: '进入 Spec 基线时使用 `grill-with-docs`、`to-spec`'
+cleared README.md: '# YSS Spec Project Template'
+cleared docs/requirements/README.md: 'grill-with-docs -> to-spec -> API 影响分析'
+cleared docs/user-guide/需求澄清指南.md: 'yss-product-lifecycle\n-> grill-with-docs'
+
+present CONTEXT.md: '已退役旧职称'
+present CONTEXT.md: '为 `active`，Router 与生命周期必须消费'
+present CONTEXT.md: '| 当前工作区入口 |'
+present CONTEXT.md: '| 合同状态 |'
+present CONTEXT.md: '| 主控数字人 | 已退役称呼'
+present AGENTS.md: '不要把父目录、兄弟 submodule 或其他模板仓的 `AGENTS.md` 当作本仓入口'
+present AGENTS.md: '使用 `yss-tactical-design` 形成当前版本 Tactical Design Contract'
+present AGENTS.md: '`architecture-agent` 调度 `yss-tactical-design`'
+present AGENTS.md: '仍由 Harness Orchestrator 按编排器规则决定'
+present AGENTS.md: '当前 `status: active`'
+present .agents/skills/yss-tactical-design/references/output-template.md: 'stage: tactical-design'
+present .agents/skills/yss-tactical-design/references/output-template.md: 'owner: role.architecture-agent'
+present .agents/skills/yss-tactical-design/SKILL.md: '旧 Discovery / 战略设计入口 `yss-stage-decision` 只保留只读迁移提示'
+present .agents/skills/yss-tactical-design/SKILL.md: '`not-applicable`'
+present README.md: '# YSS Harness Agent 模板源'
+present README.md: '`architecture-agent` 调度 `yss-tactical-design`'
+
+GREEN: stale live-source claims cleared; required alignment claims present.
+
+---
+commands:
+  - node .agents/skills/yss-tactical-design/tests/run-scenarios.mjs  # DDD tactical design scenarios passed
+  - scripts/verify-skill-registry  # 技能路由注册表校验通过（active，103 个共享，2 个平台）
+  - scripts/verify-lifecycle-registry  # 生命周期注册表验证通过（active）
+  - scripts/verify-digital-human-roles  # 数字人角色注册表校验通过（4 个角色，5 个协作组，3 个运行时）
+  - scripts/sync-skills --check && scripts/update-skill-lock --check
+  - scripts/verify-template  # 模板发布校验通过（exit 0）
+result: pass

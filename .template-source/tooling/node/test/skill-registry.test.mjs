@@ -1,0 +1,149 @@
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import test from "node:test";
+
+import { loadSkillRegistry, validateSkillRegistry } from "../../../../scripts/lib/skill-registry.mjs";
+import { parseDocument } from "../../../../scripts/vendor/yaml.mjs";
+import { ROOT } from "../../../../scripts/lib/skill-supply-chain.mjs";
+
+function registry(overrides = {}) {
+  const base = loadSkillRegistry();
+  return { ...base, ...overrides, runtime_policy: { ...base.runtime_policy, ...overrides.runtime_policy } };
+}
+
+function compilerContract() {
+  const source = readFileSync(path.join(ROOT, ".agents/skills/yss-implementation-contract-compiler/references/compiler-contract.yaml"), "utf8");
+  return parseDocument(source, { maxAliasCount: 0, uniqueKeys: true }).toJS({ maxAliasCount: 0 });
+}
+
+test("unknown layer is rejected", () => {
+  const data = registry();
+  data.skills = data.skills.map((skill) => skill.id === "tdd" ? { ...skill, layer: "misc" } : skill);
+  assert.throws(() => validateSkillRegistry(data), /未知 layer/);
+});
+
+test("shadow registry cannot be marked as runtime consumed", () => {
+  const data = registry({ status: "shadow", runtime_policy: { consumed_by_compiler: true, consumed_by_lifecycle: false, discovery_enforced: false } });
+  assert.throws(() => validateSkillRegistry(data), /shadow 注册表不得被实现合同编译器/);
+});
+
+test("alias that collides with another id is rejected", () => {
+  const data = registry();
+  data.skills = data.skills.map((skill) => skill.id === "yss-api-integration" ? { ...skill, aliases: ["tdd"] } : skill);
+  assert.throws(() => validateSkillRegistry(data), /alias 冲突/);
+});
+
+test("missing Cursor runtime root is rejected", () => {
+  const data = registry();
+  const { cursor, ...rest } = data.agent_runtime_roots;
+  data.agent_runtime_roots = rest;
+  assert.throws(() => validateSkillRegistry(data), /agent_runtime_roots.cursor/);
+});
+
+test("skill invocation contract is required and derives impact triggers", () => {
+  const missing = registry();
+  delete missing.invocation_contract;
+  assert.throws(() => validateSkillRegistry(missing), /invocation_contract/);
+
+  const invalid = registry();
+  invalid.invocation_contract = {
+    ...invalid.invocation_contract,
+    default: { ...invalid.invocation_contract.default, trigger_conditions: ["registered-skill-request"] },
+    layer_defaults: Object.fromEntries(Object.entries(invalid.invocation_contract.layer_defaults).map(([layer, value]) => [layer, { ...value }]))
+  };
+  invalid.invocation_contract.layer_defaults.core = { ...invalid.invocation_contract.layer_defaults.core, primary_output: "" };
+  assert.throws(() => validateSkillRegistry(invalid), /primary_output/);
+});
+
+test("typed dependency metadata rejects unregistered skills", () => {
+  const data = registry();
+  data.skill_dependencies = structuredClone(data.skill_dependencies);
+  data.skill_dependencies["yss-domain"].push({ skill: "missing-static-dependency", type: "context-required" });
+  assert.throws(() => validateSkillRegistry(data), /依赖引用了未登记技能/);
+});
+
+test("context-required typed dependencies reject cycles", () => {
+  const data = registry();
+  data.skill_dependencies = structuredClone(data.skill_dependencies);
+  data.skill_dependencies["alibaba-java-code-style"] = [{ skill: "yss-domain", type: "context-required" }];
+  assert.throws(() => validateSkillRegistry(data), /context-required 依赖存在循环/);
+});
+
+test("实现合同编译器合同不得重复 typed dependency 事实", () => {
+  const data = registry();
+  const contract = compilerContract();
+  contract.skill_dependencies = {};
+  assert.throws(() => validateSkillRegistry(data, { compilerContract: contract }), /不得重复注册表事实: skill_dependencies/);
+});
+
+test("platform aliases resolve lifecycle external runtime entries", () => {
+  const data = registry();
+  const route = {
+    primary_skill: "product-design:index",
+    supporting_skills: [],
+    skills: ["product-design:index"],
+    applies_when: "product_design_impact",
+    not_applicable_reason: "no_ui_or_product_design_impact"
+  };
+  assert.doesNotThrow(() => validateSkillRegistry(data, {
+    lifecycleContract: { work_unit_routes: { "work-unit.external-design": route } }
+  }));
+});
+
+test("lifecycle route with an unregistered skill is rejected", () => {
+  const data = registry();
+  const route = {
+    primary_skill: "missing-skill",
+    supporting_skills: [],
+    skills: ["missing-skill"],
+    applies_when: "always",
+    not_applicable_reason: "never"
+  };
+  assert.throws(() => validateSkillRegistry(data, {
+    lifecycleContract: { work_unit_routes: { "work-unit.invalid": route } }
+  }), /生命周期路由引用了未登记技能/);
+});
+
+test("prototype design route requires independent prototype-review", () => {
+  const data = registry();
+  const route = {
+    primary_skill: "yss-prototype-stage",
+    supporting_skills: ["yss-design-system"],
+    skills: ["yss-design-system", "yss-prototype-stage"],
+    applies_when: "product_design_impact",
+    not_applicable_reason: "no_ui_or_product_design_impact"
+  };
+  assert.throws(() => validateSkillRegistry(data, {
+    lifecycleContract: { work_unit_routes: { "work-unit.prototype-design": route } }
+  }), /prototype-review/);
+});
+
+test("deprecated skills require migration and cleanup metadata", () => {
+  const data = registry();
+  data.skills = data.skills.map((skill) => skill.id === "yss-api-integration"
+    ? { ...skill, maturity: "deprecated", replaced_by: "yss-page-module-development" }
+    : skill);
+  assert.throws(() => validateSkillRegistry(data), /migration_deadline/);
+});
+
+test("frontend conditional routes require registered skills", () => {
+  const data = registry();
+  const route = {
+    primary_skill: "yss-ui",
+    supporting_skills: [],
+    skills: ["yss-ui"],
+    applies_when: "ready_for_agent",
+    not_applicable_reason: "not_ready",
+    frontend_route: {
+      primary_skill: "yss-ui",
+      page_generation_skill: "yss-page-module-development",
+      page_orchestration_skill: "yss-page-module-development",
+      conditional_skills: { api_impact: ["missing-api-skill"] },
+      not_applicable_reasons: { api_impact: "no_api_impact" }
+    }
+  };
+  assert.throws(() => validateSkillRegistry(data, {
+    lifecycleContract: { work_unit_routes: { "work-unit.slice-implementation": route } }
+  }), /前端条件路由引用了未登记技能/);
+});

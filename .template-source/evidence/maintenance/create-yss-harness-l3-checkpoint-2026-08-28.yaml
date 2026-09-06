@@ -1,0 +1,74 @@
+schema_version: 1
+intensity: L3
+classification_reason: >-
+  新增开发落地 Harness 实例化 CLI 跨仓库契约、分发清单、身份改写和发布伴侣切换，
+  改变 Agent 路由入口与 generation / release 语义。
+triggers:
+  - cross-repo-contract
+  - generation-semantics
+  - release-semantics
+  - core-validator
+changed_assets:
+  - .template-source/README.md
+  - .template-source/adr/0015-create-yss-harness-instantiation-cli.md
+  - .template-source/contracts/create-yss-harness-dev-repository-mode-contract.md
+  - .template-source/contracts/create-yss-spec-repository-mode-contract.md
+  - .template-source/distribution/template.manifest.json
+  - .template-source/evidence/maintenance/create-yss-harness-*.md
+  - .template-source/evidence/maintenance/create-yss-harness-l3-checkpoint-2026-08-28.yaml
+  - .template-source/evidence/maintenance/digital-human-task-package-l3-checkpoint-2026-08-27.yaml
+  - .template-source/evidence/maintenance/lifecycle-ticket-transition-l3-checkpoint-2026-08-27.yaml
+  - .template-source/evidence/maintenance/maintenance-review-validation-*-2026-08-31.md
+  - .template-source/evidence/maintenance/*-formal-independent-review-2026-08-27.md
+  - .template-source/evidence/maintenance/git-submodule-scope-l3-review-request-writable-oracle-2026-08-24.md
+  - scripts/fixtures/maintenance-review/**
+  - AGENTS.md
+  - CONTEXT.md
+  - README.md
+  - docs/adr/README.md
+  - docs/process/harness-process-tailoring.md
+  - docs/process/harness-profile.yaml
+  - docs/process/implementation-repo-integration.md
+  - docs/process/schemas/maintenance-review-record.schema.json
+  - docs/templates/digital-human-runtime-profile-template.md
+  - docs/user-guide/外部命令行工具实践指南.md
+  - docs/user-guide/用户手册索引.md
+  - docs/user-guide/规格与任务迁移指南.md
+  - scripts/lib/harness-profile.mjs
+  - scripts/lib/instance-distribution.mjs
+  - scripts/lib/json-schema.mjs
+  - scripts/lib/maintenance-intensity.mjs
+  - scripts/lib/maintenance-review.mjs
+  - scripts/lib/skill-supply-chain.mjs
+  - scripts/lib/task-package.mjs
+  - scripts/lib/task-package-schema.mjs
+  - scripts/verify-harness-profile
+  - scripts/verify-harness-profile-scenarios
+  - scripts/verify-instance-distribution
+  - scripts/verify-instance-distribution-scenarios
+  - scripts/verify-maintenance-intensity-scenarios
+  - scripts/verify-maintenance-review-record
+  - scripts/verify-subagent-task-package-scenarios
+  - scripts/verify-template
+  - skills-lock.json
+verification_evidence:
+  - kind: red
+    command: .template-source/evidence/maintenance/maintenance-review-validation-red-2026-08-31.md
+    result: pass
+  - kind: green
+    command: .template-source/evidence/maintenance/maintenance-review-validation-green-2026-08-31.md
+    result: pass
+  - kind: refactor
+    command: .template-source/evidence/maintenance/maintenance-review-validation-refactor-2026-08-31.md
+    result: pass
+  - kind: pressure-scenario
+    command: .template-source/evidence/maintenance/maintenance-review-validation-pressure-2026-08-31.md
+    result: pass
+  - kind: fresh-verification
+    command: scripts/verify-template
+    result: pass
+review_mode: formal-independent
+escalation: >-
+  正式独立审查尚未完成；Reviewer 任务包可把本文件作为待审合同，
+  但最终 checkpoint 在补入可机器校验的正式结论前必须保持失败。
+  模板 commit 尚未与 CLI 仓共同发布；不得声称整体可发布。

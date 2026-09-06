@@ -1,0 +1,17 @@
+---
+schema_version: 1
+kind: review-evidence-index
+source_root: ".template-source/evidence/reviews"
+count: 1
+archive:
+  kind: git-history
+  status: pending
+  commit: null
+  tree: null
+files:
+- path: ".template-source/evidence/reviews/standalone-baseline.md"
+  origin_path: "docs/reviews/standalone-baseline.md"
+  bytes: 532
+  sha256: 6d12278e8a3eb82f95bb89ec4eba28c8533a651e10c1f6abcbc87017e3e5c826
+  archive_path: ".template-source/evidence/reviews/standalone-baseline.md"
+  archive_ref: null

@@ -1,0 +1,15 @@
+cleared canonical yss-stage-decision
+cleared registry id
+present migrations section
+wiki five-stage present
+GREEN: yss-stage-decision retired; wiki refresh claims hold
+
+scripts/verify-skill-registry
+scripts/verify-skill-governance
+scripts/verify-matt-yss-integration-scenarios
+scripts/sync-skills --check
+
+scripts/verify-template
+exit 0
+模板发布校验通过
+result: pass

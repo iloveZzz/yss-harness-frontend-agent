@@ -1,0 +1,47 @@
+L2 counterexample — live sources still describe retired lifecycle facts.
+
+Captured before the alignment edit. Each FOUND line is a currently live stale claim
+that contradicts docs/agents/yss-skill-registry.yaml (status: active),
+docs/agents/digital-human-roles.yaml (four roles only), and
+docs/process/lifecycle-registry.yaml (stage.tactical-design, not system-data-engineering).
+
+## CONTEXT.md leftover current-role rows
+file: CONTEXT.md
+  FOUND stale: | 需求经理 | 主责 Discovery
+  FOUND stale: | 产品经理 | 主责优先级
+  FOUND stale: | 商务 | 主责机会调研
+  FOUND stale: 为 `shadow`，Router 与生命周期不得按其裁剪发现面
+
+## AGENTS.md orchestrator leftover
+file: AGENTS.md
+  FOUND stale: 仍由主控数字人按编排器规则决定
+
+## docs/agents/README.md registry status
+file: docs/agents/README.md
+  FOUND stale: （shadow，不替代锁文件）
+
+## yss-tactical-design old stage
+file: .agents/skills/yss-tactical-design/references/output-template.md
+  FOUND stale: stage: system-data-engineering
+
+## yss-tactical-design legacy substitute wording
+file: .agents/skills/yss-tactical-design/SKILL.md
+  FOUND stale: 也不替代 `yss-stage-decision`
+
+## README old default instance path
+file: README.md
+  FOUND stale: 进入 Spec 基线时使用 `grill-with-docs`、`to-spec`
+  FOUND stale: # YSS Spec Project Template
+
+## requirements README old pipeline
+file: docs/requirements/README.md
+  FOUND stale: grill-with-docs -> to-spec -> API 影响分析
+
+## user-guide grill default combo
+file: docs/user-guide/需求澄清指南.md
+  FOUND stale: yss-product-lifecycle
+
+registry YAML status: active (docs claim shadow = contradiction)
+
+COUNTEREXAMPLE: stale live-source claims are currently present.
+Exit 0 means the stale claims were observed, which is the failing baseline for this L2 change.

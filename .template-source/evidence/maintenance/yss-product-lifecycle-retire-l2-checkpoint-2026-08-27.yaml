@@ -1,0 +1,43 @@
+schema_version: 1
+intensity: L2
+classification_reason: >-
+  退役已从默认路由移除的旧生命周期技能（template-structure），
+  更新入口指针与压力场景断言（local-rule、non-core-validator）。
+  未改生命周期注册表门禁、未改父仓、未改变五阶段生成语义。
+triggers: [local-rule, template-structure, non-core-validator]
+changed_assets:
+  - .agents/skills/yss-product-lifecycle/SKILL.md
+  - .claude/skills/yss-product-lifecycle
+  - .codex/skills/yss-product-lifecycle/SKILL.md
+  - .cursor/skills/yss-product-lifecycle
+  - .hermes/skills/yss-product-lifecycle
+  - .pi/skills/yss-product-lifecycle
+  - .qoder/skills/yss-product-lifecycle
+  - .trae/skills/yss-product-lifecycle
+  - docs/agents/skill-migrations.md
+  - docs/agents/yss-skill-registry.yaml
+  - yss-public-skills.json
+  - skills-lock.json
+  - scripts/lib/scenario-checks.mjs
+  - scripts/lib/skill-governance.mjs
+  - scripts/lib/skill-supply-chain.mjs
+  - scripts/node-verify-lifecycle-registry.mjs
+  - AGENTS.md
+  - .template-source/evidence/maintenance/yss-product-lifecycle-retire-l2-counterexample-2026-08-27.txt
+  - .template-source/evidence/maintenance/yss-product-lifecycle-retire-l2-fresh-verification-2026-08-27.txt
+  - .template-source/evidence/maintenance/yss-product-lifecycle-retire-l2-review-request-2026-08-27.md
+  - .template-source/evidence/maintenance/yss-product-lifecycle-retire-l2-focused-review-2026-08-27.md
+verification_evidence:
+  - kind: counterexample
+    command: .template-source/evidence/maintenance/yss-product-lifecycle-retire-l2-counterexample-2026-08-27.txt
+    result: pass
+  - kind: fresh-verification
+    command: .template-source/evidence/maintenance/yss-product-lifecycle-retire-l2-fresh-verification-2026-08-27.txt
+    result: pass
+  - kind: focused-independent-review
+    command: .template-source/evidence/maintenance/yss-product-lifecycle-retire-l2-focused-review-2026-08-27.md
+    result: pass
+review_mode: focused-independent
+escalation: >-
+  非实施者已完成 focused-independent 审查，结论 Approved。
+  本结论覆盖 L2 聚焦清单，不是模板发布或合并裁决，不得声称可发布。

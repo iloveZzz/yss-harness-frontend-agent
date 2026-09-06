@@ -1,0 +1,10 @@
+L2 counterexample — yss-product-lifecycle is still a live skill before retirement.
+
+  EXISTS .agents/skills/yss-product-lifecycle/SKILL.md: True (canonical SKILL.md exists)
+  FOUND docs/agents/yss-skill-registry.yaml 'id: yss-product-lifecycle': True (registry still lists skill)
+  FOUND yss-public-skills.json '"yss-product-lifecycle"': True (public catalog still exports skill)
+  FOUND scripts/lib/scenario-checks.mjs '.agents/skills/yss-product-lifecycle/SKILL.md': True (pressure scenario still requires stub)
+
+This contradicts docs/agents/skill-migrations.md policy (retired skills keep no physical directory,
+projection, or lock entry) and AGENTS.md (harness-orchestrator is the lifecycle entry).
+Exit 0 means the live skill was observed, which is the failing baseline for this L2 change.

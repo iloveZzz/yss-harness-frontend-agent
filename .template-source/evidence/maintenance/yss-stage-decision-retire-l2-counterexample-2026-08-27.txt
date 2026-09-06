@@ -1,0 +1,9 @@
+L2 counterexample — yss-stage-decision is still a live skill before retirement.
+
+  EXISTS .agents/skills/yss-stage-decision/SKILL.md
+  FOUND docs/agents/yss-skill-registry.yaml id: yss-stage-decision
+  FOUND skills-lock.json skillPath .agents/skills/yss-stage-decision/SKILL.md
+
+This contradicts docs/agents/skill-migrations.md policy (retired skills keep no physical
+directory, projection, or lock entry). The SKILL.md already describes itself as a
+read-only compatibility stub replaced by harness-orchestrator.

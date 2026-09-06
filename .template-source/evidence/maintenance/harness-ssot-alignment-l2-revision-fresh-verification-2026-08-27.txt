@@ -1,0 +1,32 @@
+cleared docs/user-guide/需求澄清指南.md '## 4. 推荐流程'
+cleared docs/user-guide/需求澄清指南.md '-> to-spec 或 Spec 文档'
+cleared docs/user-guide/需求澄清指南.md '-> 工程基线 / 系统 / 数据架构设计'
+cleared docs/user-guide/需求澄清最佳实践.md '实施计划应交给：'
+cleared docs/user-guide/需求澄清最佳实践.md '- `to-spec`\n- `writing-plans`'
+cleared docs/user-guide/生命周期最佳实践.md '## 6. 质量门禁'
+cleared docs/user-guide/生命周期最佳实践.md '系统概要设计 / Design Review'
+cleared docs/user-guide/生命周期最佳实践.md '才回到 Discovery / 业务架构 / Spec 初稿阶段'
+cleared docs/user-guide/生命周期最佳实践.md '升级到 Spec 校准、产品总体设计、OpenAPI 或系统概要设计等最早受影响阶段'
+cleared docs/user-guide/生命周期最佳实践.md '技能入口和阶段门禁'
+cleared docs/requirements/README.md 'architecture-agent` 调度 `yss-tactical-design'
+
+present docs/user-guide/需求澄清指南.md '## 4. 显式兼容入口的追问收口'
+present docs/user-guide/需求澄清指南.md '回交 harness-orchestrator'
+present docs/user-guide/需求澄清指南.md '仅当用户显式调用 `grill-with-docs` 时使用'
+present docs/user-guide/需求澄清最佳实践.md '实施计划回交 `harness-orchestrator`'
+present docs/user-guide/生命周期最佳实践.md '## 6. 实践检查清单'
+present docs/user-guide/生命周期最佳实践.md '下列清单是使用习惯，不是第二套门禁定义'
+present docs/user-guide/生命周期最佳实践.md '`harness-entry` 判定为小改动后做最小实现，收口 `verification`'
+present docs/user-guide/生命周期最佳实践.md '才回到 `harness-entry` 重新校验上游 Discovery / Spec'
+present docs/user-guide/生命周期最佳实践.md '本手册不另定义阶段或门禁'
+present AGENTS.md '`architecture-agent` 使用 `yss-tactical-design`'
+present CONTEXT.md '需求经理（已退役）'
+present CONTEXT.md '商务（已退役）'
+
+REVISION GREEN: reviewer-requested sentences cleared; replacement claims present.
+
+---
+scripts/verify-template
+exit 0
+模板发布校验通过
+result: pass

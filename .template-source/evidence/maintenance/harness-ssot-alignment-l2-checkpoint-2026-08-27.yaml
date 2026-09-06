@@ -1,0 +1,45 @@
+schema_version: 1
+intensity: L2
+classification_reason: >-
+  对齐本仓入口、词汇表、战术设计技能内部模板和说明文档与已生效的四角色五阶段 YAML
+  （local-rule、template-structure）。未改生命周期注册表、门禁、校验器、技能分层或父仓入口。
+triggers: [local-rule, template-structure]
+changed_assets:
+  - CONTEXT.md
+  - AGENTS.md
+  - README.md
+  - docs/agents/README.md
+  - .agents/skills/yss-tactical-design/SKILL.md
+  - .agents/skills/yss-tactical-design/references/output-template.md
+  - .agents/skills/architecture-agent/SKILL.md
+  - docs/requirements/README.md
+  - docs/user-guide/产品生命周期工作流.md
+  - docs/user-guide/用户手册索引.md
+  - docs/user-guide/生命周期最佳实践.md
+  - docs/user-guide/需求澄清指南.md
+  - docs/user-guide/需求澄清最佳实践.md
+  - skills-lock.json
+  - .template-source/evidence/maintenance/harness-ssot-alignment-l2-counterexample-2026-08-27.txt
+  - .template-source/evidence/maintenance/harness-ssot-alignment-l2-fresh-verification-2026-08-27.txt
+  - .template-source/evidence/maintenance/harness-ssot-alignment-l2-revision-counterexample-2026-08-27.txt
+  - .template-source/evidence/maintenance/harness-ssot-alignment-l2-revision-fresh-verification-2026-08-27.txt
+  - .template-source/evidence/maintenance/harness-ssot-alignment-l2-review-request-2026-08-27.md
+  - .template-source/evidence/maintenance/harness-ssot-alignment-l2-focused-review-2026-08-27.md
+verification_evidence:
+  - kind: counterexample
+    command: .template-source/evidence/maintenance/harness-ssot-alignment-l2-counterexample-2026-08-27.txt
+    result: pass
+  - kind: counterexample
+    command: .template-source/evidence/maintenance/harness-ssot-alignment-l2-revision-counterexample-2026-08-27.txt
+    result: pass
+  - kind: fresh-verification
+    command: .template-source/evidence/maintenance/harness-ssot-alignment-l2-revision-fresh-verification-2026-08-27.txt
+    result: pass
+  - kind: focused-independent-review
+    command: .template-source/evidence/maintenance/harness-ssot-alignment-l2-focused-review-2026-08-27.md
+    result: pass
+review_mode: focused-independent
+escalation: >-
+  非实施者已完成 focused-independent 审查，结论 Approved。
+  第一轮 Changes requested 后已按必须改的句子修订并重新验证。
+  本结论覆盖 L2 聚焦清单，不是模板发布或合并裁决，不得声称可发布。

@@ -1,0 +1,18 @@
+cleared canonical dir
+cleared registry skill id
+cleared public catalog
+present skill-migrations section
+GREEN: yss-product-lifecycle retired from live skill surface
+
+---
+scripts/verify-skill-registry  # active，102 个共享
+scripts/verify-skill-governance
+scripts/verify-lifecycle-registry
+scripts/verify-matt-yss-integration-scenarios  # harness-agent 替换边界压力场景验证通过
+scripts/sync-skills --check
+scripts/update-skill-lock --check
+
+scripts/verify-template
+exit 0
+模板发布校验通过
+result: pass

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "source_repository": "https://github.com/iloveZzz/yss-harness-dev-agent",
+  "source_commit": "75e977bd9a839c1e0d7d432b46d0307cd2244ba3",
+  "specialization_profile": "harness.frontend-delivery",
+  "initialization_date": "2026-09-06",
+  "source_working_changes": "Includes the current strategic/backend delivery boundary additions before specialization. Inherited maintenance evidence is historical, not verification of this new template.",
+  "shared_delivery_authority": "https://github.com/iloveZzz/yss-spec-project-template",
+  "shared_delivery_sync": "scripts/sync-strategic-handoff-tools"
+}
