@@ -57,6 +57,7 @@ const REQUIRED_EXCLUDE_PATHS = [
   "docs/.scratch",
   "docs/reviews",
   "docs/adr",
+  "scripts/instantiate-harness",
 ];
 const REQUIRED_RENDER_PATHS = ["README.md", "yss-project.yaml"];
 
@@ -131,11 +132,11 @@ export function validateInstantiationPointers(documents = {}) {
   const agents=documents.agents??read("AGENTS.md");
   const readme=documents.readme??read("README.md");
   const guide=documents.guide??read("docs/user-guide/外部命令行工具实践指南.md");
-  if(!agents.includes("`scripts/instantiate-harness`"))fail("AGENTS.md 必须声明专职初始化入口");
-  if(!readme.includes("node scripts/instantiate-harness"))fail("README.md 必须提供本地初始化命令");
+  if(!agents.includes(INSTANTIATION.cli_package))fail("AGENTS.md 必须声明专职初始化入口");
+  if(isTemplateSource(ROOT)&&!readme.includes(`npx ${INSTANTIATION.cli_package}`))fail("README.md 必须提供专职 CLI 初始化命令");
   if(!guide.includes(INSTANTIATION.metadata_file))fail("初始化指南必须绑定本端 metadata");
   if([readme,guide].some(text=>/npm create yss-harness-dev/.test(text)))fail("专职入口不得路由通用 CLI");
-  if(!existsSync(path.join(ROOT,"scripts/instantiate-harness")))fail("专职初始化脚本不可读");
+  if(isTemplateSource(ROOT)&&!existsSync(path.join(ROOT,"scripts/instantiate-harness")))fail("旧入口退役提示脚本不可读");
   return {cli_package:INSTANTIATION.cli_package,metadata_file:INSTANTIATION.metadata_file};
 }
 

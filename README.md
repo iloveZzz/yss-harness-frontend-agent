@@ -9,8 +9,10 @@
 从已经提交且干净的模板检出执行：
 
 ```bash
-node scripts/instantiate-harness --target /absolute/path/to/project
+npx create-yss-harness-frontend@latest init --target-dir /absolute/path/to/project
 ```
+
+新 CLI 首版候选支持 init、attach、sync、update/upgrade。attach / sync 默认预览，`--apply` 才写入；旧实例不兼容。发布前可从 `create-yss-harness-frontend` 仓的 tgz 本地安装验收。仓内旧入口仅在新 npm 版本可安装且完成 smoke test 后退役，当前仍保留原行为。
 
 初始化只接受新目录，绑定本模板 profile、Git 提交和文件摘要；不会把已有通用、另一端或战略项目转换 profile。本入口随仓库提供，目前没有专用 npm 包。`--allow-working-tree` 只供模板维护验证，产出标为不可发布快照。
 

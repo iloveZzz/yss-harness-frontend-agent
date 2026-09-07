@@ -60,7 +60,7 @@ export function checkEntryAlignment(sources = {}) {
 
   note(/已批准 Spec 或 Strategic Design Handoff/.test(agentsText), "AGENTS.md 必须声明已批准的上游输入");
   note(/Discovery 不是默认阶段/.test(agentsText), "AGENTS.md 必须声明 Discovery 非默认阶段");
-  note(agentsText.includes("`scripts/instantiate-harness`"), "AGENTS.md 必须声明 专职模板本地初始化入口");
+  note(agentsText.includes(profile.instantiation.cli_package), "AGENTS.md 必须声明 专职模板 CLI 初始化入口");
   note(!agentsText.includes("yss-product-lifecycle"), "AGENTS.md 不得恢复退役入口 yss-product-lifecycle");
   note(!agentsText.includes("yss-stage-decision"), "AGENTS.md 不得恢复退役入口 yss-stage-decision");
   note(/合同已批准且当前/.test(agentsText) && agentsText.includes("ready-for-agent"), "ready-for-agent 必须绑定已批准且当前的合同");

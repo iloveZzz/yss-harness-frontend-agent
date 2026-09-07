@@ -28,8 +28,8 @@ export const FORBIDDEN_WORK_UNITS = [
   "work-unit.release-and-rollback",
 ];
 export const INSTANTIATION = Object.freeze({
-  cli_package: "repository-local",
-  npm_create: "not-applicable",
+  cli_package: "create-yss-harness-frontend",
+  npm_create: "npm create yss-harness-frontend@latest",
   metadata_file: ".yss-harness-frontend.json",
   foreign_metadata_files: [".yss-template.json", ".yss-harness-dev.json", ".yss-harness-backend.json"],
   template_source: "github:iloveZzz/yss-harness-frontend-agent",
