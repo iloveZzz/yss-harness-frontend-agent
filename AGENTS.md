@@ -45,8 +45,8 @@ README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义�
 `work-unit.harness-entry` → `work-unit.frontend-engineering-design` → `work-unit.slice-contract` → `work-unit.slice-implementation` → `work-unit.verification`
 
 - 默认输入是已批准 Spec 或 Strategic Design Handoff；Discovery 不是默认阶段。`grill-with-docs`、`to-spec`、`to-tickets` 只能作为用户显式兼容入口，并回交 `harness-orchestrator` 验收。
-- 存在领域行为、聚合、不变量、状态、一致性、Domain Event、Gateway 或持久化映射影响时，由 `role.architecture-agent` 使用 `yss-tactical-design` 形成当前 Tactical Design Contract；无领域影响记录有理由的 `not-applicable`。
-- API 影响先形成 OpenAPI 3.1 Draft，经必要审查后 Freeze；无 API 影响必须有当前记录。随后正式化为可独立验证的窄垂直切片，不得按技术层横向拆分。
+- 后端领域模型只读消费；发现聚合、不变量、持久化或数据模型变化时回交后端 / 战略方，本地由 `architecture-agent` 形成前端工程设计。
+- API 消费以已冻结 OpenAPI 为输入；接口变化回交后端形成 Draft、审查和 Freeze；无 API 影响必须有当前记录。随后正式化为可独立验证的窄垂直切片，不得按技术层横向拆分。
 - 架构、前端、后端和测试只在同一个当前 Slice Implementation Contract 下工作。命中的条件门禁必须完成；未命中才可记录 `not-applicable`，不生成空文档。
 - `seam-deferred` 必须记录风险、责任人、后续 Ticket、验证计划和目标版本或日期。
 

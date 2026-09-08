@@ -75,14 +75,12 @@ work_unit_routes:
   work-unit.tactical-design:
     primary_skill: architecture-agent
     supporting_skills:
-    - yss-tactical-design
     - domain-modeling
     - codebase-design
     - research
     - tdd
     skills:
     - architecture-agent
-    - yss-tactical-design
     - domain-modeling
     - codebase-design
     - research

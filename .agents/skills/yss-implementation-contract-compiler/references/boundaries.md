@@ -19,38 +19,11 @@
 | Capability | Primary skill | Task modes |
 | --- | --- | --- |
 | `execution.frontend-slice` | `frontend-agent` | `slice-implementation`, `result-validation` |
-| `frontend.ui` | `yss-ui` | `integration`, `slice-implementation` |
+| `frontend.ui` | `yss-ui` | `integration`, `slice-implementation`, `review-input` |
 | `frontend.api-integration` | `yss-api-integration` | `integration`, `slice-implementation` |
-| `layer.mvc-service` | `yss-application` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `layer.mvc-persistence` | `yss-repository` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `layer.mvc-web` | `yss-web-controller` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `project-init.mvc-data-analysis` | `yss-mvc-data-analysis-project-initializer` | `component-maintenance` |
 | `governance.implementation-contract` | `yss-implementation-contract-compiler` | `contract-compilation`, `reroute`, `result-validation` |
-| `maintenance.skill-source-index` | `yss-skill-source-index-refresh` | `component-maintenance`, `source-index-refresh` |
 | `architecture.system-data` | `architecture-agent` | `guidance`, `contract-compilation`, `review-input` |
-| `execution.backend-slice` | `backend-agent` | `slice-implementation`, `result-validation` |
-| `architecture.tactical-domain` | `yss-tactical-design` | `guidance`, `integration`, `slice-implementation`, `review-input` |
-| `layer.domain` | `yss-domain` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `layer.application` | `yss-application` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `layer.persistence` | `yss-repository` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `layer.web-adapter` | `yss-web-controller` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `contract.dto-wire` | `yss-dto` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `contract.request-validation` | `yss-validation` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `contract.error-mapping` | `yss-exception` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `framework.mybatis` | `yss-mybatis` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `quality.java-code-style` | `alibaba-java-code-style` | `guidance`, `slice-implementation`, `review-input` |
-| `codegen.mapstruct` | `mapstruct` | `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `codegen.lombok` | `lombok` | `integration`, `slice-implementation`, `troubleshooting`, `review-input` |
-| `component.cache` | `yss-cache` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `component-maintenance`, `review-input` |
-| `component.current-user-context` | `yss-userinfo` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `component-maintenance`, `review-input` |
-| `component.audit-log` | `yss-audit-log` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `component-maintenance`, `review-input` |
-| `component.excel-import-export` | `yss-excel-mvc` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `component-maintenance`, `review-input` |
-| `component.distributed-id` | `yss-distributed-id` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `component-maintenance`, `review-input` |
-| `component.security-algorithm` | `yss-security-algorithm` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `component-maintenance`, `review-input` |
-| `component.gateway-resilience` | `yss-resilience4j` | `guidance`, `integration`, `slice-implementation`, `troubleshooting`, `component-maintenance`, `review-input` |
-| `scaffold.ddd` | `yss-ddd-scaffold-generator` | `integration`, `component-maintenance` |
-| `scaffold.layered-mvc` | `yss-layered-mvc-scaffold-generator` | `integration`, `component-maintenance` |
-| `migration.springboot3` | `yss-up-springboot3` | `guidance`, `integration`, `troubleshooting`, `component-maintenance`, `review-input` |
+| `maintenance.skill-source-index` | `yss-skill-source-index-refresh` | `component-maintenance`, `source-index-refresh` |
 
 ## Narrow Recipes
 
@@ -58,89 +31,18 @@
 
 | Recipe | Capabilities |
 | --- | --- |
-| `frontend.business-slice` | `frontend.ui`, `frontend.api-integration` |
-| `backend.ddd-domain-behavior` | `layer.domain`, `layer.application`, `quality.java-code-style` |
-| `backend.ddd-persistence-mybatis` | `layer.persistence`, `framework.mybatis`, `codegen.mapstruct`, `codegen.lombok`, `quality.java-code-style` |
-| `backend.ddd-http-api` | `layer.web-adapter`, `contract.dto-wire`, `contract.request-validation`, `contract.error-mapping`, `codegen.mapstruct`, `codegen.lombok`, `quality.java-code-style` |
-| `backend.mvc-service-behavior` | `layer.mvc-service`, `quality.java-code-style` |
-| `backend.mvc-persistence-mybatis` | `layer.mvc-persistence`, `framework.mybatis`, `codegen.mapstruct`, `codegen.lombok`, `quality.java-code-style` |
-| `backend.mvc-http-api` | `layer.mvc-web`, `contract.dto-wire`, `contract.request-validation`, `contract.error-mapping`, `codegen.mapstruct`, `codegen.lombok`, `quality.java-code-style` |
-| `backend.system-data-architecture` | `architecture.system-data` |
-| `backend.agent-execution` | `execution.backend-slice` |
-| `backend.domain-behavior` | `layer.domain`, `layer.application`, `quality.java-code-style` |
-| `backend.persistence-mybatis` | `layer.persistence`, `framework.mybatis`, `codegen.mapstruct`, `codegen.lombok`, `quality.java-code-style` |
-| `backend.http-api` | `layer.web-adapter`, `contract.dto-wire`, `contract.request-validation`, `contract.error-mapping`, `codegen.mapstruct`, `codegen.lombok`, `quality.java-code-style` |
-| `backend.current-user-context` | `component.current-user-context`, `contract.dto-wire` |
-| `backend.cached-current-user` | `component.current-user-context`, `component.cache`, `contract.dto-wire` |
-| `backend.audit-event` | `component.audit-log`, `component.current-user-context`, `contract.dto-wire` |
-| `backend.excel-import-export` | `component.excel-import-export`, `contract.dto-wire`, `contract.request-validation`, `contract.error-mapping` |
-| `backend.gateway-resilience` | `component.gateway-resilience`, `contract.error-mapping` |
-| `backend.security-algorithm` | `component.security-algorithm`, `contract.error-mapping` |
-| `backend.distributed-id` | `component.distributed-id` |
-| `backend.ddd-scaffold` | `scaffold.ddd`, `quality.java-code-style` |
-| `backend.mvc-scaffold` | `scaffold.layered-mvc`, `quality.java-code-style` |
-| `backend.springboot3-migration` | `migration.springboot3`, `quality.java-code-style` |
+| `frontend.ui-slice` | `execution.frontend-slice`, `frontend.ui`, `governance.implementation-contract` |
 
 ## Impact Entry Mapping
 
 | Impact | Entry capabilities |
 | --- | --- |
 | `system-data-architecture` | `architecture.system-data` |
-| `backend-agent-execution` | `execution.backend-slice` |
-| `domain-impact` | `layer.domain`, `layer.application` |
-| `tactical-domain-impact` | `architecture.tactical-domain` |
-| `persistence-impact` | `layer.persistence` |
-| `mybatis-framework-impact` | `framework.mybatis` |
-| `web-adapter-impact` | `layer.web-adapter` |
-| `dto-wire-impact` | `contract.dto-wire` |
-| `request-validation` | `contract.request-validation` |
-| `error-mapping` | `contract.error-mapping`, `contract.dto-wire` |
-| `cache` | `component.cache` |
-| `current-user-context` | `component.current-user-context` |
-| `user-cache-lookup` | `component.current-user-context`, `component.cache` |
-| `audit-event` | `component.audit-log`, `component.current-user-context`, `contract.dto-wire` |
-| `excel-import-export` | `component.excel-import-export` |
-| `distributed-id` | `component.distributed-id` |
-| `encryption-or-signing` | `component.security-algorithm` |
-| `gateway-resilience` | `component.gateway-resilience` |
-| `ddd-scaffold` | `scaffold.ddd` |
-| `mvc-scaffold` | `scaffold.layered-mvc` |
-| `springboot3-migration` | `migration.springboot3` |
 
 ## Typed Skill Dependencies
 
 | Skill | Dependency | Type | Condition |
 | --- | --- | --- | --- |
-| `yss-ddd-scaffold-generator` | `yss-backend-scaffold-parent` | `context-required` | — |
-| `yss-ddd-scaffold-generator` | `alibaba-java-code-style` | `context-required` | — |
-| `yss-layered-mvc-scaffold-generator` | `alibaba-java-code-style` | `context-required` | — |
-| `yss-domain` | `alibaba-java-code-style` | `context-required` | — |
-| `yss-domain` | `domain-modeling` | `coordination-only` | — |
-| `yss-domain` | `yss-tactical-design` | `context-conditional` | `tactical-domain` |
-| `yss-domain` | `lombok` | `context-conditional` | `pojo` |
-| `yss-tactical-design` | `domain-modeling` | `coordination-only` | — |
-| `yss-tactical-design` | `yss-openapi-draft-review` | `review-only` | `api-impact` |
-| `yss-tactical-design` | `yss-repository` | `component-dependency` | `data-impact` |
-| `yss-application` | `alibaba-java-code-style` | `context-required` | — |
-| `yss-application` | `mapstruct` | `context-conditional` | `conversion` |
-| `yss-application` | `lombok` | `context-conditional` | `pojo` |
-| `yss-repository` | `yss-mybatis` | `context-conditional` | `mybatis` |
-| `yss-repository` | `mapstruct` | `context-conditional` | `conversion` |
-| `yss-repository` | `lombok` | `context-conditional` | `pojo` |
-| `yss-repository` | `alibaba-java-code-style` | `context-required` | — |
-| `yss-web-controller` | `yss-dto` | `context-required` | — |
-| `yss-web-controller` | `yss-validation` | `context-conditional` | `request-validation` |
-| `yss-web-controller` | `yss-exception` | `context-conditional` | `error-mapping` |
-| `yss-web-controller` | `mapstruct` | `context-conditional` | `conversion` |
-| `yss-web-controller` | `lombok` | `context-conditional` | `pojo` |
-| `yss-web-controller` | `alibaba-java-code-style` | `context-required` | — |
-| `yss-userinfo` | `yss-dto` | `component-dependency` | — |
-| `yss-userinfo` | `yss-cache` | `context-conditional` | `cache-lookup` |
-| `yss-audit-log` | `yss-userinfo` | `component-dependency` | — |
-| `yss-audit-log` | `yss-dto` | `component-dependency` | — |
-| `yss-validation` | `yss-exception` | `component-dependency` | — |
-| `yss-security-algorithm` | `yss-exception` | `component-dependency` | — |
-| `yss-exception` | `yss-dto` | `context-required` | — |
 | `yss-page-module-development` | `yss-components` | `context-conditional` | `components` |
 | `yss-page-module-development` | `yss-hook` | `context-conditional` | `hooks` |
 | `yss-page-module-development` | `yss-formily` | `context-conditional` | `form` |

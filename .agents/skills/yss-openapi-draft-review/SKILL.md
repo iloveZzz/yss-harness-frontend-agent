@@ -3,7 +3,9 @@ name: yss-openapi-draft-review
 description: Use when reviewing a `docs/.scratch/<feature>/api/` OpenAPI Draft before Engineering Baseline, YSS DDD Review, architecture/Spec Delta design, OpenAPI Freeze, vertical slicing, frontend/backend implementation, or when checking P0 requirement coverage, page action to endpoint mapping, YSS response wrappers, errors, pagination, optimistic locking, and contract test seams.
 ---
 
-# YSS OpenAPI Draft Review
+# YSS OpenAPI 消费审查
+
+前端仅从页面动作、状态、错误与客户端类型的角度提供只读反馈；后端持有 Draft / Freeze 权威并执行修订。本地不生成后端 DTO、不批准 API Freeze；mapper evidence 由后端交付。
 
 Use this skill after OpenAPI Draft creation and before Engineering Baseline / YSS DDD Review. It is a fail-closed contract review skill for design-time OpenAPI files under `docs/.scratch/<feature>/api/`; it does not bundle JSON or generate Orval clients.
 
@@ -12,7 +14,7 @@ Use this skill after OpenAPI Draft creation and before Engineering Baseline / YS
 - OpenAPI Draft under `docs/.scratch/<feature>/api/<feature>.yaml`，作为唯一权威的单一 OAS 3.1 YAML document；生命周期元数据和 Freeze 决策位于相邻 Markdown 记录。
 - Calibrated Spec.
 - Interaction spec / prototype review when UI exists.
-- YSS engineering baseline rules and `.agents/skills/yss-dto/references/openapi-wire-profile.yaml`；先运行 `scripts/verify-yss-dto-openapi-profile`。
+- YSS engineering baseline rules and `.agents/skills/yss-openapi-governance/references/openapi-wire-profile.yaml`；先运行 `scripts/verify-yss-dto-openapi-profile`。
 - 若 Draft 包含 computed getter（例如 `totalPages`），必须提供目标 HTTP mapper identity、代表性序列化 fixture 和 contract-test / 等价 HTTP evidence。
 
 ## Review Flow

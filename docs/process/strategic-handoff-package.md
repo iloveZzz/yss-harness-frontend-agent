@@ -42,8 +42,9 @@ scripts/strategic-handoff import --bundle <目录或ZIP> --target-root <研发�
 ```bash
 scripts/verify-strategic-handoff-consumption --root <研发项目根> <战术合同>
 scripts/verify-strategic-handoff-consumption --root <研发项目根> --slice <切片ID> <已批准战术合同>
-node .agents/skills/yss-tactical-design/scripts/validate-tactical-design.mjs <战术合同> --root <研发项目根>
 ```
+
+后端战术模型及其验证由后端项目负责，前端不调用本地战术设计生成器。前端按 `docs/process/frontend-backend-delivery.md` 联合接收战略与后端交付，准备 `frontend-engineering-design`；上面的通用消费校验只用于已交付映射资产，不授权前端起草后端模型。
 
 整体验证有未落实项时返回 blocked；按切片验证可放行有证据证明不依赖这些项的切片。输出 `block_all`、`blocked_slice_refs`、`issues`、实际消费包摘要与战术摘要。通过只证明结构化映射完整和引用可核验，业务语义仍需独立评审；不能代替 Slice Contract 批准。
 

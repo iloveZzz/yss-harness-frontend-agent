@@ -8,18 +8,18 @@
 
 ```text
 harness-entry
-  → tactical-design
+  → frontend-engineering-design
   → slice-contract
   → slice-implementation
   → verification
 ```
 
-领域影响由 `architecture-agent` 使用 `yss-tactical-design`。`grill-with-docs`、`to-spec`、`to-tickets` 只作为用户显式兼容入口，不能代替 `harness-orchestrator`。
+前端工程边界由 `architecture-agent` 设计；后端领域模型只读消费，领域规则变化回交后端或战略方。`grill-with-docs`、`to-spec`、`to-tickets` 只作为用户显式兼容入口，不能代替 `harness-orchestrator`。
 
 进入开发前必须满足：
 
 - [ ] Spec 使用 [../templates/spec-template.md](../templates/spec-template.md)。
-- [ ] OpenAPI 影响明确为“无”或已产出契约草案 / review-only Draft；进入开发前必须冻结 `docs/.scratch/<feature>/api/<feature>.yaml`。
+- [ ] OpenAPI 影响明确为“无”或已接收后端冻结契约；接口变化回交后端修订并重新冻结 `docs/.scratch/<feature>/api/<feature>.yaml`。
 - [ ] 测试决策明确主要测试 seam。
 - [ ] AI / 人工审查点标注风险 / 人工确认项。
 - [ ] 后续 Ticket 使用 [../templates/vertical-slice-ticket-template.md](../templates/vertical-slice-ticket-template.md)，不得按层横向拆分。
@@ -85,8 +85,8 @@ delegate_task(
 ```
 批准的上游 Spec / 战略设计
 → harness-entry
-→ architecture-agent + yss-tactical-design（无领域影响则 not-applicable）
+→ architecture-agent：frontend-engineering-design（联合输入通过后）
 → slice-contract
-→ 前端 / 后端 / 测试按同一合同实现
+→ 前端 / 测试按当前前端合同实现，后端变更回交后端项目
 → test-agent Fresh Verification
 ```

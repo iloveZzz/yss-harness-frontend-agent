@@ -55,7 +55,7 @@ unknownSkill.roles[0].core_skills = ["not-a-registered-skill"];
 mustFail(unknownSkill, /未登记技能/, "未知技能");
 
 const overlap = clone();
-overlap.roles.find((role) => role.id === "role.frontend-agent").forbidden_skills.push("yss-ui");
+overlap.roles.find((role) => role.id === "role.frontend-agent").forbidden_skills.push(overlap.roles.find((role) => role.id === "role.frontend-agent").core_skills[0]);
 mustFail(overlap, /重叠/, "启用且禁止同一技能");
 
 const selfSign = clone();

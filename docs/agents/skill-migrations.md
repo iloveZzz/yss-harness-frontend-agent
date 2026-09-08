@@ -31,10 +31,10 @@
 迁移到：
 
 - 正式编排入口：`harness-orchestrator`
-- 领域战术设计：`architecture-agent` 使用 `yss-tactical-design`
+- 前端工程设计：`architecture-agent` 执行 `frontend-engineering-design`；领域模型变化回交后端或战略方
 - 垂直切片合同：`yss-implementation-contract-compiler` 编译 Slice Implementation Contract 草案，由 Harness Orchestrator 批准
 
-遇到旧调用或旧阶段资产时返回 `blocked`，引用 `harness-agent-contract-v1`，由 Orchestrator 重新建立当前版本的上游输入、Tactical Design Contract 和 Slice Implementation Contract。不得创建同名兼容目录，也不得恢复需求、产品、商务或项目管理角色。
+遇到旧调用或旧阶段资产时返回 `blocked`，引用 `harness-agent-contract-v1`，由 Orchestrator 重新建立当前版本的联合上游输入、前端工程计划和 Slice Implementation Contract。不得创建同名兼容目录，也不得恢复需求、产品、商务或项目管理角色。
 
 ## yss-stage-decision
 
@@ -43,6 +43,10 @@
 迁移到：
 
 - 正式编排入口：`harness-orchestrator` 的 `harness-entry`
-- 领域战术设计：`architecture-agent` 使用 `yss-tactical-design`
+- 前端工程设计：`architecture-agent` 执行 `frontend-engineering-design`；领域模型变化回交后端或战略方
 
 当前流程从已批准的上游 Spec / 战略设计进入 Harness Entry。遇到旧 Discovery / 战略设计调用或旧阶段资产时返回 `blocked`，引用 `harness-agent-contract-v1` 并交回 Orchestrator。不得创建同名兼容目录，也不得恢复旧阶段决策包为现行路由。
+
+## 前端专职技能裁剪（2026-09-08）
+
+后端实现技能退出本地安装；跨端禁止与交接 ID 作为 `cross-repo-reference` 保留，不进入本地执行闭包。`yss-dto` 的 Java 实现不恢复，公开 wire profile 在 `yss-openapi-governance/references/` 中保留带来源绑定的只读快照。`yss-skill-source-index-refresh` 仅刷新已安装前端技能的文档入口，不再读取 Java 源仓或写后端索引。

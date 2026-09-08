@@ -30,7 +30,7 @@ test("shadow registry cannot be marked as runtime consumed", () => {
 
 test("alias that collides with another id is rejected", () => {
   const data = registry();
-  data.skills = data.skills.map((skill) => skill.id === "yss-api-integration" ? { ...skill, aliases: ["tdd"] } : skill);
+  data.skills = data.skills.map((skill) => skill.id === "diagnosing-bugs" ? { ...skill, aliases: ["tdd"] } : skill);
   assert.throws(() => validateSkillRegistry(data), /alias 冲突/);
 });
 
@@ -59,14 +59,15 @@ test("skill invocation contract is required and derives impact triggers", () => 
 test("typed dependency metadata rejects unregistered skills", () => {
   const data = registry();
   data.skill_dependencies = structuredClone(data.skill_dependencies);
-  data.skill_dependencies["yss-domain"].push({ skill: "missing-static-dependency", type: "context-required" });
+  (data.skill_dependencies["tdd"] ??= []).push({ skill: "missing-static-dependency", type: "context-required" });
   assert.throws(() => validateSkillRegistry(data), /依赖引用了未登记技能/);
 });
 
 test("context-required typed dependencies reject cycles", () => {
   const data = registry();
   data.skill_dependencies = structuredClone(data.skill_dependencies);
-  data.skill_dependencies["alibaba-java-code-style"] = [{ skill: "yss-domain", type: "context-required" }];
+  data.skill_dependencies["tdd"] = [{ skill: "diagnosing-bugs", type: "context-required" }];
+  data.skill_dependencies["diagnosing-bugs"] = [{ skill: "tdd", type: "context-required" }];
   assert.throws(() => validateSkillRegistry(data), /context-required 依赖存在循环/);
 });
 
@@ -121,8 +122,8 @@ test("prototype design route requires independent prototype-review", () => {
 
 test("deprecated skills require migration and cleanup metadata", () => {
   const data = registry();
-  data.skills = data.skills.map((skill) => skill.id === "yss-api-integration"
-    ? { ...skill, maturity: "deprecated", replaced_by: "yss-page-module-development" }
+  data.skills = data.skills.map((skill) => skill.id === "diagnosing-bugs"
+    ? { ...skill, maturity: "deprecated", replaced_by: "tdd" }
     : skill);
   assert.throws(() => validateSkillRegistry(data), /migration_deadline/);
 });

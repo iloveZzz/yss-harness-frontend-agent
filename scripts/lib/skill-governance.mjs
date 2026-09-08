@@ -1,3 +1,4 @@
+import { validateHarnessSkillScope } from './harness-skill-scope.mjs';
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -42,6 +43,7 @@ export function validateSkillGovernance({ read = (relative) => readFileSync(path
     if (cursorRules.includes(stalePath)) fail(`Cursor 入口不得指向 alias 物理路径: ${stalePath}`);
   }
 
+  validateHarnessSkillScope(ROOT);
   const registry = loadSkillRegistry();
   const canonicalIds = new Set(registry.skills.map((skill) => skill.id));
   const aliases = new Map(registry.skills.flatMap((skill) => skill.aliases.map((alias) => [alias, skill.id])));

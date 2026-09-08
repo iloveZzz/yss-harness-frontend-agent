@@ -1,11 +1,11 @@
 ---
 name: yss-openapi-governance
-description: Use when creating, governing, linting, freezing, or exporting YSS OpenAPI 3.1 design-time contracts. The frozen YAML is the only authority; this skill produces the reviewed JSON derivative consumed by frontend client generation.
+description: Use when consuming frozen YSS OpenAPI 3.1 contracts, validating JSON derivatives, or preparing frontend client generation; API changes return to the backend owner.
 ---
 
 # YSS OpenAPI Governance
 
-本 skill 负责 YSS OpenAPI 的 **YAML-first** 工作流：
+本 skill 在前端仓只消费 YSS OpenAPI 的 **YAML-first** 工作流结果：
 
 ```text
 Spec / 设计输入 → OpenAPI YAML Draft → 审查与 Freeze → JSON 派生物 → 下游既有前端代码生成流程
@@ -13,18 +13,22 @@ Spec / 设计输入 → OpenAPI YAML Draft → 审查与 Freeze → JSON 派生�
 
 `docs/.scratch/<feature>/api/<feature>.yaml` 是唯一权威的 OpenAPI 3.1 契约。JSON 只能由冻结后的 YAML 可复现地产生，用于前端代码生成或分发；不得手写、不得反向覆盖 YAML、不得把运行时代码当成设计契约来源。
 
-YSS DTO 的可复用 HTTP/JSON 映射由 `.agents/skills/yss-dto/references/openapi-wire-profile.yaml` 单一维护。它描述公开 wire shape，不是 Java 字段或 getter 清单；本 skill 必须消费 profile，不能在治理文档、feature YAML 和 JSON 中各自发明 `SingleResult`、`PageResult` 或 `PageQuery` 字段表。
+YSS DTO 的可复用 HTTP/JSON 映射由 `.agents/skills/yss-openapi-governance/references/openapi-wire-profile.yaml` 提供只读快照。它描述公开 wire shape，不是 Java 字段或 getter 清单；本 skill 必须消费 profile，不能在治理文档、feature YAML 和 JSON 中各自发明 `SingleResult`、`PageResult` 或 `PageQuery` 字段表。
+
+## 前端仓消费边界
+
+本地只读审查冻结 YAML、JSON 派生物和 wire profile；profile 是后端规范的只读分发快照，不在前端另行定义；来源仓、完整提交、源路径与 SHA-256 绑定在 `references/openapi-wire-source.json`。默认校验只证明离线快照完整，不代表已检查上游最新版本。下文涉及 Draft、Freeze、后端 mapper 或 schema 修订的步骤由后端项目执行，前端只提交消费需求与问题证据。不得在本仓起草后端契约或批准 Freeze。
 
 ## 边界与职责
 
 使用 `yss-openapi-governance`：
 
-- 基于冻结前的 Spec、产品设计、架构约束创建或更新 `docs/.scratch/<feature>/api/<feature>.yaml`。
+- 向后端提交消费需求，由后端基于冻结前的 Spec、产品设计、架构约束创建或更新 `docs/.scratch/<feature>/api/<feature>.yaml`。
 - 保证 YAML 是单一 YAML document、根节点为 `openapi: 3.1.0`，且不把 `pipeline`、`stage`、`status`、`owner` 等生命周期元数据写入 OpenAPI 根节点。
-- 按 `yss-dto` wire profile 校验 `com.yss.cloud.dto.result` canonical 包、`YssResultMeta` 公共字段、具体 wrapper schema、请求 / 响应方向和分页负向字段。
+- 按只读 HTTP/JSON wire profile 校验 `com.yss.cloud.dto.result` canonical 包、`YssResultMeta` 公共字段、具体 wrapper schema、请求 / 响应方向和分页负向字段。
 - 运行受项目 lockfile 约束的 lint / bundle，检查 `$ref`、operationId、响应包装、错误、分页、幂等和契约测试 seam；只有 Spec 明确改变认证或授权行为时才检查对应契约。
 - 在 OpenAPI Freeze 后，用锁定的 Redocly CLI 将 YAML bundle 为 JSON，并记录可重现证据。
-- 维护治理记录、Freeze 记录和 JSON 派生记录。
+- 消费后端治理及 Freeze 记录，维护本地 JSON 派生与客户端生成记录。
 - Spec Delta 影响存在时，在 `docs/.scratch/<feature>/spec-delta/` 记录与冻结 YAML 的关系；没有影响时明确记录 `not-applicable`。
 
 不使用本 skill 来替代：
@@ -110,7 +114,7 @@ pnpm exec redocly bundle \
 
 ### Validation
 - Lint command and result: <locked pnpm command / result>
-- YSS DTO wire profile: <`.agents/skills/yss-dto/references/openapi-wire-profile.yaml`, schema_version, verifier result>
+- YSS DTO wire profile: <`.agents/skills/yss-openapi-governance/references/openapi-wire-profile.yaml`, schema_version, verifier result>
 - Wrapper conformance: <`x-yss-response-wrapper`, `YssResultMeta`, `allOf`, concrete data schema, direction and forbidden-field result>
 - `$ref` policy / approved exceptions: <details>
 - Blocking findings: <file:line grounded finding>
@@ -128,3 +132,14 @@ pnpm exec redocly bundle \
 - Existing frontend code generation: <manual command in target repository / blocked reason>
 - Template boundary: <no frontend configuration, code-generation execution, or CI change>
 ```
+
+## wire profile 同步
+
+维护时从已登记源仓的完整提交提取原字节，同时更新 `references/openapi-wire-source.json`；不得仅为通过校验重算本地摘要。运行：
+
+```bash
+scripts/verify-yss-dto-openapi-profile --source-root <后端模板源仓根>
+scripts/verify-yss-dto-openapi-scenarios
+```
+
+带 `--source-root` 的校验同时核验源仓身份、固定提交字节和当前源工作树。源内容变化时重新审阅并同步快照及绑定；离线消费继续使用已绑定版本，已知上游变化不能被离线校验掩盖。

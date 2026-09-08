@@ -22,7 +22,7 @@ description: Guide AI to correctly use Orval-generated API clients in Vue 3 micr
 
 1. **契约状态已明确**：
    - 已有生成客户端：可以直接集成。
-   - 新增或变更 API：必须先在 `docs/.scratch/<feature>/api/<feature>.yaml` 形成 OpenAPI Draft，经工程基线 / 架构 / Spec Delta 设计和设计审查后 Freeze。冻结的 OpenAPI YAML 是唯一权威，JSON 仅为它的受控派生物。
+   - 新增或变更 API：回交后端项目，由后端先在 `docs/.scratch/<feature>/api/<feature>.yaml` 形成 OpenAPI Draft，经工程基线 / 架构 / Spec Delta 设计和设计审查后 Freeze。冻结的 OpenAPI YAML 是唯一权威，JSON 仅为它的受控派生物。
    - 如果接口尚未冻结、JSON 派生记录缺失或生成函数不存在，先回到 Harness Orchestrator / `yss-openapi-governance`，不要手写临时路径、DTO 或响应结构。
 2. **API 已生成**：在目标前端实现仓库中，按其既有的手动代码生成命令（例如 `pnpm generate:api`）刷新 API；本 Harness 不配置、不执行该命令，也不把它加入 CI。
 3. **了解 OpenAPI**：查看 Freeze 记录、JSON 派生记录和 `openapi/openapi.json` 了解接口定义；不得把 JSON 或生成 TypeScript 当成可手改的源文件。

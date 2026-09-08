@@ -1,3 +1,4 @@
+import { assertLocalSkillReferences } from './harness-skill-scope.mjs';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { ROOT, read, safe, ensure } from './strategic-handoff-io.mjs';
@@ -43,6 +44,7 @@ export function enforceHarnessTaskScope(task,{root=ROOT}={}) {
 export function enforceHarnessSkillScope(skills,registry,{root=ROOT}={}) {
   const profile=activeProfile(root);
   if (!profile) return;
+  assertLocalSkillReferences(skills, registry, profile);
   const side=profile.profile_id==='harness.frontend-delivery'?'frontend':'backend';
   const opposite=side==='frontend'?'backend':'frontend';
   for (const id of skills) {

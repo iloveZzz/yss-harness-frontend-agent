@@ -1,11 +1,13 @@
 #!/usr/bin/env node
+import { parseArgs } from "node:util";
+import { validateWireProfileSource } from "./lib/openapi-wire-source.mjs";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseDocument } from "./vendor/yaml.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const profilePath = path.join(root, ".agents/skills/yss-dto/references/openapi-wire-profile.yaml");
+const profilePath = path.join(root, ".agents/skills/yss-openapi-governance/references/openapi-wire-profile.yaml");
 
 function ensure(condition, message) {
   if (!condition) throw new TypeError(message);
@@ -44,6 +46,8 @@ function checkFactory(factory, label, expectedArguments) {
 }
 
 try {
+  const { values } = parseArgs({options:{"source-root":{type:"string"}},strict:true});
+  const binding = validateWireProfileSource({root,sourceRoot:values["source-root"]});
   const document = parseDocument(readFileSync(profilePath, "utf8"), { maxAliasCount: 0 });
   ensure(document && document.errors.length === 0, `wire profile YAML 无法解析: ${document?.errors?.map((error) => error.message).join("; ")}`);
   const profile = document.toJSON();
@@ -112,7 +116,7 @@ try {
   ensure(profile.page_query.computed_fields.needTotalCount.policy === "exclude-from-client-input", "needTotalCount 不得成为客户端输入");
   ensure(profile.page_query.computed_fields.tempTotalCount.policy === "exclude-from-client-input", "tempTotalCount 不得成为客户端输入");
   includesAll(profile.wire_evidence?.required_before_freeze, ["target-http-mapper-identity", "representative-serialization-fixtures", "contract-test-or-equivalent-http-evidence"], "wire_evidence.required_before_freeze");
-  process.stdout.write("YSS DTO OpenAPI wire profile 验证通过\n");
+  process.stdout.write(`YSS DTO OpenAPI wire profile 验证通过（${binding.verification}）\n`);
 } catch (error) {
   process.stderr.write(`${error.message}\n`);
   process.exitCode = 1;

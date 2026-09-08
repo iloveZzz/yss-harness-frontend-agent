@@ -71,3 +71,31 @@ frontend_delivery:
   - verification
   inputs_verified_allows: plan-and-contract-preparation
   implementation_requires: approved-current-slice-contract-and-existing-readiness
+skill_scope:
+  policy: local-workflow-only
+  retired_local_skills:
+  - alibaba-java-code-style
+  - backend-agent
+  - java-backend-commit
+  - lombok
+  - mapstruct
+  - yss-application
+  - yss-audit-log
+  - yss-cache
+  - yss-ddd-scaffold-generator
+  - yss-distributed-id
+  - yss-domain
+  - yss-dto
+  - yss-excel-mvc
+  - yss-exception
+  - yss-layered-mvc-scaffold-generator
+  - yss-mvc-data-analysis-project-initializer
+  - yss-mybatis
+  - yss-repository
+  - yss-resilience4j
+  - yss-security-algorithm
+  - yss-tactical-design
+  - yss-up-springboot3
+  - yss-userinfo
+  - yss-validation
+  - yss-web-controller

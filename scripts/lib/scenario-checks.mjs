@@ -75,8 +75,8 @@ const profiles = {
   },
   yssDtoWire: {
     message: "YSS DTO OpenAPI wire-shape scenarios passed",
-    files: [".agents/skills/yss-dto/references/openapi-wire-profile.yaml", ".agents/skills/yss-dto/SKILL.md", ".agents/skills/yss-openapi-governance/SKILL.md", ".agents/skills/yss-openapi-draft-review/SKILL.md", "docs/api/templates/openapi-draft-review-checklist.md", "scripts/verify-yss-dto-openapi-profile"],
-    markers: [[".agents/skills/yss-dto/SKILL.md", "x-yss-response-wrapper"], [".agents/skills/yss-openapi-governance/SKILL.md", "verify-yss-dto-openapi-profile"], [".agents/skills/yss-openapi-draft-review/SKILL.md", "needTotalCount"], ["docs/api/templates/openapi-draft-review-checklist.md", "DTO wire shape"]]
+    files: [".agents/skills/yss-openapi-governance/references/openapi-wire-profile.yaml", ".agents/skills/yss-openapi-governance/SKILL.md", ".agents/skills/yss-openapi-governance/SKILL.md", ".agents/skills/yss-openapi-draft-review/SKILL.md", "docs/api/templates/openapi-draft-review-checklist.md", "scripts/verify-yss-dto-openapi-profile"],
+    markers: [[".agents/skills/yss-openapi-governance/SKILL.md", "x-yss-response-wrapper"], [".agents/skills/yss-openapi-governance/SKILL.md", "verify-yss-dto-openapi-profile"], [".agents/skills/yss-openapi-draft-review/SKILL.md", "needTotalCount"], ["docs/api/templates/openapi-draft-review-checklist.md", "DTO wire shape"]]
   }
 };
 

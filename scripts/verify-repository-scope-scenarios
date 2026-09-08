@@ -220,8 +220,6 @@ const markerFiles = [
   [".agents/skills/yss-implementation-contract-compiler/references/slice-implementation-contract.md", "git-submodule-harness-apps"],
   [".agents/skills/yss-implementation-contract-compiler/references/compiler-contract.yaml", "git-submodule-harness-apps"],
   [".agents/skills/harness-orchestrator/references/orchestration-contract.yaml", "target_scope: frontend-delivery"],
-  [".agents/skills/yss-ddd-scaffold-generator/scripts/generate_scaffold.mjs", "gitSubmoduleScaffoldViolation"],
-  [".agents/skills/yss-ddd-scaffold-generator/scripts/generate_scaffold.mjs", "refuseGitlinkAsRegularDirectory"]
 ];
 for (const [file, marker] of markerFiles) {
   ensure(existsSync(path.join(root, file)), `缺少场景资产: ${file}`);

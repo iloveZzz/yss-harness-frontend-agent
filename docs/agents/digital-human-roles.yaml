@@ -1,8 +1,7 @@
 schema_version: 1
 registry_id: yss.digital-human-roles
 status: active
-description: harness-agent 的角色与运行时绑定事实源。研发角色严格限制为架构、前端、后端和测试； Harness Orchestrator
-  是系统编排组件，不计入四类研发角色。
+description: harness-agent 的角色与运行时绑定事实源。研发角色严格限制为架构、前端、后端和测试； Harness Orchestrator 是系统编排组件，不计入四类研发角色。
 canonical_path: docs/agents/digital-human-roles.yaml
 runtime_policy:
   lifecycle_control: harness-orchestrator
@@ -158,8 +157,7 @@ roles:
   - yss-repository
   - yss-mybatis
   - yss-web-controller
-  description: 消费冻结的交互、状态和 Slice Contract，负责前端页面、组件、API 消费和前端测试；不创造产品规则、 不修改后端领域和
-    API 契约，不为自己实现的切片独立验收。
+  description: 消费冻结的交互、状态和 Slice Contract，负责前端页面、组件、API 消费和前端测试；不创造产品规则、 不修改后端领域和 API 契约，不为自己实现的切片独立验收。
 - id: role.backend-agent
   name: 后端 Agent
   kind: digital-human
@@ -174,19 +172,8 @@ roles:
   owned_evidence_ids:
   - evidence.backend-verification
   core_skills:
-  - backend-agent
-  - yss-domain
-  - yss-application
-  - yss-repository
-  - yss-mybatis
-  - yss-web-controller
-  - yss-dto
-  - yss-exception
-  - yss-validation
-  - yss-ddd-scaffold-generator
-  - yss-layered-mvc-scaffold-generator
-  - yss-implementation-contract-compiler
-  - tdd
+  - code-review
+  - research
   forbidden_skills:
   - harness-orchestrator
   - architecture-agent
@@ -195,8 +182,7 @@ roles:
   - yss-ui
   - yss-formily
   - yss-frontend-scaffold-generator
-  description: 消费批准的 Tactical Design Contract 和 API / 数据边界，负责 Domain、Application、Infrastructure、
-    Web、DTO、数据访问和后端测试；不重新定义架构合同，不为自己实现的切片独立验收。
+  description: 仅保留上游批准身份与只读输入审查；不分发本端实现技能，不在本仓起草或实现。
 - id: role.test-agent
   name: 测试 Agent
   kind: digital-human
@@ -228,8 +214,7 @@ roles:
   - yss-ddd-scaffold-generator
   - yss-layered-mvc-scaffold-generator
   - implement
-  description: 从战术设计和 Slice Contract 建立测试 seam、fixture 和失败基线，独立执行契约、集成、E2E 和 Fresh
-    Verification；不修改产品范围、领域规则或生产实现来掩盖失败。
+  description: 从战术设计和 Slice Contract 建立测试 seam、fixture 和失败基线，独立执行契约、集成、E2E 和 Fresh Verification；不修改产品范围、领域规则或生产实现来掩盖失败。
 stage_groups:
 - id: group.harness-entry
   name: Harness 入口

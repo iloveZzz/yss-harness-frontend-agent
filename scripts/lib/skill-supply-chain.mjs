@@ -1,3 +1,4 @@
+import { parseDocument } from '../vendor/yaml.mjs';
 import { createHash } from "node:crypto";
 import { cpSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, realpathSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
@@ -61,10 +62,17 @@ export function syncSkills({ check = false } = {}) {
   const obsolete = [...new Set([...shared.filter((name) => OBSOLETE.has(name)), ...obsoleteCanonicalResidues(skillNames(SOURCE_ROOT))])];
   if (obsolete.length) throw new TypeError(`obsolete skills remain in canonical root: ${obsolete.join(", ")}`);
   const drift = [];
+  const retired = parseDocument(readFileSync(path.join(ROOT, "docs/process/harness-profile.yaml"), "utf8")).toJS().skill_scope?.retired_local_skills ?? [];
   for (const root of PROJECTION_ROOTS) {
     const projection = path.join(ROOT, root);
     ensureSafeProjection(projection);
     if (!check) mkdirSync(projection, { recursive: true });
+    for (const name of retired) {
+      const target = path.join(projection, name);
+      if (!check && lstatSafe(target)?.isSymbolicLink()) unlinkSync(target);
+      else if (!check) rmSync(target, { recursive: true, force: true });
+      else if (lstatSafe(target)) drift.push(`retired local projection: ${relative(target)}`);
+    }
     const allowed = [...shared, ...Object.keys(lock.skills?.platform?.[root] ?? {})];
     for (const entry of unlockedProjectionEntries(entries(projection), allowed, (name) => tracked(relative(path.join(projection, name)))).filter((entry) => !OBSOLETE.has(entry.name))) {
       const target = path.join(projection, entry.name);
