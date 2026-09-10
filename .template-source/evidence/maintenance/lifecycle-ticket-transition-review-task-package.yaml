@@ -10,7 +10,7 @@ workflow_status: active
 skill_source:
   registry_ref: docs/agents/digital-human-roles.yaml
   defaults_ref: taskPackageDefaults(role.test-agent)
-  core_skills: [test-agent, tdd, diagnosing-bugs, code-review, research]
+  core_skills: [test-agent, tdd, diagnosing-bugs, code-review, yss-research]
   forbidden_skills: [harness-orchestrator, architecture-agent, frontend-agent, backend-agent, yss-ddd-scaffold-generator, yss-layered-mvc-scaffold-generator, implement]
 contract:
   kind: template-maintenance

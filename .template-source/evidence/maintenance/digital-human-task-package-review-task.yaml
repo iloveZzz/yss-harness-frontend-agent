@@ -9,7 +9,7 @@ workflow_status: active
 skill_source:
   registry_ref: docs/agents/digital-human-roles.yaml
   defaults_ref: taskPackageDefaults(role.test-agent)
-  core_skills: [test-agent, tdd, diagnosing-bugs, code-review, research]
+  core_skills: [test-agent, tdd, diagnosing-bugs, code-review, yss-research]
   forbidden_skills: [harness-orchestrator, architecture-agent, frontend-agent, backend-agent, yss-ddd-scaffold-generator, yss-layered-mvc-scaffold-generator, implement]
 contract:
   kind: template-maintenance
@@ -26,7 +26,7 @@ inputs:
   - scripts/verify-subagent-task-package-scenarios
   - scripts/verify-digital-human-task-package
   - docs/templates/subagent-task-package-template.md
-  - .agents/skills/yss-router/references/slice-implementation-contract.md
+  - .agents/skills/yss-implementation-contract-compiler/references/slice-implementation-contract.md
   - .agents/skills/harness-orchestrator/references/orchestration-contract.yaml
   - docs/process/subagent-collaboration.md
 objective: 以非实施者身份审查数字人任务包机制的合同一致性、角色技能闭包、路径边界、stale 传播和模板门禁覆盖。
@@ -39,7 +39,7 @@ expected_evidence_files:
 verification_commands:
   - scripts/verify-subagent-task-package-scenarios
   - scripts/verify-digital-human-roles-scenarios
-  - scripts/verify-yss-router-scenarios
+  - scripts/verify-yss-implementation-contract-compiler-scenarios
   - scripts/verify-template
 verification_results:
   - command: scripts/verify-template

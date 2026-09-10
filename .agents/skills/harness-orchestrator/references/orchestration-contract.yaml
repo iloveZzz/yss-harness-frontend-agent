@@ -1,4 +1,13 @@
 schema_version: 1
+document_writing:
+  supporting_skill: i-have-adhd
+  condition: lifecycle-document-output
+  scope: current-document-work-only
+  dispatch: pass-condition-and-reference-to-document-owner
+  reference: docs/process/document-writing.md
+  examples: docs/templates/examples/lifecycle-writing-examples.md
+  artifact_ownership: unchanged
+  gate_and_status_semantics: unchanged
 contract_id: harness-frontend-contract-v1
 status: active
 owner: role.harness-orchestrator
@@ -65,11 +74,11 @@ work_unit_routes:
     primary_skill: harness-orchestrator
     supporting_skills:
     - implementation-repo-onboarding
-    - research
+    - yss-research
     skills:
     - harness-orchestrator
     - implementation-repo-onboarding
-    - research
+    - yss-research
     applies_when: harness_entry
     not_applicable_reason: harness_context_already_verified
   work-unit.tactical-design:
@@ -77,13 +86,13 @@ work_unit_routes:
     supporting_skills:
     - domain-modeling
     - codebase-design
-    - research
+    - yss-research
     - tdd
     skills:
     - architecture-agent
     - domain-modeling
     - codebase-design
-    - research
+    - yss-research
     - tdd
     applies_when: legacy-reference-only-not-in-frontend-profile
     not_applicable_reason: no_domain_behavior_or_tactical_design_impact
@@ -173,12 +182,12 @@ work_unit_routes:
     primary_skill: architecture-agent
     supporting_skills:
     - codebase-design
-    - research
+    - yss-research
     - tdd
     skills:
     - architecture-agent
     - codebase-design
-    - research
+    - yss-research
     - tdd
     applies_when: frontend_delivery_inputs_verified
     not_applicable_reason: frontend_inputs_missing_blocked

@@ -7,6 +7,8 @@ description: 在战略与后端交付联合接收通过后，定义前端工程�
 
 在前端专职 profile 中，联合输入通过后负责页面工程、组件边界、状态管理、API 消费和测试 seam 的工程设计。后端 DDD / MVC 设计只读消费；本地无领域影响时记录 not-applicable。有新领域影响须回交后端或战略方。
 
+文档输出时按 `lifecycle-document-output` 条件调用 `i-have-adhd`，读取 `docs/process/document-writing.md`；作用域仅限当前产物，派发时传递条件及引用。
+
 ## 交付内容
 
 - 前端模块、组件、状态管理与 API 适配边界。

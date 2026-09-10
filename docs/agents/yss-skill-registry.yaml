@@ -43,6 +43,7 @@ capability_contract:
   - dependency-topology
   - skill-id
 capabilities:
+- { id: writing.lifecycle-document, primary_skill: i-have-adhd, task_modes: [guidance] }
 - id: execution.frontend-slice
   primary_skill: frontend-agent
   task_modes:
@@ -83,7 +84,27 @@ recipes:
   - frontend.ui
   - governance.implementation-contract
 skill_dependencies:
-  yss-page-module-development:
+  test-agent:
+    - { skill: i-have-adhd, type: context-conditional, when: lifecycle-document-output }
+  frontend-agent:
+    - { skill: i-have-adhd, type: context-conditional, when: lifecycle-document-output }
+  architecture-agent:
+    - { skill: i-have-adhd, type: context-conditional, when: lifecycle-document-output }
+  prototype-review:
+    - { skill: i-have-adhd, type: context-conditional, when: lifecycle-document-output }
+  code-review:
+    - { skill: i-have-adhd, type: context-conditional, when: lifecycle-document-output }
+  yss-implementation-contract-compiler:
+    - { skill: i-have-adhd, type: context-conditional, when: lifecycle-document-output }
+  yss-openapi-governance:
+    - { skill: i-have-adhd, type: context-conditional, when: lifecycle-document-output }
+  yss-prototype-stage:
+    - { skill: i-have-adhd, type: context-conditional, when: lifecycle-document-output }
+  yss-research:
+    - { skill: i-have-adhd, type: context-conditional, when: lifecycle-document-output }
+  harness-orchestrator:
+    - { skill: i-have-adhd, type: context-conditional, when: lifecycle-document-output }
+  yss-ui-business-page-generation:
   - skill: yss-components
     type: context-conditional
     when: components
@@ -134,7 +155,12 @@ invocation_contract:
     maintainer-only:
       invocation_mode: user
       primary_output: maintenance-operation
-  overrides: {}
+  overrides:
+    i-have-adhd:
+      invocation_mode: model
+      trigger_conditions: [lifecycle-document-output]
+      exclusion_conditions: [code-only-work, command-only-work, unrelated-conversation, user-disabled]
+      primary_output: document-writing-assistance
 agent_runtime_roots:
   claude: .claude/skills
   codex: .codex/skills
@@ -143,6 +169,7 @@ agent_runtime_roots:
   qoder: .qoder/skills
   trae: .trae/skills
 skills:
+- { id: i-have-adhd, layer: core, maturity: supported, instance_default_discoverable: true, aliases: [], impacts: [writing] }
 - id: archify
   layer: specialist
   maturity: supported
@@ -326,11 +353,12 @@ skills:
   aliases: []
   impacts:
   - prototype
-- id: research
+- id: yss-research
   layer: core
   maturity: supported
   instance_default_discoverable: true
-  aliases: []
+  aliases:
+  - research
   impacts:
   - discovery
 - id: resolving-merge-conflicts
@@ -518,14 +546,6 @@ skills:
   aliases: []
   impacts:
   - frontend
-- id: yss-microapp-commit
-  layer: maintainer-only
-  maturity: supported
-  instance_default_discoverable: false
-  aliases:
-  - microapp-commit
-  impacts:
-  - frontend
 - id: yss-openapi-draft-review
   layer: core
   maturity: supported
@@ -540,13 +560,11 @@ skills:
   aliases: []
   impacts:
   - api
-- id: yss-page-module-development
+- id: yss-ui-business-page-generation
   layer: specialist
   maturity: supported
   instance_default_discoverable: false
-  aliases:
-  - page-module-development
-  - yss-ui-business-page-generation
+  aliases: []
   impacts:
   - frontend
 - id: yss-prototype-stage

@@ -18,6 +18,7 @@
 
 | Capability | Primary skill | Task modes |
 | --- | --- | --- |
+| `writing.lifecycle-document` | `i-have-adhd` | `guidance` |
 | `execution.frontend-slice` | `frontend-agent` | `slice-implementation`, `result-validation` |
 | `frontend.ui` | `yss-ui` | `integration`, `slice-implementation`, `review-input` |
 | `frontend.api-integration` | `yss-api-integration` | `integration`, `slice-implementation` |
@@ -43,8 +44,18 @@
 
 | Skill | Dependency | Type | Condition |
 | --- | --- | --- | --- |
-| `yss-page-module-development` | `yss-components` | `context-conditional` | `components` |
-| `yss-page-module-development` | `yss-hook` | `context-conditional` | `hooks` |
-| `yss-page-module-development` | `yss-formily` | `context-conditional` | `form` |
-| `yss-page-module-development` | `yss-api-integration` | `context-conditional` | `api` |
+| `test-agent` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |
+| `frontend-agent` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |
+| `architecture-agent` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |
+| `prototype-review` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |
+| `code-review` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |
+| `yss-implementation-contract-compiler` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |
+| `yss-openapi-governance` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |
+| `yss-prototype-stage` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |
+| `yss-research` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |
+| `harness-orchestrator` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |
+| `yss-ui-business-page-generation` | `yss-components` | `context-conditional` | `components` |
+| `yss-ui-business-page-generation` | `yss-hook` | `context-conditional` | `hooks` |
+| `yss-ui-business-page-generation` | `yss-formily` | `context-conditional` | `form` |
+| `yss-ui-business-page-generation` | `yss-api-integration` | `context-conditional` | `api` |
 | `yss-api-integration` | `yss-openapi-governance` | `context-conditional` | `regeneration` |
