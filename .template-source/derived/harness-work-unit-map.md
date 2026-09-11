@@ -6,8 +6,7 @@
 | 稳定 ID | 范围 | 工作单元 | 输入 | 输出 | 完成条件 |
 |---|---|---|---|---|---|
 | `work-unit.harness-entry` | project-instance | Harness 入口校验 | yss-project.yaml、CONTEXT.md 和已确认的上游输入。 | 影响面、仓库上下文和上游输入证据。 | 身份、输入版本和写入边界可解释。 |
-| `work-unit.tactical-design` | project-instance | DDD 战术设计 | Spec、战略设计、状态矩阵、API / 数据约束和工程约束。 | Tactical Design Contract、架构决策和测试 seam。 | 战术模型已批准，或无领域影响已记录 not-applicable。 |
-| `work-unit.slice-contract` | project-instance | Slice Contract 编译与批准 | 当前上游资产、Tactical Design、API / 数据 / UI 影响和实现仓库登记。 | 当前版本 Slice Implementation Contract 和四角色任务包草案。 | 合同通过校验并满足 ready-for-agent 公式。 |
+| `work-unit.slice-contract` | project-instance | Slice Contract 编译与批准 | 当前上游资产、前端工程设计、条件化 Backend Delivery、API / 数据 / UI 影响和实现仓库登记。 | 当前版本 Slice Implementation Contract 和四角色任务包草案。 | 合同通过校验并满足 ready-for-agent 公式。 |
 | `work-unit.slice-implementation` | project-instance | 垂直切片实现 | 已批准且版本当前的 Slice Implementation Contract。 | 前端、后端和测试实现及 YSS Skill Execution Result。 | 行为测试、工程验证、契约一致性和写入边界全部满足。 |
 | `work-unit.verification` | project-instance | 独立验证 | 实现候选、合同、验收标准和测试 seam。 | Fresh Verification、Review 结果和 checkpoint。 | 测试 Agent 独立验证通过，且无阻塞信号。 |
 | `work-unit.ssot-update` | template-source | Harness 权威资产更新 | 模板维护变更合同。 | 权威文档、schema、脚本或技能。 | 权威资产可被校验器读取。 |

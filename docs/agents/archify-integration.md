@@ -4,8 +4,8 @@
 
 ## 路由
 
-- `archify` 是 `specialist`，默认不主动发现。只有用户或当前 Tactical Design、架构审查合同明确要求架构、工作流、时序、数据流、生命周期、Mermaid 美化或 Before/After 图示时才调用。
-- `architecture-agent` 负责从批准的上游输入和当前合同派生图示；图不替代 Tactical Design Contract、ADR、OpenAPI、Slice Implementation Contract、测试 Agent 评审或会签。
+- `archify` 是 `specialist`，默认不主动发现。只有用户或当前 Frontend Engineering Design、架构审查合同明确要求架构、工作流、时序、数据流、生命周期、Mermaid 美化或 Before/After 图示时才调用。
+- `architecture-agent` 负责从批准的上游输入和当前合同派生图示；图不替代 Frontend Engineering Design、ADR、OpenAPI、Slice Implementation Contract、测试 Agent 评审或会签。
 - 不加入 `yss-public-skills.json`。YSS 模板分发锁定的上游包，但不把它重新发布为 YSS 自有公共 Skill。
 
 ## 交付与网络边界

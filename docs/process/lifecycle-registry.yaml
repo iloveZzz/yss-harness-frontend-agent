@@ -1,25 +1,20 @@
 schema_version: 1
 registry_id: yss.lifecycle
 status: active
-description: harness-agent 的生命周期事实源。流程从已确认的上游输入进入 DDD 战术设计，经过统一 Slice Implementation
-  Contract，完成前后端垂直切片和独立测试验证。
+description: 前端专职 harness-agent 的生命周期事实源。流程从已确认的战略输入进入前端工程设计，按影响条件接收后端交付，经过统一 Slice Implementation Contract 完成前端实现和独立验证。
 id_policy:
   pattern: ^(stage|gate|artifact|work-unit|evidence)\.[a-z0-9][a-z0-9-]*$
   published_ids_immutable: true
   baseline: docs/process/lifecycle-registry-baseline.json
-  deprecated_ids: []
+  deprecated_ids: [stage.tactical-design, work-unit.tactical-design, gate.tactical-design-approved, artifact.tactical-design, evidence.tactical-design-review]
 stages:
 - id: stage.harness-entry
   name: Harness 入口
   goal: 校验仓库身份、上游输入、影响面和实现仓库上下文。
   exit_criteria: 上游输入版本当前，影响面、项目根、分支、写入范围和验证命令可解释。
-- id: stage.tactical-design
-  name: DDD 战术设计
-  goal: 将已确认的战略领域输入细化为可实现、可验证的战术模型。
-  exit_criteria: Tactical Design Contract 已批准；无领域影响时已记录 not-applicable 及原因。
 - id: stage.slice-contract
   name: Slice Contract
-  goal: 将战术设计和冻结契约编译为一个跨前后端测试的实现合同。
+  goal: 将当前前端工程设计、条件化后端交付和冻结契约编译为前端垂直切片实现合同。
   exit_criteria: 合同版本当前、四个角色分区完整、写路径和验证命令明确，且就绪公式满足。
 - id: stage.slice-implementation
   name: 垂直切片实现
@@ -40,9 +35,9 @@ evidence:
 - id: evidence.upstream-input-check
   name: 上游输入校验结果
   description: Spec、战略设计、原型、OpenAPI、数据架构和工程约束的版本与批准状态。
-- id: evidence.tactical-design-review
-  name: DDD 战术设计评审证据
-  description: 聚合、Entity、Value Object、行为、不变量、状态、一致性、Gateway、持久化和测试 seam 的评审结果。
+- id: evidence.frontend-engineering-design-review
+  name: 前端工程设计评审证据
+  description: 组件边界、状态与交互、API 消费、视觉基线和前端测试 seam 的评审结果。
 - id: evidence.architecture-decision
   name: 架构决策证据
   description: API、数据、跨边界和高风险架构取舍的可追溯决策。
@@ -79,17 +74,10 @@ gates:
   trigger: 每次进入 Harness。
   evidence:
   - evidence.repository-identity-check
-- id: gate.tactical-design-approved
-  name: Tactical Design 批准
-  stage: stage.tactical-design
-  trigger: 存在领域行为、聚合、状态、不变量、一致性、事件、Gateway 或持久化影响。
-  evidence:
-  - evidence.tactical-design-review
-  - evidence.approval-record
 - id: gate.high-risk-architecture-confirmed
   name: 高风险架构确认
-  stage: stage.tactical-design
-  trigger: 存在不可逆或跨边界高风险架构取舍。
+  stage: stage.frontend-engineering-design
+  trigger: 存在不可逆或跨边界的前端架构取舍。
   evidence:
   - evidence.architecture-decision
   - evidence.approval-record
@@ -133,11 +121,11 @@ artifacts:
 - id: artifact.upstream-inputs
   name: 上游输入包
   stage: stage.harness-entry
-  trigger: 进入战术设计前。
-- id: artifact.tactical-design
-  name: DDD 战术设计
-  stage: stage.tactical-design
-  trigger: 存在领域行为或战术 DDD 影响。
+  trigger: 进入前端工程设计前。
+- id: artifact.frontend-engineering-design
+  name: 前端工程设计
+  stage: stage.frontend-engineering-design
+  trigger: 存在 UI 或前端工程影响。
 - id: artifact.api-boundary
   name: API 边界
   stage: stage.slice-contract
@@ -181,16 +169,10 @@ work_units:
   input: yss-project.yaml、CONTEXT.md 和已确认的上游输入。
   output: 影响面、仓库上下文和上游输入证据。
   completion: 身份、输入版本和写入边界可解释。
-- id: work-unit.tactical-design
-  name: DDD 战术设计
-  scope: project-instance
-  input: Spec、战略设计、状态矩阵、API / 数据约束和工程约束。
-  output: Tactical Design Contract、架构决策和测试 seam。
-  completion: 战术模型已批准，或无领域影响已记录 not-applicable。
 - id: work-unit.slice-contract
   name: Slice Contract 编译与批准
   scope: project-instance
-  input: 当前上游资产、Tactical Design、API / 数据 / UI 影响和实现仓库登记。
+  input: 当前上游资产、前端工程设计、条件化 Backend Delivery、API / 数据 / UI 影响和实现仓库登记。
   output: 当前版本 Slice Implementation Contract 和四角色任务包草案。
   completion: 合同通过校验并满足 ready-for-agent 公式。
 - id: work-unit.slice-implementation

@@ -18,14 +18,16 @@
 | 数字人角色 | `docs/agents/digital-human-roles.yaml` 中定义的四类专业 Agent 身份：架构、前端、后端和测试。 | — | 不要恢复需求、产品、商务或按平台拆分的旧角色。 |
 | 当前工作区入口 | 只消费当前仓库根的 `yss-project.yaml` 与 `AGENTS.md`。 | — | 不要把父目录、兄弟 submodule 或其他模板仓的入口文件当作本仓路由。 |
 | Harness Orchestrator | 负责 Harness Agent 入口、影响面、合同、任务包、状态转移、证据汇合和重路由的系统编排组件。 | — | 不计入四类研发角色；不写业务代码，不替专业 Agent 做领域决策。不要称为「主控数字人」。 |
-| DDD Tactical Design Contract | 由 `role.architecture-agent` 将批准的上游 Spec / 战略设计细化出的聚合、行为、不变量、状态、一致性、Gateway、API 和数据边界合同。 | — | 不等同于实现代码或 OpenAPI Freeze；必须经测试 Agent 评审。 |
-| Harness Agent Contract | `harness-agent-contract-v1`，定义四角色协作、生命周期状态、执行态、Slice Contract 分区、就绪公式和重路由规则。 | — | 当前分支直接替换旧编排合同，不设 v2 或并行旧入口。 |
+| Frontend Strategic Preflight | 前端在工程设计前对 Handoff 路由、Context、视觉基线与源规则追踪执行的战略输入核验合同。 | — | `ready_for_agent` 固定为 `false`；仅允许准备前端工程设计草案。 |
+| Frontend Engineering Design | `role.architecture-agent` 基于战略预检、视觉基线及条件化 Backend Delivery 形成的组件、状态、交互、API 消费与测试边界设计。 | — | 不包含本地 Tactical DDD，也不授权实现。 |
+| Backend Delivery | 后端消费者按战略路由交付的冻结接口、Slice Contract、构建部署与真实版本验证证据。 | — | 仅在 Backend、API 或 Data 有影响时强制；UI-only 使用有证据的 `backend-not-applicable`。 |
+| Harness Agent Contract | `harness-frontend-contract-v1`，定义前端专职角色协作、生命周期状态、执行态、Slice Contract 分区、就绪公式和重路由规则。 | — | 不恢复本地 Tactical Design 阶段或并行旧入口。 |
 | 脚手架架构选择 | 新建后端工程在受控生成合同编译前，由 Harness Orchestrator 给出 `domain-driven` / `layered-mvc` 推荐并由用户逐项目确认的工程基线决策。 | — | 不是新增生命周期门禁；生成器不代替用户选择，本体默认不等于子项目静默继承。 |
 | 角色配置 | 某数字人角色的关注阶段、技能包、可起草产物和禁止事项。 | — | 不是独立编排器，也不含平台群聊人数。 |
 | 生命周期会签 | 指定数字人或生物人关闭 `gate.*` / 独立审查并写入 `evidence.approval-record`。 | — | 不是运行时副作用审批。会签人由 `docs/agents/digital-human-roles.yaml` 的 `gate_policy` 指定。起草者不得会签自己起草的资产。`paused-human-gate` 表示等待该会签人，不是必须生物人。 |
 | 运行时副作用审批 | 对发消息、改生产、付款、删数据等工具动作的账号级确认。 | — | 点 Allow 不等于门禁已批准或可发布。避免只称「Grok 平台审批」。 |
 | Ticket 状态 | Tracker 五态：`needs-triage`、`needs-info`、`ready-for-agent`、`ready-for-human`、`wontfix`。 | — | 不要称为数字人角色或「标准角色」；不要与合同状态混用。 |
-| 合同状态 | 战术设计合同与 Slice Contract 等资产状态：`draft`、`ready-for-human`、`approved`、`blocked`、`stale`、`drift`、`new_impacts`、`not-applicable`。 | — | 不要与 Ticket 五态混用。`ready-for-human` 出现在合同和 Ticket 时，以所在资产类型为准。 |
+| 合同状态 | 前端战略预检、工程设计与 Slice Contract 等资产状态：`draft`、`ready-for-human`、`approved`、`blocked`、`stale`、`drift`、`new_impacts`、`not-applicable`。 | — | 不要与 Ticket 五态混用。`ready-for-human` 出现在合同和 Ticket 时，以所在资产类型为准。 |
 | 阶段协作组 | 某阶段需要共同可见会签的逻辑成员集合。 | — | 不是某个产品的群聊；平台人数上限只写在对应 `runtimes`。 |
 | 需求经理（已退役） | 已退役旧职称。Discovery / Spec 语言由批准的上游输入进入 Harness，不由本仓角色表持有。 | — | 禁止当作当前 `role.*` 或会签人。 |
 | 产品经理（已退役） | 已退役旧职称。产品优先级与原型确认不由本仓四角色持有。 | — | 禁止当作当前 `role.*` 或会签人。 |
@@ -43,7 +45,7 @@
 | Ticket | 在追踪平台上承载功能生命周期或可实现工作单元的通用追踪对象。 | — | GitHub Issues / GitLab Issues 是具体平台对象名称；领域资产统一称为 Ticket。 |
 | 功能父 Ticket | 汇总一个功能从 Spec 到契约冻结的阶段状态、资产链接、审查结论和阻塞项的 Ticket。 | — | 不作为 Agent 直接实现的垂直切片。 |
 | 垂直切片 Ticket | 契约冻结后生成的可独立验证实现单元，记录范围、阻塞关系、验收标准和验证证据。 | — | 只有通过必要门禁并具备直接实现条件时才能标记 `ready-for-agent`。 |
-| `ready-for-human` | 表示 Spec、设计、契约草案或其他资产仍需会签（指定数字人或生物人）。 | — | 此状态不表示可以直接进入实现；也不等于某个数字人角色。出现在 Ticket 时属于 Ticket 五态；出现在战术设计合同时属于合同状态。 |
+| `ready-for-human` | 表示 Spec、设计、契约草案或其他资产仍需会签（指定数字人或生物人）。 | — | 此状态不表示可以直接进入实现；也不等于某个数字人角色。出现在 Ticket 时属于 Ticket 五态；出现在工程设计或 Slice Contract 时属于合同状态。 |
 | `ready-for-agent` | 表示垂直切片已通过必要门禁并具备直接实现条件的流程状态。 | — | 不得用于 Spec 初稿、原型、OpenAPI Draft 或其他未冻结资产。 |
 | OpenAPI Draft | review-only 的 OpenAPI 3.1 契约草案。 | — | Freeze 前不得作为前后端稳定实现契约。 |
 | OpenAPI Freeze | 已通过评审、可作为前后端实现和契约测试输入的 OpenAPI 3.1 契约。 | — | Freeze 后变更必须回到 API 影响分析和设计审查。 |
@@ -88,11 +90,11 @@
 | 实现仓库 | 承载前端、后端或其他运行时代码及其 Git、CI、MR / PR、测试命令和发布流水线的仓库。 | — | 不要把实现仓库的源码所有权混入研发管理仓库。 |
 | Git 子模块分层接入 | 将前端 / 后端实现仓以 Git submodule（gitlink，mode `160000`）挂到 `project-instance` 的 `apps/` 布局下，并登记 `repository_scope: git-submodule`。 | — | 不得与 `harness-apps` 同源 monorepo 或无 gitlink 的 `external-repository` 混用；禁止把实现源码复制进 Harness 冒充 submodule。 |
 | 跨仓库契约变更 | 需要两个或多个独立仓库协同实现、验证和按顺序发布的共享契约变化。 | — | 任一参与仓库未完成契约对齐和集成验证时，不得单独声称整体可发布。 |
-| 模板源仓库（`template-source`） | 承载可复用 Harness / 模板权威资产及其演进规则的仓库身份。本仓是 Harness Agent 五阶段模板源。 | — | 只管理可复用模板，不承载某个具体产品的研发生命周期资产。不要把仍使用旧八阶段入口的父目录或其他 submodule 当作本仓路由。 |
+| 模板源仓库（`template-source`） | 承载可复用 Harness / 模板权威资产及其演进规则的仓库身份。本仓是前端专职 Harness 五阶段模板源。 | — | 只管理可复用模板，不承载某个具体产品的研发生命周期资产。不要把父目录或其他 profile 的生命周期当作本仓活动路由。 |
 | 模板实例仓库（`project-instance`） | 由模板初始化后生成、承载某个具体产品研发生命周期资产的仓库身份。 | — | 不作为通用流程模板的权威来源。 |
 | 模板实例分发面 | 模板源中应随 CLI 快照进入 `project-instance` 的共享生命周期、模板、用户指南和验证资产集合。 | — | 不包含模板源审查、研究、发布路线、源仓库专属 ADR 或源仓库 LLM Wiki 编译树。本仓权威清单为 `.template-source/distribution/template.manifest.json`。 |
-| Harness Profile | 某个 Harness 模板源的受众、允许工作单元、禁止产物、上游输入和实例化 CLI 边界的机器可读配置。 | — | 不是角色表，也不替代生命周期注册表。本仓 `profile_id` 为 `harness.dev-agent-slice`。 |
-| 开发落地 Harness CLI | 将本仓五阶段 Harness 快照为 `project-instance` 的外部 npm CLI。 | — | 包名为 `create-yss-harness-dev`，入口 `npm create yss-harness-dev`。不要与全生命周期 CLI `create-yss-spec` 混用。 |
+| Harness Profile | 某个 Harness 模板源的受众、允许工作单元、禁止产物、上游输入和实例化 CLI 边界的机器可读配置。 | — | 不是角色表，也不替代生命周期注册表。本仓 `profile_id` 为 `harness.frontend-delivery`。 |
+| 前端落地 Harness CLI | 将本仓前端专职 Harness 快照为 `project-instance` 的外部 npm CLI。 | — | 包名为 `create-yss-harness-frontend`；不要与全生命周期 CLI 或 dev 综合模板混用。 |
 | 模板源治理区 | 仅供 `template-source` 使用、保存审查证据、研究记录、跨仓契约、发布路线、源仓库治理决策和源仓库 LLM Wiki 编译树的归档区域。 | — | 不随 CLI 分发；不等于产品实例的研发管理资产。`wiki-root` 为 `.template-source/wiki`。 |
 | 仓库身份清单 | 显式声明仓库身份和清单结构版本的机器可读资产。 | — | 不承载项目名称、团队规模、Tracker 或其他易变业务配置。 |
 

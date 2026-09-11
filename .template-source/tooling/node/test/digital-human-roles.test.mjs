@@ -60,7 +60,7 @@ test("approval records reject the wrong signer and approved countersign gates ne
   const rolesDoc = loadDigitalHumanRoles();
   assert.throws(() => validateApprovalRecord({
     schema_version: 1,
-    gate_id: "gate.tactical-design-approved",
+    gate_id: "gate.fresh-verification-passed",
     decision: "approved",
     actor_kind: "digital-human",
     role_id: "role.frontend-agent",
@@ -79,7 +79,7 @@ test("approval records reject the wrong signer and approved countersign gates ne
   assert.doesNotThrow(() => assertCheckpointApprovals({ gates: {} }, repositoryRoot));
   assert.throws(() => assertCheckpointApprovals({
     gates: {
-      "gate.tactical-design-approved": {
+      "gate.fresh-verification-passed": {
         status: "approved",
         reason: "signed",
         evidence_refs: []

@@ -61,11 +61,10 @@ orchestrator:
   title: Harness Agent 生命周期编排器
   stages:
   - stage.harness-entry
-  - stage.tactical-design
+  - stage.frontend-engineering-design
   - stage.slice-contract
   - stage.slice-implementation
   - stage.verification
-  - stage.frontend-engineering-design
   default_dual_hat: []
   draft_artifact_ids:
   - artifact.impact-assessment
@@ -95,17 +94,16 @@ roles:
   title: 前端工程架构 Agent
   stages:
   - stage.harness-entry
-  - stage.tactical-design
+  - stage.frontend-engineering-design
   - stage.slice-contract
   - stage.verification
-  - stage.frontend-engineering-design
   draft_artifact_ids:
-  - artifact.tactical-design
+  - artifact.frontend-engineering-design
   - artifact.api-boundary
   - artifact.data-architecture
   - artifact.slice-implementation-contract
   owned_evidence_ids:
-  - evidence.tactical-design-review
+  - evidence.frontend-engineering-design-review
   - evidence.architecture-decision
   core_skills:
   - architecture-agent
@@ -188,11 +186,10 @@ roles:
   kind: digital-human
   title: 独立测试与验证 Agent
   stages:
-  - stage.tactical-design
+  - stage.frontend-engineering-design
   - stage.slice-contract
   - stage.slice-implementation
   - stage.verification
-  - stage.frontend-engineering-design
   draft_artifact_ids:
   - artifact.test-strategy
   - artifact.test-seams
@@ -214,18 +211,11 @@ roles:
   - yss-ddd-scaffold-generator
   - yss-layered-mvc-scaffold-generator
   - implement
-  description: 从战术设计和 Slice Contract 建立测试 seam、fixture 和失败基线，独立执行契约、集成、E2E 和 Fresh Verification；不修改产品范围、领域规则或生产实现来掩盖失败。
+  description: 从前端工程设计和 Slice Contract 建立测试 seam、fixture 和失败基线，独立执行契约、集成、E2E 和 Fresh Verification；不修改产品范围、领域规则或生产实现来掩盖失败。
 stage_groups:
 - id: group.harness-entry
   name: Harness 入口
   stage: stage.harness-entry
-  members:
-  - role.harness-orchestrator
-  - role.architecture-agent
-  - role.test-agent
-- id: group.tactical-design
-  name: DDD 战术设计
-  stage: stage.tactical-design
   members:
   - role.harness-orchestrator
   - role.architecture-agent
@@ -280,16 +270,12 @@ gate_policy:
   - gate.openapi-freeze-confirmed
   - gate.merge-approved
   digital_human_review:
-  - gate: gate.tactical-design-approved
-    drafter: role.architecture-agent
-    countersigners:
-    - role.test-agent
   - gate: gate.fresh-verification-passed
     drafter: role.test-agent
     countersigners:
     - role.architecture-agent
   digital_human_review_work_units:
-  - work_unit: work-unit.tactical-design
+  - work_unit: work-unit.frontend-engineering-design
     countersigners:
     - role.test-agent
     implementer_must_differ: true

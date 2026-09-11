@@ -64,23 +64,22 @@ owner: ai
 |----------|-------------|-------------|-------------|------------------|
 |  |  |  |  | 是 / 否 |
 
-## 8. Tactical DDD Check（轻量）
+## 8. 前端工程设计检查
 
-> 本节嵌入系统概要设计 / 数据架构，不新增独立阶段。只有当聚合边界、状态机、一致性或持久化映射复杂到无法在本节说明时，才升级为 `docs/.scratch/<feature>/architecture/<feature>-tactical-design.md`。
-> 战术设计优先引用结构化 `tactical-design` contract（含 `version`、`digest` 和 `evidence.tactical-design-review`）；独立文档只承载复杂场景的展开，不成为第二套事实源。
+> 本节消费已验证的 Strategic Preflight、视觉基线和条件化 Backend Delivery。后端、API 或 Data 有影响时只引用真实后端交付；UI-only 时记录带影响引用、原因和证据的 `backend-not-applicable`。本仓不执行 Tactical DDD。
 
-| 限界上下文 | 聚合根 | 业务不变量 | Entity / Value Object | 一致性边界 | Gateway / Repository | 主要测试 seam |
-|------------|--------|------------|-----------------------|------------|----------------------|----------------|
-|  |  |  |  | 单聚合事务 / 跨聚合最终一致 / 只读查询 |  |  |
+| 页面 / 组件边界 | 状态与交互 | API 消费 | 视觉基线 case | 错误与恢复 | 主要测试 seam |
+|-----------------|------------|----------|-----------------|------------|----------------|
+|  |  |  |  |  |  |
 
-战术设计就绪检查：
+前端工程设计就绪检查：
 
-- [ ] 聚合根和聚合内部不变量已明确，且不以 ER 关系替代聚合边界。
-- [ ] Entity / Value Object 的身份、不可变性和生命周期已说明。
-- [ ] 事务一致性、并发、幂等、补偿或最终一致策略已说明。
-- [ ] Repository / Gateway 接口位于 Domain，Infrastructure 只做实现。
-- [ ] OpenAPI schema 不直接暴露内部聚合或持久化表结构。
-- [ ] 领域行为测试、Application 用例测试、契约测试 seam 已明确。
+- [ ] Strategic Preflight 当前且已通过，`ready_for_agent` 仍为 `false`。
+- [ ] 组件、状态、交互、权限可见性与恢复路径已明确。
+- [ ] Backend/API/Data 有影响时已绑定匹配的 Backend Delivery 收据与版本探测证据。
+- [ ] UI-only 时 `backend-not-applicable` 已绑定影响引用、原因和证据。
+- [ ] API schema 未被前端自行改写，接口差异已回交上游。
+- [ ] 组件测试、契约测试和关键交互 E2E seam 已明确。
 
 ## 9. 非功能需求
 

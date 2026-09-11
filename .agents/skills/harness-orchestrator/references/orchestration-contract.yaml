@@ -46,17 +46,16 @@ entry:
   - missing-context
   - invalid-repository-mode
   - stale-upstream-input
-tactical_design:
+frontend_engineering_design:
   required_for_impacts:
-  - domain_behavior
-  - aggregate
-  - invariant
-  - state_machine
-  - consistency
-  - domain_event
-  - gateway_boundary
-  - persistence_mapping
-  no_impact: not-applicable-with-reason; new backend domain impact returned upstream
+  - frontend
+  - ui
+  required_inputs:
+  - strategic-preflight
+  - visual-baseline
+  - source-rule-traceability
+  backend_dependency: conditional-on-backend-api-data-impact
+  no_backend_impact: backend-not-applicable-with-impact-reference-reason-and-evidence
   owner: role.architecture-agent
   review_by: role.test-agent
 slice_contract:
@@ -81,21 +80,6 @@ work_unit_routes:
     - yss-research
     applies_when: harness_entry
     not_applicable_reason: harness_context_already_verified
-  work-unit.tactical-design:
-    primary_skill: architecture-agent
-    supporting_skills:
-    - domain-modeling
-    - codebase-design
-    - yss-research
-    - tdd
-    skills:
-    - architecture-agent
-    - domain-modeling
-    - codebase-design
-    - yss-research
-    - tdd
-    applies_when: legacy-reference-only-not-in-frontend-profile
-    not_applicable_reason: no_domain_behavior_or_tactical_design_impact
   work-unit.slice-contract:
     primary_skill: harness-orchestrator
     supporting_skills:
@@ -194,7 +178,7 @@ work_unit_routes:
 readiness:
   all_of:
   - upstream_inputs_current_and_approved
-  - tactical_design_current_or_not_applicable_recorded
+  - frontend_engineering_design_current_and_approved
   - api_freeze_or_no_api_impact_recorded
   - data_architecture_or_no_data_impact_recorded
   - ui_inputs_or_no_ui_impact_recorded
@@ -209,7 +193,6 @@ parallelism:
   verifier_must_differ_from_worker: true
 gates:
   architecture:
-  - gate.tactical-design-approved
   - gate.slice-contract-approved
   implementation:
   - gate.slice-ready-for-agent

@@ -20,5 +20,5 @@ description: 在战略与后端交付联合接收通过后，定义前端工程�
 - 不写生产前端、后端或测试实现。
 - 不把数据库表、HTTP 链路或菜单结构直接当作聚合边界。
 - 不静默改变 Spec、OpenAPI Freeze、状态机或数据模型；发现变化时返回 `new_impacts` / `drift`。
-- 不自行批准战术设计或设置 `ready-for-agent`。
-- 不把 Archify 图当作 Tactical Design Contract、ADR、OpenAPI、Slice Contract 或会签结论。
+- 不执行本地 Tactical DDD，不预选后端 DDD / MVC，也不设置 `ready-for-agent`。
+- 不把 Archify 图当作 Frontend Engineering Design、ADR、OpenAPI、Slice Contract 或会签结论。

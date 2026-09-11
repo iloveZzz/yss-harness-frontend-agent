@@ -4,7 +4,7 @@ import { lifecycleTransitionContract, validateImplementationEntry, validateNextR
 
 const flags = [
   "upstream_inputs_current_and_approved",
-  "tactical_design_current_or_not_applicable_recorded",
+  "frontend_engineering_design_current_and_approved",
   "api_freeze_or_no_api_impact_recorded",
   "data_architecture_or_no_data_impact_recorded",
   "ui_inputs_or_no_ui_impact_recorded",

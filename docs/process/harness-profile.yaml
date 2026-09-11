@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 profile_id: harness.frontend-delivery
 status: active
 name: 前端专职交付 Harness
@@ -15,6 +15,12 @@ audience:
 lifecycle:
   repository_modes:
   - project-instance
+  allowed_stages:
+  - stage.harness-entry
+  - stage.frontend-engineering-design
+  - stage.slice-contract
+  - stage.slice-implementation
+  - stage.verification
   entry_work_unit: work-unit.harness-entry
   allowed_work_units:
   - work-unit.harness-entry
@@ -36,13 +42,16 @@ upstream:
   discovery_is_default: false
   strategic_design_handoff:
     schema_ref: docs/process/schemas/strategic-design-handoff.schema.json
-    required_schema_version: 3
+    accepted_schema_versions: [3, 4]
+    current_schema_version: 4
     ui_impact_requires_visual_baseline_schema_version: 1
     stale_baseline_policy: block-and-reroute
   compatibility_skills:
   - grill-with-docs
   - to-spec
   - to-tickets
+handoff:
+  consumer_capabilities: [frontend-engineering-design]
 instantiation:
   cli_package: create-yss-harness-frontend
   npm_create: npm create yss-harness-frontend@latest
@@ -60,7 +69,9 @@ execution:
   terminal_conclusion: frontend-accepted
   business_acceptance_owner: registered-coordinating-project
 frontend_delivery:
-  required: true
+  mode: conditional-by-route
+  strategic_preflight: required
+  backend_required_when_any: [api, backend, data]
   contract_ref: docs/process/frontend-backend-delivery.md
   verifier: scripts/verify-frontend-delivery
   recheck:
@@ -69,8 +80,9 @@ frontend_delivery:
   - compile
   - implementation
   - verification
-  inputs_verified_allows: plan-and-contract-preparation
-  implementation_requires: approved-current-slice-contract-and-existing-readiness
+  preflight_allows: frontend-engineering-design-draft
+  final_acceptance_requires: route-consistent-backend-binding-or-not-applicable
+  implementation_requires: approved-current-slice-contract-and-final-acceptance
 skill_scope:
   policy: local-workflow-only
   retired_local_skills:

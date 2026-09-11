@@ -42,7 +42,7 @@ Registry、角色配置、公开清单、投影和 lock 必须使用新的 canon
 - 前端工程设计：`architecture-agent` 执行 `frontend-engineering-design`；领域模型变化回交后端或战略方
 - 垂直切片合同：`yss-implementation-contract-compiler` 编译 Slice Implementation Contract 草案，由 Harness Orchestrator 批准
 
-遇到旧调用或旧阶段资产时返回 `blocked`，引用 `harness-agent-contract-v1`，由 Orchestrator 重新建立当前版本的联合上游输入、前端工程计划和 Slice Implementation Contract。不得创建同名兼容目录，也不得恢复需求、产品、商务或项目管理角色。
+遇到旧调用或旧阶段资产时返回 `blocked`，引用 `harness-frontend-contract-v1`，由 Orchestrator 重新建立当前版本的联合上游输入、前端工程计划和 Slice Implementation Contract。不得创建同名兼容目录，也不得恢复需求、产品、商务或项目管理角色。
 
 ## yss-stage-decision
 
@@ -53,7 +53,7 @@ Registry、角色配置、公开清单、投影和 lock 必须使用新的 canon
 - 正式编排入口：`harness-orchestrator` 的 `harness-entry`
 - 前端工程设计：`architecture-agent` 执行 `frontend-engineering-design`；领域模型变化回交后端或战略方
 
-当前流程从已批准的上游 Spec / 战略设计进入 Harness Entry。遇到旧 Discovery / 战略设计调用或旧阶段资产时返回 `blocked`，引用 `harness-agent-contract-v1` 并交回 Orchestrator。不得创建同名兼容目录，也不得恢复旧阶段决策包为现行路由。
+当前流程从已批准的上游 Spec / 战略设计进入 Harness Entry。遇到旧 Discovery / 战略设计调用或旧阶段资产时返回 `blocked`，引用 `harness-frontend-contract-v1` 并交回 Orchestrator。不得创建同名兼容目录，也不得恢复旧阶段决策包为现行路由。
 
 ## 前端专职技能裁剪（2026-09-08）
 

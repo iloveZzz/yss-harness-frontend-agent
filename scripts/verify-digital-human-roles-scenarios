@@ -59,7 +59,7 @@ overlap.roles.find((role) => role.id === "role.frontend-agent").forbidden_skills
 mustFail(overlap, /重叠/, "启用且禁止同一技能");
 
 const selfSign = clone();
-selfSign.gate_policy.digital_human_review[0].countersigners = ["role.architecture-agent"];
+selfSign.gate_policy.digital_human_review[0].countersigners = [selfSign.gate_policy.digital_human_review[0].drafter];
 mustFail(selfSign, /起草者不得会签自己/, "起草者自签");
 
 const mergeByBot = clone();
@@ -75,7 +75,7 @@ missingSigners.gate_policy.digital_human_review[0].countersigners = [];
 mustFail(missingSigners, /countersigners/, "单审门禁缺 countersigners");
 
 const stringReview = clone();
-stringReview.gate_policy.digital_human_review = ["gate.tactical-design-approved"];
+stringReview.gate_policy.digital_human_review = ["gate.fresh-verification-passed"];
 mustFail(stringReview, /必须是含 gate/, "单审门禁仍用字符串名单");
 
 const missingGeneric = clone();
@@ -88,7 +88,7 @@ const rolesDoc = loadDigitalHumanRoles();
 try {
   validateApprovalRecord({
     schema_version: 1,
-    gate_id: "gate.tactical-design-approved",
+    gate_id: "gate.fresh-verification-passed",
     decision: "approved",
     actor_kind: "digital-human",
     role_id: "role.frontend-agent",

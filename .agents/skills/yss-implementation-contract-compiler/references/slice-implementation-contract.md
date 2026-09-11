@@ -14,7 +14,7 @@ slice_contract:
   status: draft
   lifecycle_refs:
     upstream_inputs:
-    tactical_design:
+    frontend_engineering_design:
     api_freeze_or_no_impact:
     data_architecture_or_no_impact:
     ui_inputs_or_no_impact:
@@ -45,11 +45,11 @@ slice_contract:
     full_reroute_triggers: []
   architecture:
     frontend_engineering_design_ref:
-    tactical_design_version:
-    aggregate_refs: []
-    invariant_refs: []
-    state_behavior_refs: []
-    gateway_boundary_ref:
+    backend_delivery_ref:
+    backend_delivery_version:
+    component_boundary_refs: []
+    state_and_interaction_refs: []
+    api_consumption_ref:
     decision_refs: []
   frontend:
     status: not-applicable
@@ -102,7 +102,7 @@ slice_contract:
 
 ## 就绪与重路由
 
-只有上游输入、战术设计 / not-applicable、API / 数据 / UI 影响、实现仓库、写路径、测试 seam、验证命令和证据均满足，且不存在 blocked / stale / drift / violation / new_impacts 时，Orchestrator 才能把合同和切片设置为 ready-for-agent。
+只有上游输入、前端工程设计、条件化 Backend Delivery / `backend-not-applicable`、API / 数据 / UI 影响、实现仓库、写路径、测试 seam、验证命令和证据均满足，且不存在 blocked / stale / drift / violation / new_impacts 时，Orchestrator 才能把合同和切片设置为 ready-for-agent。
 
 API schema、数据库 schema、状态机、Visual Baseline 版本或 digest、聚合、不变量、Gateway、写路径、测试 seam、验证命令、Registry digest 或 Compiler digest 发生实质变化时，当前合同变为 stale，所有下游任务暂停并递增 contract_version；重新编译后仍须由 Orchestrator 再批准。UI 切片只消费 `visual_baseline_case_ids` 指定的图片；Agent 必须先读 manifest 与语义引用，不得按目录 glob 猜测图片含义。
 
@@ -110,4 +110,4 @@ API schema、数据库 schema、状态机、Visual Baseline 版本或 digest、�
 
 实现任务包使用 execution_state: Worker；测试 Agent 的独立 Review / Verifier 必须使用不同 actor_id。结果必须符合 workflow-execution-result-v1，并记录实际命令、退出码、执行时间和证据引用。
 
-前端专职合同仅填写页面工程、组件、状态管理、API 消费与测试边界；示例中旧 DDD 字段只为历史合同阅读保留，不是前端必填项。来自导入包的承接使用前端联合接收核验，不生成后端技术设计。
+前端专职合同仅填写页面工程、组件、状态管理、API 消费与测试边界。来自导入包的承接使用前端联合接收核验，不生成或执行后端技术设计。

@@ -6,6 +6,7 @@
     "artifact.checkpoint",
     "artifact.data-architecture",
     "artifact.fresh-verification",
+    "artifact.frontend-engineering-design",
     "artifact.frontend-implementation-plan",
     "artifact.impact-assessment",
     "artifact.openapi-draft",
@@ -20,6 +21,7 @@
     "evidence.checkpoint-and-rollback",
     "evidence.contract-approval",
     "evidence.fresh-verification",
+    "evidence.frontend-engineering-design-review",
     "evidence.frontend-verification",
     "evidence.repository-identity-check",
     "evidence.tactical-design-review",
@@ -52,5 +54,5 @@
     "work-unit.tactical-design",
     "work-unit.verification"
   ],
-  "semantic_sha256": "5cfc72e4245a8513ad5f026ce5d5221eafe8327ce7857ab79ccfe11ce2c665fe"
+  "semantic_sha256": "c0d5a37a6ef97d63542019445a7f61decbe310dc04bc196067fd361e27213118"
 }

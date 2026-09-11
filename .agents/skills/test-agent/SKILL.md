@@ -1,6 +1,6 @@
 ---
 name: test-agent
-description: 从 DDD 战术设计和 Slice Contract 建立测试 seam，独立验证前后端垂直切片并输出 Fresh Verification 证据。
+description: 从前端工程设计和 Slice Contract 建立测试 seam，独立验证前端垂直切片及后端交付绑定并输出 Fresh Verification 证据。
 ---
 
 # Test Agent
@@ -11,7 +11,7 @@ description: 从 DDD 战术设计和 Slice Contract 建立测试 seam，独立�
 
 ## 交付内容
 
-- Domain / Application / API / component / integration / E2E 测试 seam 和 fixture。
+- API / component / integration / E2E 测试 seam 和 fixture；后端证据只按 Backend Delivery 绑定验证。
 - 失败基线、回归测试、契约一致性检查和关键流程验证。
 - Fresh Verification：实际命令、退出码、执行时间、stdout / stderr 引用和结论。
 - 独立 Review / Verifier 结果；覆盖率不足或关键流程未验证时阻断。
