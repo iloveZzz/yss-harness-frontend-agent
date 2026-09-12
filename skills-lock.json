@@ -438,7 +438,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/implementation-repo-onboarding/SKILL.md",
-        "effectiveHash": "2083358c6ed57dbae7b94c2e52f91f9e9103168ad14f4b296ac084d8d9ac4ff3",
+        "effectiveHash": "905e97faee589bcc283cc299a05e795d75a3028440f7059f0115ebe80a266b3c",
         "targets": [
           ".agents/skills",
           ".claude/skills",
@@ -1131,7 +1131,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/yss-implementation-contract-compiler/SKILL.md",
-        "effectiveHash": "48c22742c47fc1b26e90551b675637563f628f7e515d30ef095700d8932f95ee",
+        "effectiveHash": "b78963084f2d0e160065924cd63d6a9438921c3925f55a7c6528314cf93e8424",
         "targets": [
           ".agents/skills",
           ".claude/skills",
@@ -1176,7 +1176,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/yss-prototype-stage/SKILL.md",
-        "effectiveHash": "54095cd5617fc64b3b04c22ba8ee6df97ed159c861700deda2c6c0b67c7b9113",
+        "effectiveHash": "2fcc354a09a1f9cff27ac186a7af6dbc2462eb4ea775ab6fd0b4d89344ff76dd",
         "targets": [
           ".agents/skills",
           ".claude/skills",

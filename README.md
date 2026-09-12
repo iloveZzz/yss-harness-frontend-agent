@@ -12,16 +12,18 @@
 npx create-yss-harness-frontend@latest init --target-dir /absolute/path/to/project
 ```
 
-新 CLI 首版候选支持 init、attach、sync、update/upgrade。attach / sync 默认预览，`--apply` 才写入；旧实例不兼容。发布前可从 `create-yss-harness-frontend` 仓的 tgz 本地安装验收。仓内旧入口仅在新 npm 版本可安装且完成 smoke test 后退役，当前仍保留原行为。
+CLI 支持 init、attach、sync、diff、doctor、recover、prune 和 update/upgrade。attach / sync 默认预览，`--apply` 才写入；旧 repository-local 实例不自动转换。npm 状态以 registry 为准，候选包从 `create-yss-harness-frontend` 仓构建实际 tgz 验收。
 
-初始化只接受新目录，绑定本模板 profile、Git 提交和文件摘要；不会把已有通用、另一端或战略项目转换 profile。本入口随仓库提供，目前没有专用 npm 包。`--allow-working-tree` 只供模板维护验证，产出标为不可发布快照。
+初始化只接受新目录，绑定本模板 profile、Git 提交和文件摘要；不会把已有通用、另一端或战略项目转换 profile。工作树候选只供模板维护验证，不能当作发布快照。
 
 ## 维护与验收
 
 修改 canonical `.agents/skills` 后运行 `scripts/sync-skills`、`scripts/update-skill-lock` 和 `scripts/verify-template-fast`。共享接力工具由综合模板源同步，避免分别维护。同一业务切片须由统一管理方汇总战略、接口、部署及前端版本的端到端证据；本端完成不能替代整体业务验收。
 
-旧 `create-yss-harness-dev` 仍服务原通用项目。本专职模板尚不提供原地 sync/迁移；升级先生成同 profile 新目录，核对差异后迁移已登记资产，保留旧目录作为回滚点。
+既有 `create-yss-harness-dev` 实例按原固定版本维护。本家族 metadata v2 实例使用同家族 sync；跨家族和旧 repository-local 实例不自动迁移。
 
 ## 用户手册
 
-首次使用请从 [本仓手册](docs/user-guide/前端子项目用户手册.md) 开始；练习见 [设备借用贯穿案例](docs/user-guide/设备借用贯穿案例.md)，其他入口见 [索引](docs/user-guide/用户手册索引.md)。
+首次使用请从[本仓手册](docs/user-guide/前端子项目用户手册.md)开始；练习见[设备借用职责案例](docs/user-guide/设备借用贯穿案例.md)，全部入口见[索引](docs/user-guide/用户手册索引.md)。
+
+CLI 创建、接入、诊断、同步及恢复见 [CLI 使用说明](docs/user-guide/CLI使用说明.md)。

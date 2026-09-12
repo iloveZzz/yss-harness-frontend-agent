@@ -131,7 +131,7 @@ export function validateDistributionManifest(manifest = loadDistributionManifest
 export function validateInstantiationPointers(documents = {}) {
   const agents=documents.agents??read("AGENTS.md");
   const readme=documents.readme??read("README.md");
-  const guide=documents.guide??read("docs/user-guide/外部命令行工具实践指南.md");
+  const guide=documents.guide??read("docs/user-guide/CLI使用说明.md");
   if(!agents.includes(INSTANTIATION.cli_package))fail("AGENTS.md 必须声明专职初始化入口");
   if(isTemplateSource(ROOT)&&!readme.includes(`npx ${INSTANTIATION.cli_package}`))fail("README.md 必须提供专职 CLI 初始化命令");
   if(!guide.includes(INSTANTIATION.metadata_file))fail("初始化指南必须绑定本端 metadata");

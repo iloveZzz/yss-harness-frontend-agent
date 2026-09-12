@@ -17,6 +17,9 @@ description: 将已批准的前端工程设计和上游联合交付、冻结契�
 
 后端 DDD / MVC 技术设计、架构确认和脚手架由后端项目持有；本仓只读消费已冻结 API、联合交付与页面工程约束。两类战略交接合同均可导入，不为前端切片补造后端技术设计。
 
+
+接入与导出先按 `docs/process/delivery-preflight.md` 执行对应阶段只读预检；既有工程身份按 `docs/process/existing-backend-architecture.md` 读取原始证据，不补造生成器来源。无 UI 改动可承接当前确认的 `existing-ui-baseline`，新设计仍走原型；当前批准后仅允许登记与合同交集内的输出增量。
+
 ## 编译结果
 
 合同必须绑定一个 `slice-implementation-contract-v2`，包含 architecture、frontend、backend、testing 四个分区，并为前端、后端、测试任务包复制同一 contract_id / contract_version。

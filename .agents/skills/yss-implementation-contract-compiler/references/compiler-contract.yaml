@@ -6,6 +6,10 @@ backend_architecture:
   - engineering_baseline
   - repository_registration
   - manifest
+  evidence_loading: original-references-and-raw-sha256
+  existing_identity: {schema_version: 2, source_kind: existing-registration, profiles_source: existing_project_profiles}
+  generated_identity: preserve-original-generator-and-module-closure
+  existing_source_policy: fixed-input-and-approved-bounded-output
   required_identity_surfaces:
   - resolution
   - work_unit

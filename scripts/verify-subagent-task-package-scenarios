@@ -17,7 +17,7 @@ const maintenanceFile = path.join(ROOT, maintenanceRef);
 const createdScratch = !existsSync(path.join(ROOT, scratchDir));
 
 const contract = {
-  schema_version: 1,
+  schema_version: 2,
   contract_id: "slice-todo",
   contract_version: 1,
   slice_id: "todo",
