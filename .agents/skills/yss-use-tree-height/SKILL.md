@@ -1,6 +1,6 @@
 ---
 name: yss-use-tree-height
-description: Use when working with YTree that needs responsive height, virtual scrolling, or built-in search and the useTreeHeight hook is involved.
+description: "用 useTreeHeight 实现 YTree 独立滚动，修复搜索区、Tab 或抽屉切换后的高度。"
 ---
 
 # useTreeHeight 树组件高度计算 Hook

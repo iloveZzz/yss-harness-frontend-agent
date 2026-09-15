@@ -1,6 +1,6 @@
 ---
 name: yss-openapi-governance
-description: Use when consuming frozen YSS OpenAPI 3.1 contracts, validating JSON derivatives, or preparing frontend client generation; API changes return to the backend owner.
+description: "维护、校验、冻结或导出 YSS OpenAPI 3.1 设计合同；以冻结 YAML 生成受审查的 JSON。"
 ---
 
 # YSS OpenAPI Governance

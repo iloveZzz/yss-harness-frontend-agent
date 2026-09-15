@@ -1,6 +1,6 @@
 ---
 name: yss-use-table-height
-description: Use when working with YTable that needs responsive height, pagination, or a toolbar and the useTableHeight hook is involved.
+description: "用 useTableHeight 修复 YTable、YEditTable 自适应高度、双滚动条及分页或工具栏偏移。"
 ---
 
 # useTableHeight 表格高度计算 Hook

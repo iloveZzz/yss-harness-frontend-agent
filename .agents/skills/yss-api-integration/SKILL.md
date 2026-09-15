@@ -1,6 +1,6 @@
 ---
 name: yss-api-integration
-description: Guide AI to correctly use Orval-generated API clients in Vue 3 micro-applications. This skill must be used whenever the user needs backend API integration, including list queries, CRUD actions, detail loading, submit flows, or API refactoring. It covers type-safe API imports, request/response mapping, and especially standardized useRequest integration patterns (manual/run/runAsync, pagination parameters, unified error handling, loading state, and success callbacks).
+description: "在 Vue3 YSS UI 中对接 Orval API；核验生成方法、mutator、错误反馈、loading 与长整型精度。"
 ---
 
 # API 集成 Skill
