@@ -5,9 +5,8 @@ import { fileURLToPath } from 'node:url';
 
 export const FRONTEND = {
   'yss-ui': ['components', 'hooks', 'skills'],
-  'yss-components': ['components'],
   'yss-hook': ['hooks'],
-  'yss-page-module-development': ['components', 'hooks', 'skills'],
+  'yss-ui-business-page-generation': ['components', 'hooks', 'skills'],
   'yss-use-table-height': ['hooks'],
   'yss-use-tree-height': ['hooks']
 };

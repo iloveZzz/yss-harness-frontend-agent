@@ -150,7 +150,7 @@ skill_dependencies:
         when: lifecycle-document-output
       }
   yss-ui-business-page-generation:
-    - skill: yss-components
+    - skill: component-selection-imports
       type: context-conditional
       when: components
     - skill: yss-hook
@@ -162,6 +162,18 @@ skill_dependencies:
     - skill: yss-api-integration
       type: context-conditional
       when: api
+  yss-formily:
+    - skill: formily-foundation
+      type: context-required
+    - skill: formily-linkage-effects
+      type: context-conditional
+      when: formily-linkage
+    - skill: formily-mode-slot-detail
+      type: context-conditional
+      when: formily-mode-detail
+    - skill: formily-step-flow
+      type: context-conditional
+      when: formily-step-flow
   yss-api-integration:
     - skill: yss-openapi-governance
       type: context-conditional
@@ -536,13 +548,6 @@ skills:
     aliases: []
     impacts:
       - writing
-  - id: yss-antd-design
-    layer: specialist
-    maturity: supported
-    instance_default_discoverable: false
-    aliases: []
-    impacts:
-      - prototype
   - id: yss-api-integration
     layer: specialist
     maturity: supported
@@ -552,13 +557,6 @@ skills:
     impacts:
       - frontend
       - api
-  - id: yss-components
-    layer: specialist
-    maturity: supported
-    instance_default_discoverable: false
-    aliases: []
-    impacts:
-      - frontend
   - id: yss-design-system
     layer: core
     maturity: supported

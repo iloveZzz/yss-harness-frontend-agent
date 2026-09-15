@@ -4,9 +4,10 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { PROJECTION_ROOTS, ROOT } from "./lib/skill-supply-chain.mjs";
 
-const retired = ["yss-router", "yss-source-index"];
+const retired = ["yss-router", "yss-source-index", "yss-components"];
 const allowed = (relative) => relative === "docs/agents/skill-migrations.md"
   || relative.includes("/docs/agents/skill-migrations.md")
+  || relative.startsWith(".template-source/wiki/raw/")
   || relative.endsWith(".template-source/wiki/raw/skill-migrations.md")
   || relative.startsWith(".template-source/evidence/")
   || relative.includes("/.template-source/evidence/")
@@ -15,7 +16,12 @@ const allowed = (relative) => relative === "docs/agents/skill-migrations.md"
   || relative.endsWith("scripts/lib/skill-supply-chain.mjs")
   || relative.endsWith("scripts/lib/implementation-contract-compiler.mjs");
 
-const search = spawnSync("rg", ["-n", "--hidden", "--glob", "!.git/**", "--glob", "!.codegraph/**", "--glob", "!submodules/**", retired.join("|"), "."], {
+const retiredSkillPattern = [
+  "yss-router",
+  "yss-source-index",
+  "(?:`yss-components`|/yss-components/|(?:^|[\\[,])\\s*[\\\"']?yss-components[\\\"']?\\s*(?=[,\\]])|\\b(?:id|name|skill)\\s*:\\s*[\\\"']?yss-components[\\\"']?\\b)",
+].join("|");
+const search = spawnSync("rg", ["-n", "--pcre2", "--hidden", "--glob", "!.git/**", "--glob", "!.codegraph/**", "--glob", "!submodules/**", retiredSkillPattern, "."], {
   cwd: ROOT,
   encoding: "utf8"
 });

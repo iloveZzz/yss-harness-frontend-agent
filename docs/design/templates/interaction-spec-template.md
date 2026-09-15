@@ -10,7 +10,7 @@
 | 产品总体设计 / 功能架构 | `docs/.scratch/<feature>/design/<feature>-product-overview-design.md` | 必需；缺失时先返回产品总体设计阶段 |
 | 领域术语 | `CONTEXT.md` | 核心名词、状态和业务规则 |
 | Discovery | `docs/.scratch/<feature>/discovery/<feature>-discovery.md` | 可选 |
-| 原型阶段合同 / Product Design 路由 | `yss-prototype-stage -> product-design:index -> <focused skill>` | 必需；记录 `$get-context`、`$ideate`、`$prototype`、`$image-to-code` 或 `$url-to-code` |
+| 原型阶段合同 / 视觉来源 | `yss-prototype-stage`；`source_visual.kind=design-system` 或 `visual-reference` | 默认 DESIGN.md 规范直出；独立视觉稿才条件使用 Product Design focused skill |
 | 原型 / 线框图 | `<链接或导出图片路径>` | Excalidraw / Figma / Penpot / tldraw / Axure / Markdown |
 | 高保真 HTML 原型 | `docs/.scratch/<feature>/design/prototypes/index.html` | 低保真原型评审通过后补齐；必须使用 Ant Design v6；可由系统 / Agent 自动产出；产出后必须获得用户确认 |
 | 原型验证清单 | `docs/.scratch/<feature>/verification/prototype-evidence.yaml` | 记录实际 CLI / AntD 版本、CLI JSON 输出、浏览器验证和阻塞项 |

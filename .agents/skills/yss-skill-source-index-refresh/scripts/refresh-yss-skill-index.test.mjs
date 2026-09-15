@@ -12,7 +12,7 @@ test('updates exactly installed frontend skills without needing or creating back
   try {
     for (const skill of Object.keys(FRONTEND)) await mkdir(path.join(root, skill));
     const result = await refresh({skillsRoot:root, now:'2026-09-08T00:00:00Z'});
-    assert.equal(result.frontend, 6);
+    assert.equal(result.frontend, Object.keys(FRONTEND).length);
     assert.deepEqual((await readdir(root)).sort(), Object.keys(FRONTEND).sort());
     for (const file of result.files) assert.match(await readFile(path.join(root,file),'utf8'), /does not fetch or verify/);
     execFileSync(process.execPath, [fileURLToPath(new URL('./refresh-yss-skill-index.mjs',import.meta.url))], {

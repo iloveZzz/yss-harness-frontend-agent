@@ -294,6 +294,8 @@ groups:
     - run: scripts/verify-skill-registry
     - run: scripts/verify-skill-governance
     - run: node --test .agents/skills/yss-skill-source-index-refresh/scripts/refresh-yss-skill-index.test.mjs
+    - run: node .agents/skills/yss-prototype-stage/tests/run-scenarios.mjs
+    - run: node --test .agents/skills/yss-prototype-stage/tests/antd-reference.test.mjs
   tactical-design:
     commands: []
   contracts:

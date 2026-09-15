@@ -55,8 +55,8 @@ pnpm why vue @yss-ui/components @yss-ui/hooks ant-design-vue vxe-table
 
 | 任务 | 必须路由 |
 |---|---|
-| 完整页面模块 | `yss-page-module-development` |
-| 页面布局、组件和交互 | `yss-components` |
+| 新建或改造完整业务页面 | `yss-ui-business-page-generation` |
+| 页面布局与无独立 Skill 的专项组件 | `page-skeleton`、`component-selection-imports`、`references/specialized-components.md` |
 | 请求、分页、参数、树数据映射 | `yss-hook` |
 | Formily schema、联动、校验、详情态 | `yss-formily` |
 | 表格高度 | `yss-use-table-height` |
@@ -153,6 +153,7 @@ verification: pnpm type-check
 ## 10. 按需读取
 
 - 组件路由：`references/component-routing.md`
+- 无独立 Skill 的专项组件：`references/specialized-components.md`
 - 版本兼容：`references/antdv-compatibility.md`
 - 主题/locale/浮层：`references/theme-locale-overlay.md`
 - 可访问性与性能：`references/accessibility.md`

@@ -19,7 +19,7 @@ description: Use when working with YTable that needs responsive height, paginati
 - YSS UI hooks documentation: `http://192.168.164.27:3200/hooks`
 - Local reference index: `references/frontend-docs.md`
 
-This skill only covers `useTableHeight` wiring. Use `yss-components` for table layout/rendering rules and `yss-hook` for request/pagination state.
+This skill only covers `useTableHeight` wiring. Use `ytable-usage` for table rendering rules, `page-list-module` for list orchestration, and `yss-hook` for request/pagination state.
 
 中文说明：这里只处理表格高度计算，不处理表格列渲染、接口请求或分页数据逻辑。
 

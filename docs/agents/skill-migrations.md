@@ -2,6 +2,12 @@
 
 本文记录已退役技能入口的迁移路径。退役技能不保留物理目录、投影或 lock 条目；本文件是历史名称的唯一持久兼容说明。
 
+## 前端组件总入口收敛（2026-09-15）
+
+`yss-components` 已硬退役，不保留 alias、物理目录、投影或 lock 条目。前端页面统一从 `yss-ui` 路由：页面骨架使用 `page-skeleton`，组件选型使用 `component-selection-imports`，表格、树、Formily、Hook 和高度使用各自专项 Skill；没有独立 Skill 的复杂组件契约集中在 `yss-ui/references/specialized-components.md`。
+
+`yss-formily` 保留为薄路由器，只选择 `formily-foundation`、联动、模式/详情和分步专项，不再复制表单代码骨架。旧 ID 只允许存在于本迁移记录、retired/obsolete 清单、负向测试和不可变历史证据中。
+
 ## 研究、页面与提交入口收敛（2026-09-11）
 
 - `research` 物理 Skill 迁移到 `yss-research`；仅保留 `research` 作为其兼容 alias。
@@ -26,7 +32,7 @@ Registry、角色配置、公开清单、投影和 lock 必须使用新的 canon
 迁移到：
 
 - 阶段合同：`yss-prototype-stage`
-- Codex 产品设计主入口：`product-design:index`
+- 高保真默认入口：`yss-prototype-stage` 离线 HTML；独立视觉稿按需使用 `product-design:index`
 - Ant Design v6 事实与 CLI 证据：`yss-antd-design`
 - 独立低保真评审：`prototype-review`
 
@@ -58,3 +64,7 @@ Registry、角色配置、公开清单、投影和 lock 必须使用新的 canon
 ## 前端专职技能裁剪（2026-09-08）
 
 后端实现技能退出本地安装；跨端禁止与交接 ID 作为 `cross-repo-reference` 保留，不进入本地执行闭包。`yss-dto` 的 Java 实现不恢复，公开 wire profile 在 `yss-openapi-governance/references/` 中保留带来源绑定的只读快照。`yss-skill-source-index-refresh` 仅刷新已安装前端技能的文档入口，不再读取 Java 源仓或写后端索引。
+
+## 2026-09-14：HTML 原型与 Provider 退役
+
+`yss-antdv-next-design`、`yss-antd-design` 从当前技能、默认生成路线及分发中移除。新原型使用 `yss-prototype-stage` 的 html-css-js 适配器；历史原型、fact pack、截图及用户决定保持只读。在途继续演进时新建 HTML 工作版本，重新验证并确认；普通同步不直接删除消费项目的历史或用户修改资产。

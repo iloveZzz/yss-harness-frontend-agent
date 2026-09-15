@@ -19,7 +19,7 @@ description: Use when working with YTree that needs responsive height, virtual s
 - YSS UI hooks documentation: `http://192.168.164.27:3200/hooks`
 - Local reference index: `references/frontend-docs.md`
 
-This skill only covers `useTreeHeight` wiring. Use `yss-components` for tree layout/rendering rules and `yss-hook` for tree request/selection state.
+This skill only covers `useTreeHeight` wiring. Use `ytree-usage` for tree rendering rules and `yss-hook` for tree request/selection state.
 
 中文说明：这里只处理树高度计算，不处理树数据请求、选中状态或业务联动。
 

@@ -135,7 +135,6 @@ roles:
   core_skills:
   - frontend-agent
   - yss-ui
-  - yss-components
   - yss-formily
   - yss-api-integration
   - yss-hook
@@ -290,3 +289,20 @@ gate_policy:
     - role.frontend-agent
     - role.backend-agent
     - role.test-agent
+
+# 只用于读取原始用户决定证据；不新增产品设计批准门禁。
+user_decision_policy:
+  schema_version: 1
+  default_responder: requester
+  delegate_requires_requester_evidence: true
+  source_kinds:
+    - platform-message
+    - session-export
+    - user-confirmation-file
+  gates: []
+  work_units: {}
+  conditional_decisions: []
+  waiting_allows: independent-work-only
+  expiry: basis-change-or-revocation-only
+  record_schema: docs/process/schemas/user-decision.schema.json
+  verifier: scripts/verify-user-decision
