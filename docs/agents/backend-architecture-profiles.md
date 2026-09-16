@@ -4,6 +4,10 @@ Profile、模块闭包、生成器、成熟度和 Recipe 的权威映射见 `yss
 
 执行前比较工程基线、仓库登记、Manifest 与当前合同的 `architecture_identity`。缺失、digest 漂移、Profile 不匹配或越界写路径均停止；既有工程不能自动重选架构。新 Profile 的真实编译及首切片验证未通过前保持 `draft`，不能设置 `ready-for-agent`。
 
+## 既有工程适配
+
+`existing_project_profiles` 与下述生成器 Profile 独立维护。首版两个 Maven 适配器通过真实 Git/POM 三方核验、对应架构的成功/失败行为测试与 Maven test/package 后标记 supported；依据见 `.template-source/evidence/maintenance/2026-09-12-existing-project-delivery/maven-adapters-04.json`。这是适配协议支持证据，不是实际产品批准、数据库兼容或真实跨仓 S0 结论。每个工程仍须自己的固定来源、架构边界审查和执行证据，详见 `docs/process/existing-backend-architecture.md`。生成器原有 draft 和首切片要求保持。
+
 ## MVC 分层
 
 - `layered-mvc-service` 的用例层为 `service`；`mvc-data-analysis-v1` 的用例层为 `core`。后者是薄应用层，不是合并 Domain 的容器。MVC 不加载 `yss-domain`，不生成 DDD Gateway。
@@ -17,7 +21,7 @@ Profile、模块闭包、生成器、成熟度和 Recipe 的权威映射见 `yss
 
 - 新脚手架统一 `verification_database=h2`、`production_database=not-bound`。仅测试和显式 `scaffold-local` 使用 H2；普通配置不设置数据库或默认激活 Profile。不另加生产驱动、第三方数据源或 Mock 服务。
 - 生产数据库、DDL、索引和方言在后续批准的存储工作单元接入；H2 测试不能证明生产方言兼容。脚手架不包含业务 SQL、schema/data 占位或业务 API。
-- 三种新 Profile 使用 `spring-boot-2.7-jdk8` / `javax`。组件 Skill 消费工程基线，不擅自升级 Java、Boot、处理器版本或替换依赖。MapStruct + Lombok 必须验证 binding 与生成代码编译。
+- DDD / 通用 MVC 消费批准的 `platform_configuration` v1，平台清单与证据规则见 `docs/engineering/backend-platforms.md`。数据分析初始化器保留 `spring-boot-2.7-jdk8` / `javax`，不自动开放新平台。组件 Skill 不擅自升级 Java、Boot、处理器或替换 YSS 依赖。MapStruct + Lombok 必须验证 binding 与生成代码编译。
 - 对 SQL 注入、敏感信息、权限和事务的规则不因 H2 或模板而豁免。MySQL 专属语法规则仅适用于批准的 MySQL 存储工作单元；框架命名/返回包装等差异须记录明确的 YSS 基线例外。
 
 ## 验证含义

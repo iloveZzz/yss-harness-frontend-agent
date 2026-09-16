@@ -1,10 +1,11 @@
 ---
 status: ready-for-human
+requirement_version: v1
 ---
 
 # 垂直切片 Ticket：<标题>
 
-Status: ready-for-human
+冻结时状态见 frontmatter；当前执行状态、勾选结果和会签进度从主 tracker / 任务包读取。冻结后不得回写本文件，需求修改另存新版本并重新编译、审查与绑定批准。见 [Slice v3 冻结需求协议](../../.agents/skills/yss-implementation-contract-compiler/references/slice-implementation-contract.md#第二轮增量规则)。
 
 ## 父级
 
@@ -132,8 +133,8 @@ Status: ready-for-human
 - [ ] 实现完成
 - [ ] 已新增测试且测试通过
 - [ ] 已移除调试 / 原型代码
-- [ ] 已回勾 `Backend Slice Implementation Contract` 和 `Build Architecture Checklist`
-- [ ] 已回勾当前 `contract_id` / `contract_version`、全部工作单元和对应 `YSS Skill Execution Result`
+- [ ] 已在任务包核验 `Backend Slice Implementation Contract` 和 `Build Architecture Checklist`
+- [ ] 已在任务包核验当前 `contract_id` / `contract_version`、全部工作单元和对应 `YSS Skill Execution Result`
 - [ ] 实际 changed files 均在合同允许路径内，预期证据齐全，验证结果包含执行时间
 - [ ] `new_impacts`、`drift`、`violation` 和重路由状态均有明确结论，合同未处于 `stale`
 - [ ] 如领域或架构决策变化，已更新 `CONTEXT.md` / ADR；新增业务术语含 PascalCase `英文标识`，代码与契约字段能追溯到该词干

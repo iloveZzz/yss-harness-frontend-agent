@@ -66,7 +66,7 @@
         "source": "mattpocock/skills",
         "sourceType": "github",
         "skillPath": "skills/engineering/code-review/SKILL.md",
-        "effectiveHash": "b4db6db84a586535fa70ca6b82b001187bb14c48c38cf0391c7a35314432f30e",
+        "effectiveHash": "58f36f98505dbd9e9fc018beba230d1f5d8d8dff1b13419c7e3ca090d3c2f77f",
         "sourceRevision": "0ab1b63a410a03d3627979a109c8695de27af954",
         "upstreamHash": "12daafb9c4f77deb3c3303dc2e6f8a3c2a0ff7928fc004af959ba18b8bd38068",
         "adaptationRef": "docs/process/MATT-POCOCK-ENGINEERING-SKILLS.md",
@@ -903,7 +903,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/yss-implementation-contract-compiler/SKILL.md",
-        "effectiveHash": "e7e21852bff70a0292d506716652f1683fe741f18eb0cabc2e2e2818a7e8685c",
+        "effectiveHash": "f073b692a0c971cad57bf6674409c0f6648f414b5f4db39c17c28a6ce524c627",
         "targets": [
           ".agents/skills",
           ".codex/skills",
@@ -939,7 +939,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/yss-prototype-stage/SKILL.md",
-        "effectiveHash": "11c1bbbf90d6fcd9497552b572252dc808469554a7b91e5ca0afe18b83e406cd",
+        "effectiveHash": "54ebaba142334fe25ffa8455f42b70404aac53617fe48dec1c1cb20c3ec4cb6f",
         "targets": [
           ".agents/skills",
           ".codex/skills",

@@ -22,7 +22,7 @@ description: "编译或重验 YSS Slice Implementation Contract、最小 Skill �
 
 ## 编译结果
 
-合同必须绑定一个 `slice-implementation-contract-v2`，包含 architecture、frontend、backend、testing 四个分区，并为前端、后端、测试任务包复制同一 contract_id / contract_version。
+新合同使用 Slice v3 唯一 YAML：basis、scope、resolution、acceptance、verification、work_units 与适用 extensions 单点保存；任务包由批准合同派生。v2 按原规则读取，修改时显式迁移新草案，不继承批准。
 
 编译器必须计算：
 
@@ -51,3 +51,7 @@ description: "编译或重验 YSS Slice Implementation Contract、最小 Skill �
 ## 战略交接快照包
 
 使用 `scripts/strategic-handoff export / verify / import`；源资产冻结、规则身份与批准绑定、目标术语对账和逐条承接合同以 `docs/process/strategic-handoff-package.md` 为准。来自导入包时，战术合同绑定 `strategic_handoff`；批准/流转前执行 `scripts/verify-strategic-handoff-consumption --root <target> <tactical>`，切片消费追加 `--slice <slice-id>`。存在延期时仅允许无依赖且核验通过的切片继续；未知依赖扩大阻断。
+
+## Slice v3 准备与批准
+
+使用 `scripts/slice-contract prepare/view/diff/migrate`，字段与接口见 [Slice v3](references/slice-implementation-contract.md)。用户只确认目标、范围、验收和关键取舍，已有有效确认按原协议延续；独立专业审查核验工程约束，主控汇总批准。原因链、缺口、检查结果和任务进度留在派生报告或现有证据，不改写权威合同。不得从普通 Spec 确认推断实施授权。
