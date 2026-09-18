@@ -55,3 +55,7 @@ description: "编译或重验 YSS Slice Implementation Contract、最小 Skill �
 ## Slice v3 准备与批准
 
 使用 `scripts/slice-contract prepare/view/diff/migrate`，字段与接口见 [Slice v3](references/slice-implementation-contract.md)。用户只确认目标、范围、验收和关键取舍，已有有效确认按原协议延续；独立专业审查核验工程约束，主控汇总批准。原因链、缺口、检查结果和任务进度留在派生报告或现有证据，不改写权威合同。不得从普通 Spec 确认推断实施授权。
+
+## 后端组件合同的只读承接
+
+前端任务不选择或认证 YSS 后端组件。跨仓 Slice 含 `component_bindings` 时必须原样保留并消费 `component_bindings_digest`；绑定缺失或漂移时返回 `stale` 并交回后端与主控重新编译，禁止在前端合同中补造构件证据。

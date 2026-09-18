@@ -46,7 +46,7 @@ test("rejects recipes that reference skills and context-required cycles", () => 
 
 test("rejects removed ids and schema v1 without compatibility", () => {
   assert.throws(() => compile({ recipeIds: ["yss-router"] }), /已移除 skill id/);
-  assert.throws(() => compileImplementationContract({ registry: { ...registry, schema_version: 1 }, compilerContract, requiredCapabilities: ["frontend.ui"] }), /schema v1 已停止支持/);
+  assert.throws(() => compileImplementationContract({ registry: { ...registry, schema_version: 1 }, compilerContract, requiredCapabilities: ["frontend.ui"] }), /schema v1\/v2 已停止支持/);
   assert.throws(() => compileImplementationContract({ registry, compilerContract: { ...compilerContract, schema_version: 1 }, requiredCapabilities: ["frontend.ui"] }), /schema v1 已停止支持/);
 });
 

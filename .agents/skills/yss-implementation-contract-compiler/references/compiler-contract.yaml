@@ -171,6 +171,14 @@ resolution_contract:
   - skill-id
   digest_change_status: stale
   stale_action: recompile-and-return-to-harness-approval
+  component_bindings:
+    when: any-required-capability-provider-kind-is-yss-component
+    platform_configuration: required-v2
+    catalog_source: docs/engineering/backend-platforms.json
+    required_fields: [component_bindings, component_bindings_digest]
+    exact_artifact_binding: [group_id, artifact_id, declared_version, resolved_version, pom_sha256, jar_sha256, source_tree]
+    digest_change_status: stale
+    old_contract_without_binding: stale-and-recompile-no-auto-upgrade
 impact_to_capabilities:
   system-data-architecture:
   - architecture.system-data
@@ -183,6 +191,7 @@ full_reroute_triggers:
 - invariant-impact
 - scaffold-architecture-decision-changed
 - scaffold-profile-or-module-closure-changed
+- component-binding-drift
 - new-write-path
 - new-repository
 - contract-violation
@@ -378,7 +387,6 @@ scaffold_contract_schema:
     - approved
     after_generation_by_architecture:
       domain-driven:
-      - yss-backend-scaffold-parent
       - yss-implementation-contract-compiler
       layered-mvc:
       - yss-implementation-contract-compiler
@@ -459,3 +467,14 @@ frontend_delivery_readiness:
   verifier: scripts/verify-frontend-delivery
   output_binding: frontend.delivery
   inputs_verified_is_implementation_approval: false
+
+execution_result_component_binding:
+  when: resolution.component_bindings-present
+  required: consumed_contract.component_bindings_digest
+  mismatch: component-binding-mismatch
+
+backend_component_contract_readonly:
+  binding_fields: [component_bindings, component_bindings_digest]
+  missing_or_drift: component-binding-drift
+  action: return-to-backend-and-harness-orchestrator
+  frontend_must_not_certify: true
