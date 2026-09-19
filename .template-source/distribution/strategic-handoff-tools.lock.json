@@ -2,7 +2,7 @@
   "schema_version": 1,
   "target_id": "yss-harness-frontend-agent",
   "source_repository": "yss-spec-project-template",
-  "source_revision": "2178205fd2e8bd14218858f424f77b032311a8bc",
+  "source_revision": "0e0411bf8975edaf5c17bfefe67051846e98e343",
   "source_state": "committed",
   "transformation_set": [
     "identity"
