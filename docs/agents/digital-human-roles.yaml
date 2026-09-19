@@ -77,7 +77,6 @@ orchestrator:
   - implementation-repo-onboarding
   - cross-repo-implementation-routing
   - handoff
-  - dispatching-parallel-agents
   forbidden_skills:
   - architecture-agent
   - frontend-agent

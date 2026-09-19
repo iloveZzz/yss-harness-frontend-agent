@@ -123,9 +123,14 @@ test("prototype design route requires independent prototype-review", () => {
 test("deprecated skills require migration and cleanup metadata", () => {
   const data = registry();
   data.skills = data.skills.map((skill) => skill.id === "diagnosing-bugs"
-    ? { ...skill, maturity: "deprecated", replaced_by: "tdd" }
+    ? {
+        ...skill,
+        maturity: "deprecated",
+        replacement_skill: "tdd",
+        deprecation: { new_use: "forbidden", remove_after: "2026-12-31" }
+      }
     : skill);
-  assert.throws(() => validateSkillRegistry(data), /migration_deadline/);
+  assert.throws(() => validateSkillRegistry(data), /deprecation\.cleanup_status/);
 });
 
 test("frontend conditional routes require registered skills", () => {

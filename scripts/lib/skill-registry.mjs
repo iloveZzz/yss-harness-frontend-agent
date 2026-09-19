@@ -6,7 +6,7 @@ import { nestedSkillPaths, OBSOLETE, PROJECTION_ROOTS, ROOT, unregisteredNestedS
 export const DEFAULT_REGISTRY = path.join(ROOT, "docs/agents/yss-skill-registry.yaml");
 const LOCK_PATH = path.join(ROOT, "skills-lock.json");
 const COMPILER_CONTRACT = path.join(ROOT, ".agents/skills/yss-implementation-contract-compiler/references/compiler-contract.yaml");
-const LIFECYCLE_CONTRACT = path.join(ROOT, ".agents/skills/yss-product-lifecycle/references/orchestration-contract.yaml");
+const LIFECYCLE_CONTRACT = path.join(ROOT, ".agents/skills/harness-orchestrator/references/orchestration-contract.yaml");
 const BACKEND_PLATFORMS = path.join(ROOT, "docs/engineering/backend-platforms.json");
 const LAYERS = new Set(["core", "specialist", "compatibility", "maintainer-only"]);
 const MATURITIES = new Set(["draft", "verified", "supported", "deprecated"]);
@@ -509,7 +509,7 @@ export function validateSkillRegistry(registry, { lock, compilerContract, lifecy
   requireStringSet(backendDomains.domain_ids, [...BACKEND_SKILL_DOMAINS], "backend_skill_domains.domain_ids");
   requireObject(backendDomains.assignments, "backend_skill_domains.assignments");
   const backendCapabilityOwners = [...new Set(registry.capabilities
-    .filter((capability) => capability.id !== "scaffold.frontend-vue3" && capability.primary_skill.startsWith("yss-"))
+    .filter((capability) => skills.find((skill) => skill.id === capability.primary_skill)?.impacts.includes("backend"))
     .map((capability) => capability.primary_skill))];
   requireStringSet(Object.keys(backendDomains.assignments), backendCapabilityOwners, "backend_skill_domains.assignments");
   for (const [skillId, domainId] of Object.entries(backendDomains.assignments)) {
