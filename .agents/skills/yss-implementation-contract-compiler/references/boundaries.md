@@ -25,6 +25,7 @@
 | `governance.implementation-contract` | `yss-implementation-contract-compiler` | `contract-compilation`, `reroute`, `result-validation` |
 | `architecture.system-data` | `architecture-agent` | `guidance`, `contract-compilation`, `review-input` |
 | `maintenance.skill-source-index` | `yss-skill-source-index-refresh` | `component-maintenance`, `source-index-refresh` |
+| `scaffold.frontend-vue3` | `yss-frontend-scaffold-generator` | `integration`, `component-maintenance` |
 
 ## Narrow Recipes
 
