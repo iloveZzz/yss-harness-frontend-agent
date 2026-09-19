@@ -249,7 +249,7 @@ owner: ai
 
 ### 4.3 后端脚手架工作单元
 
-当 backend `scaffold_status=required` 时，先完成并批准架构选择，再登记一个 `controlled-generation` 工作单元：DDD 绑定 `primary_skill=yss-ddd-scaffold-generator`，MVC 绑定 `primary_skill=yss-layered-mvc-scaffold-generator`。DDD 后续追加 `yss-backend-scaffold-parent` 基线校验，两者都回到 `yss-implementation-contract-compiler` 重编译业务合同。`existing` / `initialized` 不重复全量生成；架构互转走独立迁移工作单元。
+当 backend `scaffold_status=required` 时，先完成并批准架构选择，再登记一个 `controlled-generation` 工作单元：DDD 绑定 `primary_skill=yss-ddd-scaffold-generator`，MVC 绑定 `primary_skill=yss-layered-mvc-scaffold-generator`。DDD 使用生成器内部 `engineering-baseline` 合同校验，两者都回到 `yss-implementation-contract-compiler` 重编译业务合同。`existing` / `initialized` 不重复全量生成；架构互转走独立迁移工作单元。
 
 | 项 | 内容 |
 |---|---|
@@ -262,7 +262,7 @@ owner: ai
 | 生成选项 | 关闭 `--with-example`；生成器严格 initialize-only，非空目录、`--force`、旧项目迁移和当前模板升级均为 `unsupported` |
 | Profile | DDD：`target-domain-model` + mysql；MVC：`layered-mvc` + mysql / oracle / oceanbase-oracle；共同为 MyBatis-Plus、Spring Boot 2.7、Java 8、`javax`、`yss-internal` |
 | 验证 | 使用一键生成验证入口，实际执行项目根目录 `./mvnw validate`、`./mvnw test`、`./mvnw package`；通过后仅为 `empty-scaffold-verified`，golden first slice 通过后才是 `first-slice-verified` |
-| 后置 | DDD 追加 `yss-backend-scaffold-parent`；两者均执行 `yss-implementation-contract-compiler` 业务合同重编译和 YSS Skill Execution Result |
+| 后置 | DDD 校验内部 `engineering-baseline`；两者均执行 `yss-implementation-contract-compiler` 业务合同重编译和 YSS Skill Execution Result |
 
 所有后续生成代码必须绑定当前批准且版本一致的 Slice Implementation Contract、主 YSS skill、依赖闭包、允许写路径、预期证据和 Execution Result。业务行为必须使用 `behavior-tdd`；缺任一条件即阻断，不得以脚手架成功或时间压力豁免。
 

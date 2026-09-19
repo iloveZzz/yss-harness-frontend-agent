@@ -157,9 +157,8 @@ skill_dependencies:
     type: context-conditional
     when: lifecycle-document-output
   yss-ui-business-page-generation:
-  - skill: component-selection-imports
-    type: context-conditional
-    when: components
+  - skill: yss-ui
+    type: context-required
   - skill: yss-hook
     type: context-conditional
     when: hooks
@@ -271,13 +270,6 @@ skills:
   aliases: []
   impacts:
   - discovery
-- id: component-selection-imports
-  layer: specialist
-  maturity: supported
-  instance_default_discoverable: false
-  aliases: []
-  impacts:
-  - frontend
 - id: cross-repo-implementation-routing
   layer: specialist
   maturity: supported
@@ -426,27 +418,6 @@ skills:
   aliases: []
   impacts:
   - template-maintenance
-- id: page-form-module
-  layer: specialist
-  maturity: supported
-  instance_default_discoverable: false
-  aliases: []
-  impacts:
-  - frontend
-- id: page-list-module
-  layer: specialist
-  maturity: supported
-  instance_default_discoverable: false
-  aliases: []
-  impacts:
-  - frontend
-- id: page-skeleton
-  layer: specialist
-  maturity: supported
-  instance_default_discoverable: false
-  aliases: []
-  impacts:
-  - frontend
 - id: prototype
   layer: maintainer-only
   maturity: supported
@@ -532,13 +503,6 @@ skills:
   aliases: []
   impacts:
   - setup
-- id: vue3-best-practices
-  layer: specialist
-  maturity: supported
-  instance_default_discoverable: false
-  aliases: []
-  impacts:
-  - frontend
 - id: wait-what
   layer: maintainer-only
   maturity: supported
@@ -671,22 +635,6 @@ skills:
   aliases: []
   impacts:
   - frontend
-- id: yss-use-table-height
-  layer: specialist
-  maturity: supported
-  instance_default_discoverable: false
-  aliases:
-  - use-table-height
-  impacts:
-  - frontend
-- id: yss-use-tree-height
-  layer: specialist
-  maturity: supported
-  instance_default_discoverable: false
-  aliases:
-  - use-tree-height
-  impacts:
-  - frontend
 - id: ytable-usage
   layer: specialist
   maturity: supported
@@ -714,8 +662,6 @@ platform_skills:
   aliases:
   - product-design:index
 external_skills:
-- id: yss-backend-scaffold-parent
-  source: cross-repo-reference
 - id: backend-agent
   source: cross-repo-reference
 - id: yss-domain
@@ -763,8 +709,10 @@ backend_skill_domains:
   - engineering-initialization
   - platform-governance-migration
   assignments:
+    yss-ui: layered-implementation
+    yss-api-integration: wire-framework-contract
     yss-implementation-contract-compiler: platform-governance-migration
-    architecture-agent: technical-design
+    yss-skill-source-index-refresh: platform-governance-migration
   deprecated_skills: []
 backend_source_index_contract:
   schema_version: 1

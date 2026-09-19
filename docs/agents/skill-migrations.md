@@ -2,9 +2,20 @@
 
 本文记录已退役技能入口的迁移路径。退役技能不保留物理目录、投影或 lock 条目；本文件是历史名称的唯一持久兼容说明。
 
+## 前端 Skill 面二次收敛（2026-09-20）
+
+- `page-skeleton` 迁移到 `yss-ui-business-page-generation`。
+- `component-selection-imports` 迁移到 `yss-ui` 与 `yss-ui/references/component-routing.md`。
+- `page-list-module` 拆分到 `yss-ui-business-page-generation`、`yss-hook` 与 `ytable-usage`。
+- `page-form-module` 拆分到 `yss-ui-business-page-generation` 与 `yss-formily` 路由的专项 Skill。
+- `yss-use-table-height` 迁移到 `ytable-usage` / `yedit-table-usage`；`yss-use-tree-height` 迁移到 `ytree-usage`。
+- `vue3-best-practices` 的请求与状态规则迁移到 `yss-hook`，类型边界以 `yss-api-integration` 为准。
+
+这些入口已硬退役，不保留运行时 alias、物理目录、投影、Registry 条目或 lock 条目；命中旧 ID 返回 `skill-retired`。
+
 ## 前端组件总入口收敛（2026-09-15）
 
-`yss-components` 已硬退役，不保留 alias、物理目录、投影或 lock 条目。前端页面统一从 `yss-ui` 路由：页面骨架使用 `page-skeleton`，组件选型使用 `component-selection-imports`，表格、树、Formily、Hook 和高度使用各自专项 Skill；没有独立 Skill 的复杂组件契约集中在 `yss-ui/references/specialized-components.md`。
+`yss-components` 已硬退役，不保留 alias、物理目录、投影或 lock 条目。前端页面统一从 `yss-ui` 路由：完整页面使用 `yss-ui-business-page-generation`，组件选型与导入使用 `yss-ui/references/component-routing.md`，表格、树、Formily 和 Hook 使用各自专项 Skill；组件高度由对应表格或树专项持有。没有独立 Skill 的复杂组件契约集中在 `yss-ui/references/specialized-components.md`。
 
 `yss-formily` 保留为薄路由器，只选择 `formily-foundation`、联动、模式/详情和分步专项，不再复制表单代码骨架。旧 ID 只允许存在于本迁移记录、retired/obsolete 清单、负向测试和不可变历史证据中。
 

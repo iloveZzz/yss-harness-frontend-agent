@@ -14,9 +14,7 @@
     "yss-ui-business-page-generation",
     "yss-prototype-stage",
     "yss-implementation-contract-compiler",
-    "yss-ui",
-    "yss-use-table-height",
-    "yss-use-tree-height"
+    "yss-ui"
   ],
   "groupings": [
     {
@@ -37,9 +35,7 @@
         "yss-hook",
         "yss-ui-business-page-generation",
         "yss-prototype-stage",
-        "yss-ui",
-        "yss-use-table-height",
-        "yss-use-tree-height"
+        "yss-ui"
       ]
     },
     {

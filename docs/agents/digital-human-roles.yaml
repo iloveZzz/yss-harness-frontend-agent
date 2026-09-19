@@ -137,10 +137,10 @@ roles:
   - yss-formily
   - yss-api-integration
   - yss-hook
-  - page-skeleton
-  - page-list-module
-  - page-form-module
-  - vue3-best-practices
+  - yss-ui-business-page-generation
+  - ytable-usage
+  - yedit-table-usage
+  - ytree-usage
   - theme-token-usage
   - tdd
   forbidden_skills:

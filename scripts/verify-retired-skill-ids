@@ -4,7 +4,18 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { PROJECTION_ROOTS, ROOT } from "./lib/skill-supply-chain.mjs";
 
-const retired = ["yss-router", "yss-source-index", "yss-components"];
+const retired = [
+  "component-selection-imports",
+  "page-form-module",
+  "page-list-module",
+  "page-skeleton",
+  "vue3-best-practices",
+  "yss-use-table-height",
+  "yss-use-tree-height",
+  "yss-router",
+  "yss-source-index",
+  "yss-components",
+];
 const allowed = (relative) => relative === "docs/agents/skill-migrations.md"
   || relative.includes("/docs/agents/skill-migrations.md")
   || relative.startsWith(".template-source/wiki/raw/")
@@ -12,11 +23,19 @@ const allowed = (relative) => relative === "docs/agents/skill-migrations.md"
   || relative.startsWith(".template-source/evidence/")
   || relative.includes("/.template-source/evidence/")
   || relative.includes("/tests/")
+  || relative.endsWith("/skills/.yss-skills-manifest.json")
   || relative.endsWith("scripts/verify-retired-skill-ids")
   || relative.endsWith("scripts/lib/skill-supply-chain.mjs")
   || relative.endsWith("scripts/lib/implementation-contract-compiler.mjs");
 
 const retiredSkillPattern = [
+  "component-selection-imports",
+  "page-form-module",
+  "page-list-module",
+  "page-skeleton",
+  "vue3-best-practices",
+  "yss-use-table-height",
+  "yss-use-tree-height",
   "yss-router",
   "yss-source-index",
   "(?:`yss-components`|/yss-components/|(?:^|[\\[,])\\s*[\\\"']?yss-components[\\\"']?\\s*(?=[,\\]])|\\b(?:id|name|skill)\\s*:\\s*[\\\"']?yss-components[\\\"']?\\b)",
