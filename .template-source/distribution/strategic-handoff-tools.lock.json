@@ -2,7 +2,7 @@
   "schema_version": 1,
   "target_id": "yss-harness-frontend-agent",
   "source_repository": "yss-spec-project-template",
-  "source_revision": "92fe58c347af008ad778ab8c90e99344ea46943d",
+  "source_revision": "1bd0bd890ba32fa651da307722905468777d7040",
   "source_state": "committed",
   "transformation_set": [
     "identity"
@@ -202,7 +202,7 @@
     "scripts/lib/implementation-contract-compiler.mjs": "sha256:3dd6adc0c385b912b8d3caa9f268b4974ad8cf6badabd002ba8dcc9fd148f5f4",
     "scripts/lib/json-schema.mjs": "sha256:007e39300478da6f0e359d822642f7a6aaf2466ee5781bd81924cf5897eebc72",
     "scripts/lib/scaffold-local-database.mjs": "sha256:66d47c11698b36ff57e4f37577c6f83ea3a6590f4b9ab6862833bd991fde3662",
-    "scripts/lib/skill-registry.mjs": "sha256:ba4ffe37b440b91639ef090f204acebdb822cba57cc187634af67b5407bf2601",
+    "scripts/lib/skill-registry.mjs": "sha256:aa37c030a439f99e05ad4bb2f40734c0238c9623bbfa31fcc3bd069aa14f9643",
     "scripts/lib/skill-supply-chain.mjs": "sha256:5e70b6c1b73587524a8280e8a4509a951ec956118b05ac0b681364b65a58a111",
     "scripts/lib/slice-applicability.mjs": "sha256:c899fd31a39e3a4237a4a21e13c5fa718b319b792b6365b23b602cf792281e1c",
     "scripts/lib/slice-contract-preparation.mjs": "sha256:15ee8f4e567b0b4cc209d60be6f7d9ca9e8d5dca7f0b1e9b104443604184d1de",
@@ -237,6 +237,6 @@
     "scripts/verify-strategic-handoff-consumption": "sha256:9ab43edbcf48ab6677ca7389e959a557d52939455ed309e5306391aa48ef0b10",
     "scripts/verify-strategic-handoff-package-scenarios": "sha256:35f5ccf55f11e59848e53a865acba6a66ba9e8ab45d4c2ccc592e1d03660f892",
     "scripts/verify-strategic-handoff-tools-lock": "sha256:7b413ccc4ab4dc606113ec9e3f51ddac0d2045a761b18130483a70118c566d9b",
-    "docs/agents/yss-skill-registry.yaml": "sha256:d5f1d7da9ded972272b495ec16a6fbe73b49059729054508c2cb12b3244e484a"
+    "docs/agents/yss-skill-registry.yaml": "sha256:febf6a8d5acd678cb5248377e5d4eff0732c7f8166e78bbb9e40fb276f86d868"
   }
 }
