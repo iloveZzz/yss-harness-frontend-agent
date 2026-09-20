@@ -9,8 +9,6 @@ description: "选择和核验 YSS Vue 生产页面组件及 Ant Design Vue 兼�
 
 ## 1. 权威事实顺序
 
-采用专职前端 profile 或显式 `frontend_delivery` 时，按 `docs/process/frontend-backend-delivery.md` 核验战略与后端联合交付；缺任一输入只诊断和回交，正式实现与恢复从当前批准的 Slice Contract 重验接收摘要和真实服务。
-
 发生冲突时按以下顺序决策：
 
 1. 冻结的项目工程基线和批准的 Slice Implementation Contract。
@@ -24,6 +22,8 @@ description: "选择和核验 YSS Vue 生产页面组件及 Ant Design Vue 兼�
 
 ## 2. 执行前版本预检
 
+采用专职前端 profile 或显式 `frontend_delivery` 绑定时，先按 `docs/process/frontend-backend-delivery.md` 实际核验战略与后端联合交付。缺任一输入只能诊断和回交；输入通过后准备计划/合同，正式实现、生成和恢复仍须当前批准的 Slice Contract 冻结接收摘要。接口或部署版本漂移时重新接收，不复用旧成功输出。
+
 进入实现前从前端工程根目录执行：
 
 ```bash
@@ -32,7 +32,7 @@ pnpm why vue @yss-ui/components @yss-ui/hooks ant-design-vue vxe-table
 
 记录实际版本、lockfile、验证命令和环境阻塞。完整策略见 `references/antdv-compatibility.md`。
 
-产品设计使用的 Ant Design v6 视觉/token 语义，不等于 Vue 生产实现 API。生产代码必须使用项目安装的 Ant Design Vue 4.x API，禁止复制 React hook、props 或组件写法。`yss-antd-design` 与 `@ant-design/cli` 只用于原型设计构建，进入本技能后不得再调用。
+产品设计使用的 Antdv Next 或 Ant Design v6 视觉/token 语义，不等于 Vue 生产实现 API。生产代码必须使用项目安装的 Ant Design Vue 4.x API，禁止把原型 props、events、slots、hook 或组件写法当作生产合同。原型统一使用 HTML/CSS/JavaScript；原型阶段不得调用本技能。只有进入前端实现计划、已批准切片的生产实现或实现还原验证后，才从目标 lockfile、类型、本地文档和既有用法取得真实组件事实。
 
 ## 3. 组件选型门禁
 
@@ -48,10 +48,10 @@ pnpm why vue @yss-ui/components @yss-ui/hooks ant-design-vue vxe-table
 
 - `YTable` 替代 AntDV `Table`，列使用 `field/type` 和字段同名插槽。
 - `YTree` 替代 AntDV `Tree`。
-- `YssFormily` 是新代码 canonical name；`YFormily` 仅作为已确认导出的 deprecated alias。
+- `YFormily` 是新代码 canonical name；`YssFormily` 仅作为已确认导出的历史兼容 alias。
 - `YSplitPane`、`YButton`、`YCard` 等已有封装优先使用 YSS。
 
-导入来源必须可追溯：优先查询真实组件、Hook、Utils 与导出包；不可用时再读取与安装版本匹配的本地文档、源码 `src/index.ts` 和已编译用法。已导出的能力分别从 `@yss-ui/components`、`@yss-ui/hooks`、`@yss-ui/utils` 导入；确认未封装的 `Modal`、`Drawer`、`Popconfirm`、`Input` 等才从 `ant-design-vue` 导入。禁止臆造 `YModal`、`YDrawer`、`YInput`、`YPopconfirm` 或直接导入 `@formily/antdv` 业务 UI。
+导入来源必须可追溯：优先使用当前会话的 yss-ui MCP 查询真实组件、Hook、Utils 与导出包；不可用时再读取与安装版本匹配的本地文档、`llms-full.txt`、源码 `src/index.ts` 和已编译用法。已导出的能力分别从 `@yss-ui/components`、`@yss-ui/hooks`、`@yss-ui/utils` 导入；确认未封装的 `Modal`、`Drawer`、`Popconfirm`、`Input` 等才从 `ant-design-vue` 导入。禁止臆造 `YModal`、`YDrawer`、`YInput`、`YPopconfirm` 或直接导入 `@formily/antdv` 业务 UI。
 
 ## 4. 最小专项 skill 路由
 
@@ -83,7 +83,7 @@ views/PageName/
 - `index.vue` 只做页面编排和事件转发。
 - `components/` 承载区块展示和局部交互。
 - `hooks/` 承载请求、分页、参数单一来源、映射和错误兜底。
-- `schemas/` 承载 `YssFormily` schema。
+- `schemas/` 承载 `YFormily` schema。
 - 页面内禁止复制请求流程、分页状态和复杂字段转换。
 
 ## 6. 跨组件强制约束
@@ -134,7 +134,7 @@ verification: pnpm type-check
 1. 读取批准合同、项目版本和组件映射。
 2. 选择最小专项 skills。
 3. 搭页面目录和布局。
-4. 接 `YssFormily`、`YTable`、`YTree` 等 YSS 主体组件。
+4. 接 `YFormily`、`YTable`、`YTree` 等 YSS 主体组件。
 5. 下沉请求、分页和映射到 `yss-hook`。
 6. 按组件专项接高度，再接主题、locale、浮层和无障碍约束。
 7. 联调冻结 API、Mock、路由和权限。
@@ -144,7 +144,7 @@ verification: pnpm type-check
 
 - [ ] 已记录 Vue、YSS UI、AntDV、VXE 实际版本。
 - [ ] 组件选型符合 `component-routing.md`，回退有证据。
-- [ ] 新代码使用 `YssFormily` 和真实存在的 `yss-hook`。
+- [ ] 新代码使用 `YFormily` 和真实存在的 `yss-hook`。
 - [ ] YTable/YEditTable/YTree/Formily 及其高度 Hook 遵循对应组件专项 skill。
 - [ ] 主题、locale、浮层容器和微应用隔离已检查。
 - [ ] loading/empty/error/no-access/selected 状态按影响面覆盖。
@@ -173,3 +173,4 @@ verification: pnpm type-check
 - 禁止把 React Ant Design v6 API 写入 Vue 生产代码。
 - 禁止引用不存在的 skill、未验证 Demo 或未冻结 API 契约。
 - 禁止省略错误、权限、空态、焦点和验证证据。
+- 禁止在原型阶段调用本技能，或用生产组件实现冒充原型资产。

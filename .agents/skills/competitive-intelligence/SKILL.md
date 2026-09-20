@@ -1,13 +1,13 @@
 ---
 name: competitive-intelligence
-description: Use when researching competitors, market positioning, pricing, feature gaps, customer sentiment, or category trends before Discovery, Spec, product strategy, or roadmap decisions.
+description: Use when researching competitors, market positioning, pricing, feature gaps, customer sentiment, or category trends before Plan, Spec, product strategy, or roadmap decisions.
 ---
 
 # Competitive Intelligence
 
 Source requested for this project: `anthropics/knowledge-work-plugins`, `sales/skills/competitive-intelligence`.
 
-Use this skill when competitive or market facts are needed to shape product Discovery, Spec scope, positioning, differentiation, pricing assumptions, or roadmap tradeoffs.
+Use this skill when competitive or market facts are needed to shape product Plan, Spec scope, positioning, differentiation, pricing assumptions, or roadmap tradeoffs.
 
 ## Core Rules
 
@@ -45,9 +45,9 @@ Use this skill when competitive or market facts are needed to shape product Disc
    - Risks if we copy the competitor too closely.
    - Product opportunities for Spec or roadmap.
 5. Hand off to lifecycle assets:
-   - Update Discovery findings in `docs/.scratch/<feature>/discovery/`.
-   - Create or update a competitor matrix in `docs/.scratch/<feature>/discovery/reports/`.
-   - Feed stable user, pain, MVP, non-goal, and success criteria into `grill-with-docs` and `to-spec`.
+   - Update Plan findings in `docs/.scratch/<feature>/plan/`.
+   - Create or update a competitor matrix in `docs/.scratch/<feature>/plan/reports/`.
+   - Return stable user, pain, MVP, non-goal and success criteria to the current lifecycle/strategic owner for its native Plan and Spec work units. Compatibility entries remain explicit-user-only.
    - Record uncertain claims as assumptions, not requirements.
 
 ## Output Shape

@@ -1,6 +1,6 @@
 ---
 name: yss-openapi-governance
-description: "维护、校验、冻结或导出 YSS OpenAPI 3.1 设计合同；以冻结 YAML 生成受审查的 JSON。"
+description: 前端只读核验后端冻结 OpenAPI、JSON 派生与交付证据；契约修订或 Freeze 回交后端权威方。
 ---
 
 # YSS OpenAPI Governance

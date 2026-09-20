@@ -59,3 +59,6 @@ description: "编译或重验 YSS Slice Implementation Contract、最小 Skill �
 ## 后端组件合同的只读承接
 
 前端任务不选择或认证 YSS 后端组件。跨仓 Slice 含 `component_bindings` 时必须原样保留并消费 `component_bindings_digest`；绑定缺失或漂移时返回 `stale` 并交回后端与主控重新编译，禁止在前端合同中补造构件证据。
+
+
+仅消费战略交接包时，按 [跨仓承接核验](references/strategic-handoff-routing.md) 追加当前摘要与逐规则承接检查；本 profile 的主控批准边界不变。

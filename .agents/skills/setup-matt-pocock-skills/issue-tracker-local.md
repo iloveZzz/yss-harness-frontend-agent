@@ -26,12 +26,12 @@ The legacy roots above are read-only migration sources. New Local Markdown outpu
 
 ## YSS lifecycle extension
 
-When `harness-orchestrator` is active, the same `docs/.scratch/<feature-slug>/` directory is the complete local feature package. Keep the compatibility files above only as input evidence and use the current Harness evidence directories:
+When `yss-product-lifecycle` is active, the same `docs/.scratch/<feature-slug>/` directory is the complete local feature package. Keep the Matt files above and use these lifecycle evidence directories:
 
 ```text
 docs/.scratch/<feature-slug>/
 ├── map.md
-├── discovery/
+├── plan/
 ├── spec.md
 ├── spec-delta/
 ├── parent-ticket.md

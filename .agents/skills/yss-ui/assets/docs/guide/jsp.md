@@ -16,7 +16,7 @@ toc: content
 
 必须保证以下顺序（同 Demo）：
 
-```38:63:<local-path-removed>
+```38:63:/Users/wangyancong/Downloads/guangda/Sonorus/yss-ui-demo/index.html
   <!-- 依赖顺序：Vue3 -> xe-utils -> vxe-pc-ui -> vxe-table -> dayjs(+plugins) -> antd -> Formily -> yss-ui -->
   <script src="../resources/vue3/vue.global.js" defer></script>
   <script src="../resources/xe-utils/xe-utils.umd.min.js" defer></script>
@@ -171,7 +171,7 @@ echo "\n下载完成：请将 ${BASE} 目录发布到 Web 服务器可访问路�
 
 > 插件注册方式与 Demo 一致：
 
-```90:95:<local-path-removed>
+```90:95:/Users/wangyancong/Downloads/guangda/Sonorus/yss-ui-demo/main.js
   const plugins = [window.VXETable, window.antd, window.YssUI];
   plugins.forEach(p => { try { p && app.use(p); } catch (e) { console.warn('plugin use failed:', e); } });
   app.mount('#app');
@@ -211,7 +211,7 @@ HTML/JSP 等 DOM 模板会将属性名统一转为小写，这会影响具名插
 
 脚本内容可参考 Demo：
 
-```75:95:<local-path-removed>
+```75:95:/Users/wangyancong/Downloads/guangda/Sonorus/yss-ui-demo/main.js
       return { columns, tableData, formState, roleOptions, statusOptions, handleSearch, handleReset };
     },
   });
