@@ -5,6 +5,8 @@ description: 前端只读核验后端冻结 OpenAPI、JSON 派生与交付证据
 
 # YSS OpenAPI Governance
 
+已有生命周期资产优先用 `scripts/contract view <资产> --kind <类型>` 阅读；执行任务用 `--profile task --unit <ID>`，绑定与校验明细用 `--profile full`。视图不授予执行权限，仍按本 Skill 的原始来源和批准门禁处理。类型、准备和迁移见 `docs/process/contract-reading.md`。
+
 本 skill 在前端仓只消费 YSS OpenAPI 的 **YAML-first** 工作流结果：
 
 ```text
@@ -145,3 +147,5 @@ scripts/verify-yss-dto-openapi-scenarios
 ```
 
 带 `--source-root` 的校验同时核验源仓身份、固定提交字节和当前源工作树。源内容变化时重新审阅并同步快照及绑定；离线消费继续使用已绑定版本，已知上游变化不能被离线校验掩盖。
+
+API Contract Decision 可用 `scripts/api-contract-decision prepare` 自动生成来源摘要；v1 显式迁移用 `migrate --version <新版本> --output <新路径>`。候选保持 draft，审查、Freeze 绑定和工程契约批准仍由现有生命周期核验。

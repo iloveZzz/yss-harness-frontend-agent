@@ -5,6 +5,8 @@ description: "审查 YSS OpenAPI Draft 的需求覆盖、页面动作、响应�
 
 # YSS OpenAPI 消费审查
 
+已有生命周期资产优先用 `scripts/contract view <资产> --kind <类型>` 阅读；执行任务用 `--profile task --unit <ID>`，绑定与校验明细用 `--profile full`。视图不授予执行权限，仍按本 Skill 的原始来源和批准门禁处理。类型、准备和迁移见 `docs/process/contract-reading.md`。
+
 前端仅从页面动作、状态、错误与客户端类型角度提供只读反馈；后端持有 Draft / Freeze 权威并执行修订。本地不生成后端 DTO、不批准 API Freeze；mapper evidence 由后端交付。
 
 Use this skill after OpenAPI Draft creation and before Engineering Baseline / YSS DDD Review. It is a fail-closed contract review skill for design-time OpenAPI files under `docs/.scratch/<feature>/api/`; it does not bundle JSON or generate Orval clients.

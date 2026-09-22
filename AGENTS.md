@@ -54,6 +54,8 @@ README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义�
 
 ## 6. Ticket 与状态
 
+- Plan / Spec / Design 按 `docs/process/stage-tracking.md` 从阶段入口登记工作、按需拆分并在恢复 / 流转时验证；工作项进度不替代 Ticket 五态和阶段批准。
+
 - 功能父 Ticket 汇总批准资产、阻塞项和证据；Spec、Draft 和待冻结资产使用 `ready-for-human`。
 - 只有合同已批准且当前、必要门禁通过、阻塞清除并可直接实现的窄垂直切片，才能设为 `ready-for-agent`。
 - Tracker 按 `docs/agents/issue-tracker.md` 选择，不得从 Git remote 推断；平台不可用时生成待发布草案。

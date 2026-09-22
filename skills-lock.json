@@ -302,7 +302,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/harness-orchestrator/SKILL.md",
-        "effectiveHash": "7260bd4d5302d6190fe335131aa230d5b2298b1d936a072e45b35940420b6489",
+        "effectiveHash": "eb8d94b0ac8fd349ab79ae74fc74cf721d5f62cc6667c695d48d1ed3ed4975ce",
         "targets": [
           ".agents/skills",
           ".codex/skills",
@@ -710,7 +710,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/yss-implementation-contract-compiler/SKILL.md",
-        "effectiveHash": "71f6d7533a4de644d5972e60ae454c31817b282219229858eb80740030e414af",
+        "effectiveHash": "e09f7e9a540e365ccf4e61948faa250b6c9ae21701c3a37794b7b8c7d3029c11",
         "targets": [
           ".agents/skills",
           ".codex/skills",
@@ -722,7 +722,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/yss-openapi-draft-review/SKILL.md",
-        "effectiveHash": "0c8a8920064acc914da51f7cb2f85dbfac447f4610a3c80be21c7b2d42b66686",
+        "effectiveHash": "88e22686ab460386a4113bf762823c4e728c82f0425cb06b7b8c1e35d30abfc4",
         "targets": [
           ".agents/skills",
           ".codex/skills",
@@ -734,7 +734,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/yss-openapi-governance/SKILL.md",
-        "effectiveHash": "4cb14a5e103fa1856dd793fc30bcbf57f16ee72a3b3c4727de49be1b28477852",
+        "effectiveHash": "4147f3f8a082ca71f388181d28d49fd77883417d38ac5a6e112949aaa1052ecf",
         "targets": [
           ".agents/skills",
           ".codex/skills",
@@ -746,7 +746,7 @@
         "source": "iloveZzz/yss-harness-design-agent",
         "sourceType": "git-submodule",
         "skillPath": ".agents/skills/yss-prototype-stage/SKILL.md",
-        "effectiveHash": "c25ec459fdf657cd0c4c9662013444e62e5f76bffc1a6ef08938759cb1401bb7",
+        "effectiveHash": "4cc7d388f89feddf50d208b2d5db3a4ffa41974afb364328270c097970fc39c0",
         "sourceRevision": "83d7bce7eab1adf16e02a419717c94fa8ba84f43",
         "upstreamHash": "6e1bcdf107d95c11faee2b988e4e0c36b8e5b76f6b40312a206b83733a96b0fc",
         "adaptationRef": "docs/agents/strategic-design-skills-integration.md",

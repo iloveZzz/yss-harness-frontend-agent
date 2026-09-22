@@ -1,3 +1,5 @@
+import { ROOT } from './lifecycle-registry.mjs';
+import { assertTrackingTransition } from './stage-tracking.mjs';
 import { enforceFrontendDelivery } from "./frontend-delivery-boundary.mjs";
 const IMPLEMENTATION_WORK_UNIT = "work-unit.slice-implementation";
 const CONTRACT_WORK_UNIT = "work-unit.slice-contract";
@@ -45,6 +47,8 @@ const blockedResult = (signals, missing = [], evidenceRefs = []) => ({
 });
 
 export function validateNextRoute(currentWorkUnit, nextRoute, state, options = {}) {
+  try { assertTrackingTransition(currentWorkUnit, nextRoute, state, { root: options.root || ROOT }); }
+  catch (error) { return blockedResult(['stage-tracking-blocked'], [error.message]); }
   if (["work-unit.frontend-engineering-design", CONTRACT_WORK_UNIT, IMPLEMENTATION_WORK_UNIT, VERIFICATION_WORK_UNIT].includes(nextRoute)) {
     try { enforceFrontendDelivery(state, { root: options.root, phase: nextRoute === IMPLEMENTATION_WORK_UNIT ? "implementation" : "inputs" }); }
     catch (error) { return blockedResult(["frontend-delivery-blocked"], [error.message]); }
