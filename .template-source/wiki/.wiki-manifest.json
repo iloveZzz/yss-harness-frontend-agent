@@ -40,7 +40,7 @@
     {
       "id": "lifecycle-registry.yaml",
       "kind": "document",
-      "livePath": "docs/process/lifecycle-registry.yaml",
+      "livePath": ".template-spec/process/lifecycle-registry.yaml",
       "rawPath": "raw/lifecycle-registry.yaml",
       "role": "copy",
       "sha256": "5b1f79adff29f41dc940cd86b0bb645c17420ad3a0b974efeb20eb52c0701647"
@@ -48,7 +48,7 @@
     {
       "id": "harness-process-tailoring.md",
       "kind": "document",
-      "livePath": "docs/process/harness-process-tailoring.md",
+      "livePath": ".template-spec/process/harness-process-tailoring.md",
       "rawPath": "raw/harness-process-tailoring.md",
       "role": "copy",
       "sha256": "f05a3485010857e9c98c02ba69f8f10a6160386cfcf41d46255241593784afd3"
@@ -56,7 +56,7 @@
     {
       "id": "maintenance-intensity.yaml",
       "kind": "document",
-      "livePath": "docs/process/maintenance-intensity.yaml",
+      "livePath": ".template-source/process/maintenance-intensity.yaml",
       "rawPath": "raw/maintenance-intensity.yaml",
       "role": "copy",
       "sha256": "6338e218860416a2a2ca9c187b5589bc1140b967dbac5f3ecea906adfb588a0f"
@@ -64,7 +64,7 @@
     {
       "id": "implementation-repo-integration.md",
       "kind": "document",
-      "livePath": "docs/process/implementation-repo-integration.md",
+      "livePath": ".template-spec/process/implementation-repo-integration.md",
       "rawPath": "raw/implementation-repo-integration.md",
       "role": "copy",
       "sha256": "9f7745aca6814aea1c863bd4f55e606eef1698202b7ac93dbf0492080f49896a"
@@ -72,7 +72,7 @@
     {
       "id": "skills-maintenance.md",
       "kind": "document",
-      "livePath": "docs/agents/skills-maintenance.md",
+      "livePath": ".template-source/agents/skills-maintenance.md",
       "rawPath": "raw/skills-maintenance.md",
       "role": "copy",
       "sha256": "400b9bfdbb35764316a86bb48013d214b142243a0d064fc47cb041dfd3bd0adf"
@@ -80,7 +80,7 @@
     {
       "id": "yss-skill-registry.yaml",
       "kind": "document",
-      "livePath": "docs/agents/yss-skill-registry.yaml",
+      "livePath": ".template-spec/agents/yss-skill-registry.yaml",
       "rawPath": "raw/yss-skill-registry.yaml",
       "role": "copy",
       "sha256": "bec5411f279557d68c86a2b47018d18bf6485ec5ae6314ac62400d53806a69bf"
@@ -88,7 +88,7 @@
     {
       "id": "issue-tracker.md",
       "kind": "document",
-      "livePath": "docs/agents/issue-tracker.md",
+      "livePath": ".template-spec/agents/issue-tracker.md",
       "rawPath": "raw/issue-tracker.md",
       "role": "copy",
       "sha256": "260db9b67b39f8cba50fc1de7a7ae12abb9d246f3a4b85c0122a71f9fcf431f9"
@@ -96,7 +96,7 @@
     {
       "id": "triage-labels.md",
       "kind": "document",
-      "livePath": "docs/agents/triage-labels.md",
+      "livePath": ".template-spec/agents/triage-labels.md",
       "rawPath": "raw/triage-labels.md",
       "role": "copy",
       "sha256": "41f5eb2fe11388077c73dbac7d29cf83fb1da229248b6363c273a891d00705fd"
@@ -112,7 +112,7 @@
     {
       "id": "spec-template.md",
       "kind": "document",
-      "livePath": "docs/templates/spec-template.md",
+      "livePath": ".template-spec/templates/spec-template.md",
       "rawPath": "raw/spec-template.md",
       "role": "copy",
       "sha256": "10d12f0d4c7c148afd74876d057afebdf0a97b65a21cdf2b67ca14a3ce804115"
@@ -120,7 +120,7 @@
     {
       "id": "vertical-slice-ticket-template.md",
       "kind": "document",
-      "livePath": "docs/templates/vertical-slice-ticket-template.md",
+      "livePath": ".template-spec/templates/vertical-slice-ticket-template.md",
       "rawPath": "raw/vertical-slice-ticket-template.md",
       "role": "copy",
       "sha256": "ce53258ca085b3b74adf56dd3d9cac2c01b4644d581f81886440d11682d02ae3"
@@ -139,7 +139,7 @@
     {
       "id": "skill-migrations.md",
       "kind": "document",
-      "livePath": "docs/agents/skill-migrations.md",
+      "livePath": ".template-spec/agents/skill-migrations.md",
       "rawPath": "raw/skill-migrations.md",
       "role": "copy",
       "sha256": "78c373a98df9b93b96758e7092e2890afb10d5266209a4fa515e50582c80b178"

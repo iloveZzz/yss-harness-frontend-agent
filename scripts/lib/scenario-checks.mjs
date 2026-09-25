@@ -17,7 +17,7 @@ const newRoles = ["role.architecture-agent", "role.frontend-agent", "role.backen
 function verifyHarnessContract() {
   const contract = parse(".agents/skills/harness-orchestrator/references/orchestration-contract.yaml");
   ensure(contract.contract_id === "harness-frontend-contract-v1", "Harness Agent contract id 漂移");
-  ensure(JSON.stringify(contract.roles) === JSON.stringify(parse("docs/process/harness-profile.yaml").audience.target_user_roles), "专职执行角色与 profile 不一致");
+  ensure(JSON.stringify(contract.roles) === JSON.stringify(parse(".template-spec/process/harness-profile.yaml").audience.target_user_roles), "专职执行角色与 profile 不一致");
   ensure(contract.orchestrator === "role.harness-orchestrator", "Harness Orchestrator 未登记");
   ensure(JSON.stringify(contract.execution_states) === JSON.stringify(["Explorer", "Drafter", "Worker", "Reviewer", "Verifier"]), "执行态集合不完整");
   ensure(JSON.stringify(contract.slice_contract?.required_sections) === JSON.stringify(["architecture", "frontend", "backend", "testing"]), "Slice Contract 四角色分区不完整");
@@ -28,11 +28,11 @@ function verifyReplacementBoundary() {
   const roles = loadDigitalHumanRoles();
   validateDefaultDigitalHumanRoles();
   ensure(JSON.stringify(roles.roles.map((role) => role.id)) === JSON.stringify(newRoles), "旧角色仍然进入默认角色集合");
-  const serialized = read("docs/agents/digital-human-roles.yaml");
+  const serialized = read(".template-spec/agents/digital-human-roles.yaml");
   for (const legacy of ["requirements-manager", "product-manager", "business", "project-manager", "frontend-engineer", "backend-engineer", "test-engineer"]) {
     ensure(!serialized.includes("role." + legacy), "旧角色残留: " + legacy);
   }
-  const migrations = read("docs/agents/skill-migrations.md");
+  const migrations = read(".template-spec/agents/skill-migrations.md");
   for (const retired of ["yss-product-lifecycle", "yss-stage-decision"]) {
     ensure(!exists(`.agents/skills/${retired}`), `旧入口不得保留物理目录: ${retired}`);
     ensure(migrations.includes(`## ${retired}`) && migrations.includes("harness-orchestrator"), `旧入口缺少迁移说明: ${retired}`);
@@ -45,13 +45,13 @@ function verifyReplacementBoundary() {
 const profiles = {
   lifecycle: {
     message: "harness-agent 生命周期压力场景验证通过",
-    files: [".agents/skills/harness-orchestrator/SKILL.md", ".agents/skills/harness-orchestrator/references/orchestration-contract.yaml", "docs/process/lifecycle-registry.yaml"],
+    files: [".agents/skills/harness-orchestrator/SKILL.md", ".agents/skills/harness-orchestrator/references/orchestration-contract.yaml", ".template-spec/process/lifecycle-registry.yaml"],
     markers: [[".agents/skills/harness-orchestrator/SKILL.md", "Fresh Verification"], [".agents/skills/harness-orchestrator/references/orchestration-contract.yaml", "ready_for_agent"]]
   },
   matt: {
     message: "harness-agent 替换边界压力场景验证通过",
-    files: ["docs/agents/digital-human-roles.yaml", "docs/process/lifecycle-registry.yaml", "docs/agents/skill-migrations.md", ".agents/skills/harness-orchestrator/SKILL.md"],
-    markers: [["docs/agents/digital-human-roles.yaml", "role.architecture-agent"], ["docs/process/lifecycle-registry.yaml", "stage.frontend-engineering-design"], ["docs/agents/skill-migrations.md", "yss-stage-decision"], [".agents/skills/harness-orchestrator/SKILL.md", "专职 Harness"]]
+    files: [".template-spec/agents/digital-human-roles.yaml", ".template-spec/process/lifecycle-registry.yaml", ".template-spec/agents/skill-migrations.md", ".agents/skills/harness-orchestrator/SKILL.md"],
+    markers: [[".template-spec/agents/digital-human-roles.yaml", "role.architecture-agent"], [".template-spec/process/lifecycle-registry.yaml", "stage.frontend-engineering-design"], [".template-spec/agents/skill-migrations.md", "yss-stage-decision"], [".agents/skills/harness-orchestrator/SKILL.md", "专职 Harness"]]
   },
   prototype: {
     message: "DDD 战术设计到实现路由场景验证通过",
@@ -65,18 +65,18 @@ const profiles = {
   },
   openapiYaml: {
     message: "OpenAPI YAML-first 场景验证通过",
-    files: ["docs/templates/openapi-spec-template.yaml", ".agents/skills/yss-openapi-governance/SKILL.md"],
-    markers: [["docs/templates/openapi-spec-template.yaml", "openapi: 3.1.0"], [".agents/skills/yss-openapi-governance/SKILL.md", "YAML-first"]]
+    files: [".template-spec/templates/openapi-spec-template.yaml", ".agents/skills/yss-openapi-governance/SKILL.md"],
+    markers: [[".template-spec/templates/openapi-spec-template.yaml", "openapi: 3.1.0"], [".agents/skills/yss-openapi-governance/SKILL.md", "YAML-first"]]
   },
   openapiJson: {
     message: "OpenAPI YAML-first JSON handoff scenarios passed",
-    files: ["docs/api/templates/openapi-json-export-record-template.md", ".agents/skills/yss-api-integration/SKILL.md"],
+    files: [".template-spec/api/templates/openapi-json-export-record-template.md", ".agents/skills/yss-api-integration/SKILL.md"],
     markers: [[".agents/skills/yss-api-integration/SKILL.md", "SHA-256"]]
   },
   yssDtoWire: {
     message: "YSS DTO OpenAPI wire-shape scenarios passed",
-    files: [".agents/skills/yss-openapi-governance/references/openapi-wire-profile.yaml", ".agents/skills/yss-openapi-governance/SKILL.md", ".agents/skills/yss-openapi-governance/SKILL.md", ".agents/skills/yss-openapi-draft-review/SKILL.md", "docs/api/templates/openapi-draft-review-checklist.md", "scripts/verify-yss-dto-openapi-profile"],
-    markers: [[".agents/skills/yss-openapi-governance/SKILL.md", "x-yss-response-wrapper"], [".agents/skills/yss-openapi-governance/SKILL.md", "verify-yss-dto-openapi-profile"], [".agents/skills/yss-openapi-draft-review/SKILL.md", "needTotalCount"], ["docs/api/templates/openapi-draft-review-checklist.md", "DTO wire shape"]]
+    files: [".agents/skills/yss-openapi-governance/references/openapi-wire-profile.yaml", ".agents/skills/yss-openapi-governance/SKILL.md", ".agents/skills/yss-openapi-governance/SKILL.md", ".agents/skills/yss-openapi-draft-review/SKILL.md", ".template-spec/api/templates/openapi-draft-review-checklist.md", "scripts/verify-yss-dto-openapi-profile"],
+    markers: [[".agents/skills/yss-openapi-governance/SKILL.md", "x-yss-response-wrapper"], [".agents/skills/yss-openapi-governance/SKILL.md", "verify-yss-dto-openapi-profile"], [".agents/skills/yss-openapi-draft-review/SKILL.md", "needTotalCount"], [".template-spec/api/templates/openapi-draft-review-checklist.md", "DTO wire shape"]]
   }
 };
 
@@ -89,7 +89,7 @@ export function runScenario(name) {
     verifyHarnessContract();
     const result = spawnSync("scripts/verify-lifecycle-registry", [], { cwd: root, encoding: "utf8" });
     ensure(result.status === 0, result.stderr || result.stdout);
-    const registry = parse("docs/process/lifecycle-registry.yaml");
+    const registry = parse(".template-spec/process/lifecycle-registry.yaml");
     ensure(registry.status === "active", "新生命周期必须为 active");
     ensure(JSON.stringify(registry.stages.map((stage) => stage.id)) === JSON.stringify(["stage.harness-entry", "stage.slice-contract", "stage.slice-implementation", "stage.verification", "stage.frontend-engineering-design"]), "生命周期阶段不是五阶段 Frontend Harness 流程");
     ensure(lifecycleTransitionContract.next_routes["work-unit.slice-contract"].includes("work-unit.slice-implementation"), "Slice Contract 后未允许进入实现");

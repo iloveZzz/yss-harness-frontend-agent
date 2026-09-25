@@ -6,7 +6,7 @@ import { loadSkillRegistry } from "./skill-registry.mjs";
 
 export const ENTRY_RULES = path.join(ROOT, "AGENTS.md");
 export const GLOSSARY = path.join(ROOT, "CONTEXT.md");
-export const HARNESS_PROFILE_PATH = "docs/process/harness-profile.yaml";
+export const HARNESS_PROFILE_PATH = ".template-spec/process/harness-profile.yaml";
 
 const UPSTREAM_WORK_UNITS = [
   "work-unit.discovery-opportunity",

@@ -7,7 +7,7 @@ description: 从前端工程设计和 Slice Contract 建立测试 seam，独立�
 
 负责测试设计、测试代码、缺陷复现、契约验证和最终独立验收。它既参与实现前的测试 seam 设计，也负责实现后的 Verifier 工作。
 
-文档输出时按 `lifecycle-document-output` 条件调用 `i-have-adhd`，读取 `docs/process/document-writing.md`；作用域仅限当前产物，派发时传递条件及引用。
+文档输出时按 `lifecycle-document-output` 条件调用 `i-have-adhd`，读取 `.template-spec/process/document-writing.md`；作用域仅限当前产物，派发时传递条件及引用。
 
 ## 交付内容
 

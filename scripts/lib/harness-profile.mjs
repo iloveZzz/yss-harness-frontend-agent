@@ -5,7 +5,7 @@ import { loadDigitalHumanRoles } from "./digital-human-roles.mjs";
 import { loadRegistry, ROOT } from "./lifecycle-registry.mjs";
 import { isTemplateSource } from "./repository-mode.mjs";
 
-export const DEFAULT_PROFILE = path.join(ROOT, "docs/process/harness-profile.yaml");
+export const DEFAULT_PROFILE = path.join(ROOT, ".template-spec/process/harness-profile.yaml");
 export const DEV_AGENT_PROFILE_ID = "harness.frontend-delivery";
 export const TARGET_ROLES = [
   "role.architecture-agent",
@@ -146,7 +146,7 @@ export function validateHarnessProfile(profile = loadHarnessProfile(), {
     fail("upstream.default_entry 必须为 work-unit.harness-entry");
   }
   const handoff = profile.upstream?.strategic_design_handoff;
-  if (handoff?.schema_ref !== "docs/process/schemas/strategic-design-handoff.schema.json"
+  if (handoff?.schema_ref !== ".template-spec/process/schemas/strategic-design-handoff.schema.json"
     || !equalArray(handoff?.accepted_schema_versions, [3, 4])
     || handoff?.current_schema_version !== 4
     || handoff?.ui_impact_requires_visual_baseline_schema_version !== 1

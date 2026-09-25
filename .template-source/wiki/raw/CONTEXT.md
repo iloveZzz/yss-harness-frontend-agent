@@ -15,13 +15,13 @@
 | Agent | 执行特定工作流步骤的 AI 协作者。本仓库当前只面向架构、前端、后端和测试四类 Agent。 | — | 不要与生物人审查者、Harness Orchestrator 或 Ticket 状态混用。 |
 | 运行时绑定 | 把数字人角色落到某个 Agent 平台的适配声明，权威清单在数字人角色注册表的 `runtimes`。 | — | 不要为每个平台复制一套职称职责。 |
 | Grok Bot | Grok 平台上的持久数字队友实例；对应 `runtime.grok`。 | — | 不是数字人角色、技能或门禁。 |
-| 数字人角色 | `docs/agents/digital-human-roles.yaml` 中定义的四类专业 Agent 身份：架构、前端、后端和测试。 | — | 不要恢复需求、产品、商务或按平台拆分的旧角色。 |
+| 数字人角色 | `.template-spec/agents/digital-human-roles.yaml` 中定义的四类专业 Agent 身份：架构、前端、后端和测试。 | — | 不要恢复需求、产品、商务或按平台拆分的旧角色。 |
 | 当前工作区入口 | 只消费当前仓库根的 `yss-project.yaml` 与 `AGENTS.md`。 | — | 不要把父目录、兄弟 submodule 或其他模板仓的入口文件当作本仓路由。 |
 | Harness Orchestrator | 负责 Harness Agent 入口、影响面、合同、任务包、状态转移、证据汇合和重路由的系统编排组件。 | — | 不计入四类研发角色；不写业务代码，不替专业 Agent 做领域决策。不要称为「主控数字人」。 |
 | DDD Tactical Design Contract | 由 `role.architecture-agent` 将批准的上游 Spec / 战略设计细化出的聚合、行为、不变量、状态、一致性、Gateway、API 和数据边界合同。 | — | 不等同于实现代码或 OpenAPI Freeze；必须经测试 Agent 评审。 |
 | Harness Agent Contract | `harness-agent-contract-v1`，定义四角色协作、生命周期状态、执行态、Slice Contract 分区、就绪公式和重路由规则。 | — | 当前分支直接替换旧编排合同，不设 v2 或并行旧入口。 |
 | 角色配置 | 某数字人角色的关注阶段、技能包、可起草产物和禁止事项。 | — | 不是独立编排器，也不含平台群聊人数。 |
-| 生命周期会签 | 指定数字人或生物人关闭 `gate.*` / 独立审查并写入 `evidence.approval-record`。 | — | 不是运行时副作用审批。会签人由 `docs/agents/digital-human-roles.yaml` 的 `gate_policy` 指定。起草者不得会签自己起草的资产。`paused-human-gate` 表示等待该会签人，不是必须生物人。 |
+| 生命周期会签 | 指定数字人或生物人关闭 `gate.*` / 独立审查并写入 `evidence.approval-record`。 | — | 不是运行时副作用审批。会签人由 `.template-spec/agents/digital-human-roles.yaml` 的 `gate_policy` 指定。起草者不得会签自己起草的资产。`paused-human-gate` 表示等待该会签人，不是必须生物人。 |
 | 运行时副作用审批 | 对发消息、改生产、付款、删数据等工具动作的账号级确认。 | — | 点 Allow 不等于门禁已批准或可发布。避免只称「Grok 平台审批」。 |
 | Ticket 状态 | Tracker 五态：`needs-triage`、`needs-info`、`ready-for-agent`、`ready-for-human`、`wontfix`。 | — | 不要称为数字人角色或「标准角色」；不要与合同状态混用。 |
 | 合同状态 | 战术设计合同与 Slice Contract 等资产状态：`draft`、`ready-for-human`、`approved`、`blocked`、`stale`、`drift`、`new_impacts`、`not-applicable`。 | — | 不要与 Ticket 五态混用。`ready-for-human` 出现在合同和 Ticket 时，以所在资产类型为准。 |
@@ -80,7 +80,7 @@
 | 试验技能 | 尚未达到项目默认支持成熟度的技能。 | — | 只在明确试验范围内使用，不进入 实现合同编译器 默认技能闭包。 |
 | 显式兼容入口 | 为已有用户操作习惯保留的 user-invoked 工作流入口，写入前由生命周期编排器预检，结果回交其验收。 | — | 不是默认路径、过时别名或可以越过门禁的第二套生命周期。 |
 | 技能成熟度 | 描述技能从 `draft`、`verified`、`supported` 到 `deprecated` 的治理状态。 | — | 不等同于文件存在、已被投影或能够安装。 |
-| 技能注册表 | 记录技能身份、别名、分层、适用影响面、成熟度、默认可发现性和 Agent 运行时入口的机器可读路由资产。 | — | 不替代 `skills-lock.json` 的来源、hash 和投影完整性职责。当前 `docs/agents/yss-skill-registry.yaml` 为 `active`，实现合同编译器 与生命周期必须消费通过本表校验的 canonical 技能。 |
+| 技能注册表 | 记录技能身份、别名、分层、适用影响面、成熟度、默认可发现性和 Agent 运行时入口的机器可读路由资产。 | — | 不替代 `skills-lock.json` 的来源、hash 和投影完整性职责。当前 `.template-spec/agents/yss-skill-registry.yaml` 为 `active`，实现合同编译器 与生命周期必须消费通过本表校验的 canonical 技能。 |
 | LLM Wiki | 由 `raw/`、`wiki/` 与 `.wiki-manifest.json` 组成的本地持久知识库。 | — | 不是 `research` 一次性笔记，也不替代权威源。`ingest` 只把用户点名的外源或已落盘研究笔记编进 IR，不改 live 权威文件。 |
 | 生态发布清单 | 关联模板 schema 与 commit、CLI 版本与快照、公开技能来源与导出 hash 的跨仓发布证据。 | — | 不要求尚未生成的仓库 commit 互相循环引用。 |
 | 研发管理仓库 | 承载 Spec、OpenAPI、架构、Ticket、验证、发布和复盘等研发管理资产的仓库。 | — | 不等同于前端 / 后端代码 monorepo。 |

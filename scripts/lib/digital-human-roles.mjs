@@ -4,7 +4,7 @@ import { parseDocument } from "../vendor/yaml.mjs";
 import { loadRegistry, ROOT } from "./lifecycle-registry.mjs";
 import { loadSkillRegistry } from "./skill-registry.mjs";
 
-export const DEFAULT_DIGITAL_HUMAN_ROLES = path.join(ROOT, "docs/agents/digital-human-roles.yaml");
+export const DEFAULT_DIGITAL_HUMAN_ROLES = path.join(ROOT, ".template-spec/agents/digital-human-roles.yaml");
 
 const ROLE_ID = /^role\.[a-z0-9][a-z0-9-]*$/;
 const GROUP_ID = /^group\.[a-z0-9][a-z0-9-]*$/;
@@ -240,7 +240,7 @@ export function validateDigitalHumanRoles(doc, { skillIds, stageIds, gateIds, ar
   if (doc.registry_id !== "yss.digital-human-roles") fail("registry_id 必须为 yss.digital-human-roles");
   if (doc.status !== "active") fail("status 必须为 active");
   requireString(doc.description, "description");
-  if (doc.canonical_path !== "docs/agents/digital-human-roles.yaml") fail("canonical_path 必须为 docs/agents/digital-human-roles.yaml");
+  if (doc.canonical_path !== ".template-spec/agents/digital-human-roles.yaml") fail("canonical_path 必须为 .template-spec/agents/digital-human-roles.yaml");
   rejectGrokCoupling(doc.runtime_policy, "runtime_policy");
   rejectGrokCoupling(doc.gate_policy, "gate_policy");
   const runtime = doc.runtime_policy;
@@ -252,7 +252,7 @@ export function validateDigitalHumanRoles(doc, { skillIds, stageIds, gateIds, ar
   if (runtime.implementer_must_differ !== true) fail("implementer_must_differ 必须为 true");
   if (runtime.biological_veto !== true) fail("biological_veto 必须为 true");
   if (runtime.write_isolation !== "task-package-policy") fail("write_isolation 必须为 task-package-policy");
-  if (runtime.task_package_schema !== "docs/process/schemas/digital-human-task-package.schema.json") fail("runtime_policy.task_package_schema 路径不正确");
+  if (runtime.task_package_schema !== ".template-spec/process/schemas/digital-human-task-package.schema.json") fail("runtime_policy.task_package_schema 路径不正确");
   if (runtime.contract_schema !== "slice-implementation-contract-v1") fail("runtime_policy.contract_schema 必须为 slice-implementation-contract-v1");
   if (JSON.stringify(runtime.execution_states) !== JSON.stringify(["Explorer", "Drafter", "Worker", "Reviewer", "Verifier"])) fail("runtime_policy.execution_states 不完整");
 

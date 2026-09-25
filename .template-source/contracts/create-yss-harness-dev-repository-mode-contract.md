@@ -98,7 +98,7 @@ npx create-yss-harness-dev@latest attach \
 
 根规则、共享 skills / 投影、`docs/` 中的实例流程资产、共享 `scripts/`、`scripts/vendor/`、`.nvmrc` 与根 `.gitignore` 属于分发面。`.template-source/`、根 `package.json`、`.github/`、`.cursor/environment.json`、源仓库 ADR、`wiki/`、`docs/reviews/` 属于模板源资产。
 
-`docs/process/harness-profile.yaml` 随 `docs/` 进入实例，供 Agent 识别本 Harness 家族。
+`.template-spec/process/harness-profile.yaml` 随 `docs/` 进入实例，供 Agent 识别本 Harness 家族。
 
 ## 第一版不做
 

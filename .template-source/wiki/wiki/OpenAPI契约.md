@@ -14,10 +14,10 @@ OpenAPI Freeze 或无 API 影响记录完成后，由 `harness-orchestrator` 正
 
 - `CONTEXT.md`
 - `AGENTS.md`
-- `docs/templates/spec-template.md`
-- `docs/process/lifecycle-registry.yaml`
-- `docs/api/templates/openapi-draft-review-checklist.md`
-- `docs/agents/digital-human-roles.yaml`
+- `.template-spec/templates/spec-template.md`
+- `.template-spec/process/lifecycle-registry.yaml`
+- `.template-spec/api/templates/openapi-draft-review-checklist.md`
+- `.template-spec/agents/digital-human-roles.yaml`
 - `.agents/skills/yss-implementation-contract-compiler/SKILL.md`
 - `.agents/skills/yss-implementation-contract-compiler/references/compiler-contract.yaml`
 - `.agents/skills/yss-implementation-contract-compiler/references/slice-implementation-contract.md`

@@ -7,7 +7,7 @@
 `yss-router` 已由 `yss-implementation-contract-compiler` 硬替换；`yss-source-index` 已由 `yss-skill-source-index-refresh` 硬替换。两个旧 ID 不保留 alias、兼容目录、投影或 lock 条目，也不能作为 Recipe、合同、模板或脚本的正向输入。
 
 - Registry、编译器合同、Slice Implementation Contract 和 YSS Skill Execution Result 使用 schema v2。
-- Recipe 只引用 dotted capability；类型化依赖只由 `docs/agents/yss-skill-registry.yaml` 持有。
+- Recipe 只引用 dotted capability；类型化依赖只由 `.template-spec/agents/yss-skill-registry.yaml` 持有。
 - schema v1 明确拒绝并返回迁移提示，不自动升级。
 - 历史冻结证据不改写；旧 ID 只允许留在本迁移记录、`OBSOLETE` 阻断集合和负向测试。
 

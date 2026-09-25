@@ -21,7 +21,7 @@ const validContract = {
   frontend: {},
   backend: {},
   testing: {},
-  evidence_refs: ["docs/process/lifecycle-registry.yaml"]
+  evidence_refs: [".template-spec/process/lifecycle-registry.yaml"]
 };
 
 assert.equal(validateNextRoute("work-unit.harness-entry", "work-unit.frontend-engineering-design").result, "allowed");

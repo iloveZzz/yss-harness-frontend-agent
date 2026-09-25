@@ -11,7 +11,7 @@ const REVIEW_KIND_TO_MODE = new Map([
   ["focused-independent-review", "focused-independent"],
   ["formal-independent-review", "formal-independent"]
 ]);
-const REVIEW_RECORD_SCHEMA = path.join(ROOT, "docs/process/schemas/maintenance-review-record.schema.json");
+const REVIEW_RECORD_SCHEMA = path.join(ROOT, ".template-spec/process/schemas/maintenance-review-record.schema.json");
 const STRUCTURED_FIELDS = [
   "schema_version",
   "record_kind",

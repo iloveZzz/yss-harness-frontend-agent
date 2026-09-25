@@ -5,8 +5,8 @@ import { fileURLToPath } from "node:url";
 import { parseDocument } from "../vendor/yaml.mjs";
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-export const DEFAULT_REGISTRY = path.join(ROOT, "docs/process/lifecycle-registry.yaml");
-export const DEFAULT_BASELINE = path.join(ROOT, "docs/process/lifecycle-registry-baseline.json");
+export const DEFAULT_REGISTRY = path.join(ROOT, ".template-spec/process/lifecycle-registry.yaml");
+export const DEFAULT_BASELINE = path.join(ROOT, ".template-spec/process/lifecycle-registry-baseline.json");
 const ID_PATTERN = /^(stage|gate|artifact|work-unit|evidence)\.[a-z0-9][a-z0-9-]*$/;
 const COLLECTIONS = ["stages", "gates", "artifacts", "work_units", "evidence"];
 
@@ -104,7 +104,7 @@ export function validateRegistry(registry, { baseline = DEFAULT_BASELINE } = {})
   }
   if (policy.published_ids_immutable !== true) fail("published_ids_immutable 必须为 true");
   if (policy.pattern !== "^(stage|gate|artifact|work-unit|evidence)\\.[a-z0-9][a-z0-9-]*$") fail("id_policy.pattern 不符合固定命名空间");
-  if (policy.baseline !== "docs/process/lifecycle-registry-baseline.json") fail("id_policy.baseline 必须指向发布基线");
+  if (policy.baseline !== ".template-spec/process/lifecycle-registry-baseline.json") fail("id_policy.baseline 必须指向发布基线");
   if (!Array.isArray(policy.deprecated_ids)) fail("deprecated_ids 必须是数组");
   const ids = new Map();
   for (const collection of COLLECTIONS) {
@@ -145,7 +145,7 @@ export function validateRegistry(registry, { baseline = DEFAULT_BASELINE } = {})
 export function renderLifecycleStructure(registry) {
   const lines = [
     "<!-- lifecycle-registry:structure:start -->",
-    `> 此结构区由 \`docs/process/lifecycle-registry.yaml\` 生成。当前为 \`${registry.status}\` 模式：它校验结构和派生文档，不改变运行时状态 schema 或人工批准语义。`, "",
+    `> 此结构区由 \`.template-spec/process/lifecycle-registry.yaml\` 生成。当前为 \`${registry.status}\` 模式：它校验结构和派生文档，不改变运行时状态 schema 或人工批准语义。`, "",
     "## 1. 主阶段", "", "| 稳定 ID | 阶段 | 目标 | 退出标准 |", "|---|---|---|---|"
   ];
   for (const stage of registry.stages) lines.push(`| \`${stage.id}\` | ${stage.name} | ${stage.goal} | ${stage.exit_criteria} |`);
@@ -160,7 +160,7 @@ export function renderLifecycleStructure(registry) {
 }
 
 export function renderWorkUnits(registry) {
-  const lines = ["<!-- lifecycle-registry:work-units:start -->", "> 此表由 `docs/process/lifecycle-registry.yaml` 生成；工作单元按 `scope` 区分模板维护与项目实例流程。", "", "| 稳定 ID | 范围 | 工作单元 | 输入 | 输出 | 完成条件 |", "|---|---|---|---|---|---|"];
+  const lines = ["<!-- lifecycle-registry:work-units:start -->", "> 此表由 `.template-spec/process/lifecycle-registry.yaml` 生成；工作单元按 `scope` 区分模板维护与项目实例流程。", "", "| 稳定 ID | 范围 | 工作单元 | 输入 | 输出 | 完成条件 |", "|---|---|---|---|---|---|"];
   for (const unit of registry.work_units) lines.push(`| \`${unit.id}\` | ${unit.scope} | ${unit.name} | ${unit.input} | ${unit.output} | ${unit.completion} |`);
   lines.push("<!-- lifecycle-registry:work-units:end -->");
   return `${lines.join("\n")}\n`;

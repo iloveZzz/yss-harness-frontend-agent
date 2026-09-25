@@ -15,7 +15,7 @@ export function validateSkillGovernance({ read = (relative) => readFileSync(path
   const tableSkill = read(".agents/skills/ytable-usage/SKILL.md");
   const pageSkill = read(".agents/skills/yss-ui-business-page-generation/SKILL.md");
 
-  for (const marker of ["trigger: always_on", "docs/agents/yss-skill-registry.yaml", ".agents/skills/yss-ui/SKILL.md", "原型阶段"]) {
+  for (const marker of ["trigger: always_on", ".template-spec/agents/yss-skill-registry.yaml", ".agents/skills/yss-ui/SKILL.md", "原型阶段"]) {
     if (!globalRules.includes(marker)) fail(`YSS UI 薄入口缺少路由标记: ${marker}`);
   }
   for (const staleHeading of ["## Available Skills", "## Mandatory Workflow"]) {
@@ -36,7 +36,7 @@ export function validateSkillGovernance({ read = (relative) => readFileSync(path
   }
 
   const cursorRules = read(".cursorrules");
-  for (const marker of ["docs/process/harness-profile.yaml", "docs/agents/yss-skill-registry.yaml", "harness-orchestrator", ".cursor/skills"]) {
+  for (const marker of [".template-spec/process/harness-profile.yaml", ".template-spec/agents/yss-skill-registry.yaml", "harness-orchestrator", ".cursor/skills"]) {
     if (!cursorRules.includes(marker)) fail(`Cursor 薄入口缺少路由标记: ${marker}`);
   }
   for (const stalePath of [".agents/skills/page-module-development/", ".agents/skills/api-integration/", ".agents/skills/use-table-height/", ".agents/skills/use-tree-height/"]) {

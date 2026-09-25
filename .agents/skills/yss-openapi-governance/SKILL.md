@@ -5,7 +5,7 @@ description: 前端只读核验后端冻结 OpenAPI、JSON 派生与交付证据
 
 # YSS OpenAPI Governance
 
-已有生命周期资产优先用 `scripts/contract view <资产> --kind <类型>` 阅读；执行任务用 `--profile task --unit <ID>`，绑定与校验明细用 `--profile full`。视图不授予执行权限，仍按本 Skill 的原始来源和批准门禁处理。类型、准备和迁移见 `docs/process/contract-reading.md`。
+已有生命周期资产优先用 `scripts/contract view <资产> --kind <类型>` 阅读；执行任务用 `--profile task --unit <ID>`，绑定与校验明细用 `--profile full`。视图不授予执行权限，仍按本 Skill 的原始来源和批准门禁处理。类型、准备和迁移见 `.template-spec/process/contract-reading.md`。
 
 本 skill 在前端仓只消费 YSS OpenAPI 的 **YAML-first** 工作流结果：
 
@@ -17,7 +17,7 @@ Spec / 设计输入 → OpenAPI YAML Draft → 审查与 Freeze → JSON 派生�
 
 YSS DTO 的可复用 HTTP/JSON 映射由 `.agents/skills/yss-openapi-governance/references/openapi-wire-profile.yaml` 提供只读快照。它描述公开 wire shape，不是 Java 字段或 getter 清单；本 skill 必须消费 profile，不能在治理文档、feature YAML 和 JSON 中各自发明 `SingleResult`、`PageResult` 或 `PageQuery` 字段表。
 
-文档输出时按 `lifecycle-document-output` 条件调用 `i-have-adhd`，读取 `docs/process/document-writing.md`；作用域仅限当前产物，派发时传递条件及引用。
+文档输出时按 `lifecycle-document-output` 条件调用 `i-have-adhd`，读取 `.template-spec/process/document-writing.md`；作用域仅限当前产物，派发时传递条件及引用。
 
 ## 前端仓消费边界
 
@@ -81,7 +81,7 @@ pnpm exec redocly bundle \
 4. **从冻结 YAML 派生 JSON**
    - 使用上面的锁定 `redocly bundle` 命令生成 `docs/.scratch/<feature>/api/<feature>.json`，JSON 不纳入人工编辑面。
    - 对输出 JSON 重新执行解析 / lint（按项目工具链），确认 bundle 未产生组件重名冲突或无法解析的引用。
-   - 写入 `docs/.scratch/<feature>/api/<feature>-json-export.md`，可从 `docs/api/templates/openapi-json-export-record-template.md` 创建。
+   - 写入 `docs/.scratch/<feature>/api/<feature>-json-export.md`，可从 `.template-spec/api/templates/openapi-json-export-record-template.md` 创建。
    - 记录 YAML SHA-256、JSON SHA-256、OAS 版本、Redocly CLI 版本与 lockfile 引用、完整命令、metafile、`$ref` 例外以及结果。
 
 5. **交给下游前端**

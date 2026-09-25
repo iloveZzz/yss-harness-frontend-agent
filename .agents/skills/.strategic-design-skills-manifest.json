@@ -4,7 +4,7 @@
   "source_type": "git-submodule",
   "source_root": ".agents/skills",
   "source_revision": "83d7bce7eab1adf16e02a419717c94fa8ba84f43",
-  "adaptation_ref": "docs/agents/strategic-design-skills-integration.md",
+  "adaptation_ref": ".template-spec/agents/strategic-design-skills-integration.md",
   "skills": [
     {
       "upstream": "prototype-review",

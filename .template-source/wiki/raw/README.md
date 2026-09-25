@@ -37,23 +37,23 @@ README 只解释上述入口，不另定义阶段、门禁或技能分层。
 └── scripts/                 ← 模板轻量校验脚本
 ```
 
-项目需要生成度量、外部实现仓库记录或其他临时产物时再按需创建对应目录。前后端实现仓库接入规则见 `docs/process/implementation-repo-integration.md`。
+项目需要生成度量、外部实现仓库记录或其他临时产物时再按需创建对应目录。前后端实现仓库接入规则见 `.template-spec/process/implementation-repo-integration.md`。
 
 ## Quickstart
 
 1. 先读取当前仓库根 `yss-project.yaml`，按 `repository_mode` 选择模板维护或产品研发生命周期。
-2. 必读入口为 `AGENTS.md` 与 `CONTEXT.md`；流程事实以 `docs/process/lifecycle-registry.yaml` 和 `docs/process/harness-process-tailoring.md` 为准。
+2. 必读入口为 `AGENTS.md` 与 `CONTEXT.md`；流程事实以 `.template-spec/process/lifecycle-registry.yaml` 和 `.template-spec/process/harness-process-tailoring.md` 为准。
 3. `template-source` 修改后默认执行 `scripts/verify-template-fast`；共享 skill 变化时再执行必要的投影与 lock 更新。PR 使用 candidate 核验，发布使用完整门禁。
 4. `project-instance` 先做影响面分诊，再走 `harness-orchestrator`：`harness-entry` → `tactical-design` → `slice-contract` → `slice-implementation` → `verification`。领域影响由 `architecture-agent` 使用 `yss-tactical-design`。`grill-with-docs`、`to-spec`、`to-tickets` 只作为用户显式兼容入口。
 5. 实现仓库接入、YSS 路由、独立审查、fresh verification 和 Git checkpoint 以 `AGENTS.md` 的硬门禁为准。
 
-YSS skills 的公开发布投影维护在 [iloveZzz/yss-spec-dev-skills](https://github.com/iloveZzz/yss-spec-dev-skills)，发布清单和导出命令见 [skills 维护说明](./docs/agents/skills-maintenance.md)。
+YSS skills 的公开发布投影维护在 [iloveZzz/yss-spec-dev-skills](https://github.com/iloveZzz/yss-spec-dev-skills)，发布清单和导出命令见 [skills 维护说明](./.template-source/agents/skills-maintenance.md)。
 
 ## 模板初始化 CLI
 
 开发落地 Harness 的实例化入口是独立 GitHub 仓库 [iloveZzz/create-yss-harness-dev](https://github.com/iloveZzz/create-yss-harness-dev)。本仓库不包含 CLI 源码、测试或发布配置，只保留分发契约和面向实例使用者的实践指南：
 
-- [create-yss-harness-dev 外部 CLI 实践指南](./docs/user-guide/外部命令行工具实践指南.md)
+- [create-yss-harness-dev 外部 CLI 实践指南](./.template-spec/user-guide/外部命令行工具实践指南.md)
 
 推荐入口：
 
@@ -104,29 +104,29 @@ scripts/verify-template
 | 文档 | 内容 |
 |------|------|
 | [AGENTS.md](./AGENTS.md) | 全局 AI 指令 + 工程基线入口 + Agent 协作 |
-| [docs/user-guide/用户手册索引.md](./docs/user-guide/用户手册索引.md) | 模板使用说明 |
-| [docs/user-guide/产品生命周期工作流.md](./docs/user-guide/产品生命周期工作流.md) | Harness Agent 五阶段使用手册 |
-| [docs/user-guide/图示生成器使用指南.md](./docs/user-guide/图示生成器使用指南.md) | Excalidraw 可视化辅助 skill 使用手册 |
-| [docs/process/PDCA-SCRUM.md](./docs/process/PDCA-SCRUM.md) | PDCA × Scrum × AI |
-| [docs/process/MATT-POCOCK-ENGINEERING-SKILLS.md](./docs/process/MATT-POCOCK-ENGINEERING-SKILLS.md) | Matt Pocock Engineering Skills 集成与使用 |
-| [docs/process/lifecycle-registry.yaml](./docs/process/lifecycle-registry.yaml) | 生命周期结构事实源：主阶段、门禁、产物、工作单元、证据与稳定 ID |
-| [docs/process/harness-process-tailoring.md](./docs/process/harness-process-tailoring.md) | 小改动 / 中等变更 / 新模块的流程裁剪指南 |
-| [docs/process/harness-executive-blueprint.md](./docs/process/harness-executive-blueprint.md) | 面向业务方和管理者的 Harness 一页式蓝图 |
-| [docs/process/implementation-repo-integration.md](./docs/process/implementation-repo-integration.md) | 外部前端 / 后端实现仓库接入与跨仓库切片绑定 |
-| [docs/agents/README.md](./docs/agents/README.md) | Agent 协作文档目录说明 |
-| [docs/agents/skills-maintenance.md](./docs/agents/skills-maintenance.md) | Agent skills 安装与维护 |
-| [docs/user-guide/规格与任务迁移指南.md](./docs/user-guide/规格与任务迁移指南.md) | 旧规格与任务入口迁移指南 |
-| [docs/discovery/IDEATION.md](./docs/discovery/IDEATION.md) | 机会构想方法 |
-| [docs/architecture/README.md](./docs/architecture/README.md) | 架构设计 + 审查清单 |
+| [.template-spec/user-guide/用户手册索引.md](./.template-spec/user-guide/用户手册索引.md) | 模板使用说明 |
+| [.template-spec/user-guide/产品生命周期工作流.md](./.template-spec/user-guide/产品生命周期工作流.md) | Harness Agent 五阶段使用手册 |
+| [.template-spec/user-guide/图示生成器使用指南.md](./.template-spec/user-guide/图示生成器使用指南.md) | Excalidraw 可视化辅助 skill 使用手册 |
+| [.template-spec/process/PDCA-SCRUM.md](./.template-spec/process/PDCA-SCRUM.md) | PDCA × Scrum × AI |
+| [.template-source/process/MATT-POCOCK-ENGINEERING-SKILLS.md](./.template-source/process/MATT-POCOCK-ENGINEERING-SKILLS.md) | Matt Pocock Engineering Skills 集成与使用 |
+| [.template-spec/process/lifecycle-registry.yaml](./.template-spec/process/lifecycle-registry.yaml) | 生命周期结构事实源：主阶段、门禁、产物、工作单元、证据与稳定 ID |
+| [.template-spec/process/harness-process-tailoring.md](./.template-spec/process/harness-process-tailoring.md) | 小改动 / 中等变更 / 新模块的流程裁剪指南 |
+| [.template-spec/process/harness-executive-blueprint.md](./.template-spec/process/harness-executive-blueprint.md) | 面向业务方和管理者的 Harness 一页式蓝图 |
+| [.template-spec/process/implementation-repo-integration.md](./.template-spec/process/implementation-repo-integration.md) | 外部前端 / 后端实现仓库接入与跨仓库切片绑定 |
+| [.template-spec/agents/README.md](./.template-spec/agents/README.md) | Agent 协作文档目录说明 |
+| [.template-source/agents/skills-maintenance.md](./.template-source/agents/skills-maintenance.md) | Agent skills 安装与维护 |
+| [.template-spec/user-guide/规格与任务迁移指南.md](./.template-spec/user-guide/规格与任务迁移指南.md) | 旧规格与任务入口迁移指南 |
+| [.template-spec/discovery/IDEATION.md](./.template-spec/discovery/IDEATION.md) | 机会构想方法 |
+| [.template-spec/architecture/README.md](./.template-spec/architecture/README.md) | 架构设计 + 审查清单 |
 | [docs/testing/README.md](./docs/testing/README.md) | 测试策略 |
 
 ## 核心模板
 
 | 模板 | 用途 |
 |------|------|
-| [docs/templates/spec-template.md](./docs/templates/spec-template.md) | Spec，包含 OpenAPI 影响、测试决策、AI / 人工审查点 |
-| [docs/templates/local-parent-ticket-template.md](./docs/templates/local-parent-ticket-template.md) | Local Markdown 功能父 Ticket 与生命周期索引 |
-| [docs/templates/vertical-slice-ticket-template.md](./docs/templates/vertical-slice-ticket-template.md) | 垂直切片 Ticket |
-| [docs/templates/implementation-repo-registry-template.md](./docs/templates/implementation-repo-registry-template.md) | 外部实现仓库登记 |
-| [docs/templates/cross-repo-slice-template.md](./docs/templates/cross-repo-slice-template.md) | 跨仓库垂直切片记录 |
-| [docs/architecture/templates/architecture-deepening-template.md](./docs/architecture/templates/architecture-deepening-template.md) | 架构 deepening 候选与 seam 设计 |
+| [.template-spec/templates/spec-template.md](./.template-spec/templates/spec-template.md) | Spec，包含 OpenAPI 影响、测试决策、AI / 人工审查点 |
+| [.template-spec/templates/local-parent-ticket-template.md](./.template-spec/templates/local-parent-ticket-template.md) | Local Markdown 功能父 Ticket 与生命周期索引 |
+| [.template-spec/templates/vertical-slice-ticket-template.md](./.template-spec/templates/vertical-slice-ticket-template.md) | 垂直切片 Ticket |
+| [.template-spec/templates/implementation-repo-registry-template.md](./.template-spec/templates/implementation-repo-registry-template.md) | 外部实现仓库登记 |
+| [.template-spec/templates/cross-repo-slice-template.md](./.template-spec/templates/cross-repo-slice-template.md) | 跨仓库垂直切片记录 |
+| [.template-spec/architecture/templates/architecture-deepening-template.md](./.template-spec/architecture/templates/architecture-deepening-template.md) | 架构 deepening 候选与 seam 设计 |

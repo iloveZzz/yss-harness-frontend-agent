@@ -5,22 +5,22 @@ description: "编译或重验 YSS Slice Implementation Contract、最小 Skill �
 
 # YSS Implementation Contract Compiler
 
-已有生命周期资产优先用 `scripts/contract view <资产> --kind <类型>` 阅读；执行任务用 `--profile task --unit <ID>`，绑定与校验明细用 `--profile full`。视图不授予执行权限，仍按本 Skill 的原始来源和批准门禁处理。类型、准备和迁移见 `docs/process/contract-reading.md`。
+已有生命周期资产优先用 `scripts/contract view <资产> --kind <类型>` 阅读；执行任务用 `--profile task --unit <ID>`，绑定与校验明细用 `--profile full`。视图不授予执行权限，仍按本 Skill 的原始来源和批准门禁处理。类型、准备和迁移见 `.template-spec/process/contract-reading.md`。
 
 本技能是确定性的实现合同编译器，不是生命周期主控。它消费已批准且版本当前的输入，输出 draft、blocked 或 ready-for-lifecycle-review 的合同草案，由 `harness-orchestrator` 批准、持久化并设置 ready-for-agent。
 
-文档输出时按 `lifecycle-document-output` 条件调用 `i-have-adhd`，读取 `docs/process/document-writing.md`；作用域仅限当前产物，派发时传递条件及引用。
+文档输出时按 `lifecycle-document-output` 条件调用 `i-have-adhd`，读取 `.template-spec/process/document-writing.md`；作用域仅限当前产物，派发时传递条件及引用。
 
 ## 输入
 
-采用专职前端 profile 或显式 `frontend_delivery` 时，按 `docs/process/frontend-backend-delivery.md` 核验战略与后端联合交付；缺任一输入只诊断和回交，正式实现与恢复从当前批准的 Slice Contract 重验接收摘要和真实服务。
+采用专职前端 profile 或显式 `frontend_delivery` 时，按 `.template-spec/process/frontend-backend-delivery.md` 核验战略与后端联合交付；缺任一输入只诊断和回交，正式实现与恢复从当前批准的 Slice Contract 重验接收摘要和真实服务。
 
 必须读取 yss-project.yaml、CONTEXT.md、Spec / 战略设计、前端工程设计、已核验的后端交付、API / UI 消费影响、实现仓库登记、允许写路径和验证命令。输入缺失、未批准或过期时返回 blocked。
 
 后端 DDD / MVC 技术设计、架构确认和脚手架由后端项目持有；本仓只读消费已冻结 API、联合交付与页面工程约束。两类战略交接合同均可导入，不为前端切片补造后端技术设计。
 
 
-接入与导出先按 `docs/process/delivery-preflight.md` 执行对应阶段只读预检；既有工程身份按 `docs/process/existing-backend-architecture.md` 读取原始证据，不补造生成器来源。无 UI 改动可承接当前确认的 `existing-ui-baseline`，新设计仍走原型；当前批准后仅允许登记与合同交集内的输出增量。
+接入与导出先按 `.template-spec/process/delivery-preflight.md` 执行对应阶段只读预检；既有工程身份按 `.template-spec/process/existing-backend-architecture.md` 读取原始证据，不补造生成器来源。无 UI 改动可承接当前确认的 `existing-ui-baseline`，新设计仍走原型；当前批准后仅允许登记与合同交集内的输出增量。
 
 ## 编译结果
 
@@ -52,7 +52,7 @@ description: "编译或重验 YSS Slice Implementation Contract、最小 Skill �
 
 ## 战略交接快照包
 
-使用 `scripts/strategic-handoff export / verify / import`；源资产冻结、规则身份与批准绑定、目标术语对账和逐条承接合同以 `docs/process/strategic-handoff-package.md` 为准。来自导入包时，战术合同绑定 `strategic_handoff`；批准/流转前执行 `scripts/verify-strategic-handoff-consumption --root <target> <tactical>`，切片消费追加 `--slice <slice-id>`。存在延期时仅允许无依赖且核验通过的切片继续；未知依赖扩大阻断。
+使用 `scripts/strategic-handoff export / verify / import`；源资产冻结、规则身份与批准绑定、目标术语对账和逐条承接合同以 `.template-spec/process/strategic-handoff-package.md` 为准。来自导入包时，战术合同绑定 `strategic_handoff`；批准/流转前执行 `scripts/verify-strategic-handoff-consumption --root <target> <tactical>`，切片消费追加 `--slice <slice-id>`。存在延期时仅允许无依赖且核验通过的切片继续；未知依赖扩大阻断。
 
 ## Slice v3 准备与批准
 

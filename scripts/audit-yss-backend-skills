@@ -51,6 +51,6 @@ if (checkOnly) {
   const counts = Object.fromEntries(["keep", "narrow", "merge", "remove"].map((classification) => [classification, candidates.filter((item) => item.classification === classification).length]));
   process.stdout.write(`backend skill audit passed: ${candidates.length} candidates (${Object.entries(counts).map(([key, value]) => `${key}=${value}`).join(", ")})\n`);
 } else {
-  process.stdout.write(`${JSON.stringify({ schema_version: 1, generated_from: "docs/agents/yss-skill-registry.yaml", candidates }, null, 2)}\n`);
+  process.stdout.write(`${JSON.stringify({ schema_version: 1, generated_from: ".template-spec/agents/yss-skill-registry.yaml", candidates }, null, 2)}\n`);
 }
 if (blocking.length) process.exitCode = 1;

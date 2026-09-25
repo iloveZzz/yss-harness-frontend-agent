@@ -5,7 +5,7 @@ description: "审查 YSS OpenAPI Draft 的需求覆盖、页面动作、响应�
 
 # YSS OpenAPI 消费审查
 
-已有生命周期资产优先用 `scripts/contract view <资产> --kind <类型>` 阅读；执行任务用 `--profile task --unit <ID>`，绑定与校验明细用 `--profile full`。视图不授予执行权限，仍按本 Skill 的原始来源和批准门禁处理。类型、准备和迁移见 `docs/process/contract-reading.md`。
+已有生命周期资产优先用 `scripts/contract view <资产> --kind <类型>` 阅读；执行任务用 `--profile task --unit <ID>`，绑定与校验明细用 `--profile full`。视图不授予执行权限，仍按本 Skill 的原始来源和批准门禁处理。类型、准备和迁移见 `.template-spec/process/contract-reading.md`。
 
 前端仅从页面动作、状态、错误与客户端类型角度提供只读反馈；后端持有 Draft / Freeze 权威并执行修订。本地不生成后端 DTO、不批准 API Freeze；mapper evidence 由后端交付。
 
@@ -98,4 +98,4 @@ Block if any of these are true:
 
 `Review Result` 只有在 `Structural Validation` 与 `Semantic Review` 均为 `Passed` 时才能是 `Approved`；不使用 `Conditionally Approved` 或 `Semantic Approved` 作为顶层结论。
 
-Prefer `docs/api/templates/openapi-draft-review-checklist.md` when a tabular checklist is useful.
+Prefer `.template-spec/api/templates/openapi-draft-review-checklist.md` when a tabular checklist is useful.

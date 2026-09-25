@@ -4,8 +4,8 @@ document_writing:
   condition: lifecycle-document-output
   scope: current-document-work-only
   dispatch: pass-condition-and-reference-to-document-owner
-  reference: docs/process/document-writing.md
-  examples: docs/templates/examples/lifecycle-writing-examples.md
+  reference: .template-spec/process/document-writing.md
+  examples: .template-spec/templates/examples/lifecycle-writing-examples.md
   artifact_ownership: unchanged
   gate_and_status_semantics: unchanged
 contract_id: harness-frontend-contract-v1
@@ -219,7 +219,7 @@ scaffold_architecture_decision:
   applies_when: backend_scaffold_status_required
   owner: role.harness-orchestrator
   evidence_file: scaffold-architecture-decisions.yaml
-  schema_ref: docs/process/schemas/scaffold-architecture-decisions.schema.json
+  schema_ref: .template-spec/process/schemas/scaffold-architecture-decisions.schema.json
   recommendation:
     domain_driven_signals:
       - aggregate_invariants
@@ -255,7 +255,7 @@ backend_scaffold:
   status: not-applicable-in-frontend-profile
   owner: upstream-backend-project
 frontend_delivery:
-  contract_ref: docs/process/frontend-backend-delivery.md
+  contract_ref: .template-spec/process/frontend-backend-delivery.md
   verifier: scripts/verify-frontend-delivery
   every_start_and_resume: true
   inputs_do_not_approve_implementation: true
@@ -274,8 +274,8 @@ consumer_entry_routes:
       target_work_unit: work-unit.technical-design
 
 stage_tracking:
-  contract: docs/process/stage-tracking.md
-  schema: docs/process/schemas/stage-tracking.schema.json
+  contract: .template-spec/process/stage-tracking.md
+  schema: .template-spec/process/schemas/stage-tracking.schema.json
   verifier: scripts/stage-tracking
   configuration: tracker.lifecycle_tracking_version
   machine_state_owner: checkpoint.stage_tracking

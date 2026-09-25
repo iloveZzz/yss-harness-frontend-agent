@@ -26,7 +26,7 @@ lint 脚本改为失败跨路径 wikilink、校验 manifest sha256，并要求 H
 
 ## [2026-08-23] REFRESH | 登记前端 pnpm / 后端 mvnw 验证命令
 
-`AGENTS.md` 与根目录 `CLAUDE.md` 写入 frontend `pnpm`、backend `./mvnw` 优先序；细则落在 `docs/process/implementation-repo-integration.md`。刷新 [[Agent入口规则]] 与 [[实现仓库与跨仓库契约]]。
+`AGENTS.md` 与根目录 `CLAUDE.md` 写入 frontend `pnpm`、backend `./mvnw` 优先序；细则落在 `.template-spec/process/implementation-repo-integration.md`。刷新 [[Agent入口规则]] 与 [[实现仓库与跨仓库契约]]。
 
 ## [2026-08-23] REFRESH | llm-wiki 去掉外部技能关联
 
@@ -68,10 +68,10 @@ wiki-root 从仓库根 `wiki/` 迁到 `.template-source/wiki`。同步 raw 中�
 - changed: AGENTS.md, CONTEXT.md, README.md, lifecycle-registry.yaml, implementation-repo-integration.md, skills-maintenance.md, yss-skill-registry.yaml, triage-labels.md, create-yss-spec-repository-mode-contract, vertical-slice-ticket-template.md, skills-lock.json
 - missing: adr-0002
 - articles: 模板总览, 仓库身份与路由, Agent入口规则, 产品研发生命周期, 条件强制门禁, 影响面分诊与流程裁剪, 模板维护流程, Spec基线, SpecDelta, OpenAPI契约, 产品设计影响与原型, 垂直切片Ticket, 切片实现合同, YSS路由与合同编译, YSS工程技能体系, Matt技能体系, 技能投影与锁定, 实现仓库与跨仓库契约, LLM Wiki, Ticket与流程状态, Fresh验证与独立审查, 模板发布门禁与验证, 复盘与权威资产修订
-- unmapped: docs/agents/skill-migrations.md (Update)
+- unmapped: .template-spec/agents/skill-migrations.md (Update)
 - unmapped: yss-public-skills.json (Update)
-- unmapped: docs/user-guide/产品生命周期工作流.md (No material)
-- unmapped: docs/user-guide/用户手册索引.md (No material)
+- unmapped: .template-spec/user-guide/产品生命周期工作流.md (No material)
+- unmapped: .template-spec/user-guide/用户手册索引.md (No material)
 - unmapped: docs/requirements/README.md (No material)
 
 adr-0002 livePath 改为 `.template-source/adr/0002-yss-project-repository-mode.md`。新增源 `skill-migrations.md`、`yss-public-skills.json`。文章改为五阶段与 `harness-orchestrator`；`yss-product-lifecycle`、`yss-stage-decision` 标为已退役。lint-wikilinks 23 篇 / 191 条通过。抽查：共享技能 101、注册表 `status: active`、`gate.tactical-design-approved` 存在、两技能不在 lock。

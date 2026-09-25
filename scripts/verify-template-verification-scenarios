@@ -20,11 +20,11 @@ const releaseBaseline = [
   "scripts/verify-entry-alignment",
   "scripts/verify-instance-distribution",
   "scripts/verify-instance-distribution-scenarios",
-  "scripts/verify-approval-record docs/templates/approval-record-template.yaml",
+  "scripts/verify-approval-record .template-spec/templates/approval-record-template.yaml",
   "scripts/verify-lifecycle-registry",
-  "scripts/verify-lifecycle-checkpoint docs/process/templates/lifecycle-checkpoint-template.yaml",
-  "scripts/verify-frontend-implementation-evidence --allow-template docs/process/templates/frontend-implementation-plan-template.yaml",
-  "scripts/verify-frontend-implementation-evidence --allow-template docs/process/templates/frontend-implementation-verification-template.yaml",
+  "scripts/verify-lifecycle-checkpoint .template-spec/process/templates/lifecycle-checkpoint-template.yaml",
+  "scripts/verify-frontend-implementation-evidence --allow-template .template-spec/process/templates/frontend-implementation-plan-template.yaml",
+  "scripts/verify-frontend-implementation-evidence --allow-template .template-spec/process/templates/frontend-implementation-verification-template.yaml",
   "scripts/verify-subagent-task-package-scenarios",
   "scripts/verify-digital-human-task-package-scenarios",
   "scripts/verify-maintenance-checkpoint .template-source/evidence/maintenance/yss-tactical-design-l3-checkpoint-2026-08-27.yaml",
@@ -49,7 +49,7 @@ const releaseCommands = new Set(release.commands.map((entry) => entry.command));
 assert.deepEqual(releaseBaseline.filter((command) => !releaseCommands.has(command)), [], "release profile 必须保留旧发布门禁的全部行为命令");
 assert.ok(releaseCommands.has("node scripts/verify-template-verification-scenarios"), "release profile 必须验证三级核验路由本身");
 
-const docsOnly = planTemplateVerification({ profile: "fast", changedFiles: ["docs/user-guide/example.md"] });
+const docsOnly = planTemplateVerification({ profile: "fast", changedFiles: ["docs/plan/example.md"] });
 assert.equal(docsOnly.effective_profile, "fast");
 assert.ok(docsOnly.groups.includes("hygiene"));
 assert.ok(!docsOnly.groups.includes("skills"), "文档内循环不得运行无关 skill 投影检查");
@@ -58,7 +58,7 @@ const tacticalChange = planTemplateVerification({ profile: "fast", changedFiles:
 assert.ok(tacticalChange.groups.includes("skills"));
 assert.ok(tacticalChange.groups.includes("tactical-design"), "战术设计 skill 变化必须运行专属场景");
 
-const candidate = planTemplateVerification({ profile: "candidate", changedFiles: ["docs/process/harness-process-tailoring.md"] });
+const candidate = planTemplateVerification({ profile: "candidate", changedFiles: [".template-spec/process/harness-process-tailoring.md"] });
 assert.equal(candidate.effective_profile, "candidate");
 assert.ok(candidate.groups.includes("maintenance"));
 assert.ok(candidate.groups.includes("candidate-integrity"));
