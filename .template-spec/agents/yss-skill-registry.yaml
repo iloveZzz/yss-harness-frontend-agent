@@ -116,6 +116,8 @@ recipes:
   - frontend.ui
   - governance.implementation-contract
 skill_dependencies:
+  frontend-commit:
+    - { skill: git-commit-core, type: context-required }
   test-agent:
   - skill: i-have-adhd
     type: context-conditional
@@ -234,6 +236,12 @@ agent_runtime_roots:
   cursor: .cursor/skills
   pi: .pi/skills
 skills:
+- id: git-commit-core
+  layer: maintainer-only
+  maturity: supported
+  instance_default_discoverable: false
+  aliases: []
+  impacts: [template-maintenance]
 - id: archify
   layer: specialist
   maturity: supported
@@ -341,13 +349,6 @@ skills:
   aliases: []
   impacts:
   - template-maintenance
-- id: grill-with-docs
-  layer: compatibility
-  maturity: supported
-  instance_default_discoverable: false
-  aliases: []
-  impacts:
-  - discovery
 - id: grilling
   layer: core
   maturity: supported
@@ -390,13 +391,6 @@ skills:
   aliases: []
   impacts:
   - lifecycle
-- id: improve-codebase-architecture
-  layer: compatibility
-  maturity: supported
-  instance_default_discoverable: false
-  aliases: []
-  impacts:
-  - quality
 - id: llm-wiki
   layer: core
   maturity: verified
@@ -461,13 +455,6 @@ skills:
   impacts:
   - frontend
   - prototype
-- id: to-questionnaire
-  layer: maintainer-only
-  maturity: supported
-  instance_default_discoverable: false
-  aliases: []
-  impacts:
-  - discovery
 - id: to-spec
   layer: compatibility
   maturity: supported
@@ -490,13 +477,6 @@ skills:
   impacts:
   - lifecycle
 - id: using-git-worktrees
-  layer: maintainer-only
-  maturity: supported
-  instance_default_discoverable: false
-  aliases: []
-  impacts:
-  - setup
-- id: wait-what
   layer: maintainer-only
   maturity: supported
   instance_default_discoverable: false
@@ -643,11 +623,6 @@ skills:
   impacts:
   - frontend
 platform_skills:
-- id: data-analytics
-  root: .codex/skills
-  layer: maintainer-only
-  instance_default_discoverable: false
-  aliases: []
 - id: product-design
   root: .codex/skills
   layer: specialist

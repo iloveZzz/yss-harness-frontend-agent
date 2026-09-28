@@ -8,7 +8,7 @@
 
 `project-instance` 新功能或较大变更进入 `harness-orchestrator` 的 Harness Entry。存在领域行为、聚合、不变量、状态、一致性、Domain Event、Gateway 或持久化映射影响时，由 `role.architecture-agent` 使用 `yss-tactical-design` 形成 Tactical Design Contract；无领域影响只记录 `not-applicable`。进入实现前先读 `.template-spec/process/implementation-repo-integration.md` 并登记实现仓库，再由 `yss-implementation-contract-compiler` 编译最小 skill 集合与当前实现合同（见 [[YSS路由与合同编译]]）。前端优先 `pnpm`；后端优先项目根 `./mvnw`。根目录 `CLAUDE.md` 只引用 `AGENTS.md`，不是第二套入口规则。
 
-专项任务必须走指定入口：领域影响用 `architecture-agent` + `yss-tactical-design`；技术事实用 `research`；竞品用 `competitive-intelligence`；UI / 原型先 `yss-design-system` 再 `yss-prototype-stage`；Bug 先 `diagnosing-bugs` 再 `tdd`；冲突用 `resolving-merge-conflicts`；架构治理用 `improve-codebase-architecture` / `codebase-design`；跨线程或过长上下文用 `handoff`；四角色协同先读 `.template-spec/agents/digital-human-roles.yaml`；本地知识库用 [[LLM Wiki]]。实现者不能承担命中的独立审查；完成结论必须基于 fresh verification（见 [[Fresh验证与独立审查]]）。
+专项任务必须走指定入口：领域影响用 `architecture-agent` + `yss-tactical-design`；技术事实用 `research`；竞品用 `competitive-intelligence`；UI / 原型先 `yss-design-system` 再 `yss-prototype-stage`；Bug 先 `diagnosing-bugs` 再 `tdd`；冲突用 `resolving-merge-conflicts`；架构治理用 `codebase-design` / `codebase-design`；跨线程或过长上下文用 `handoff`；四角色协同先读 `.template-spec/agents/digital-human-roles.yaml`；本地知识库用 [[LLM Wiki]]。实现者不能承担命中的独立审查；完成结论必须基于 fresh verification（见 [[Fresh验证与独立审查]]）。
 
 ## 来源
 

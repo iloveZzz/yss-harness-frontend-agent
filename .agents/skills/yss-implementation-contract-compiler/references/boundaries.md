@@ -45,6 +45,7 @@
 
 | Skill | Dependency | Type | Condition |
 | --- | --- | --- | --- |
+| `frontend-commit` | `git-commit-core` | `context-required` | — |
 | `test-agent` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |
 | `frontend-agent` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |
 | `architecture-agent` | `i-have-adhd` | `context-conditional` | `lifecycle-document-output` |

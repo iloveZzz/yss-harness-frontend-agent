@@ -47,7 +47,6 @@ upstream:
     ui_impact_requires_visual_baseline_schema_version: 1
     stale_baseline_policy: block-and-reroute
   compatibility_skills:
-  - grill-with-docs
   - to-spec
   - to-tickets
 handoff:
