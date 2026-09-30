@@ -3,6 +3,7 @@
   "registry_id": "yss.lifecycle",
   "published_ids": [
     "artifact.api-boundary",
+    "artifact.business-ticket-set",
     "artifact.checkpoint",
     "artifact.data-architecture",
     "artifact.fresh-verification",
@@ -54,5 +55,5 @@
     "work-unit.tactical-design",
     "work-unit.verification"
   ],
-  "semantic_sha256": "c0d5a37a6ef97d63542019445a7f61decbe310dc04bc196067fd361e27213118"
+  "semantic_sha256": "286b66ab0a4958ea8944c6e948d2a4028ce771b65aa0823ba1058ce72d4e6cd0"
 }

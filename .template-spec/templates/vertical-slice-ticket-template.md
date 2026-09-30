@@ -1,5 +1,9 @@
 ---
+kind: vertical-slice-ticket
 status: ready-for-human
+business_ticket_set_ref: <current-business-ticket-set-ref>
+business_ticket_refs: [BT-001]
+acceptance_refs: [AC-001]
 requirement_version: v1
 ---
 

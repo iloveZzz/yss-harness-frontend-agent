@@ -48,6 +48,7 @@
 | `artifact.test-seams` | 测试 seam 与 fixture | `stage.slice-contract` | 进入实现前。 |
 | `artifact.fresh-verification` | Fresh Verification | `stage.verification` | 实现完成后。 |
 | `artifact.checkpoint` | Git Checkpoint | `stage.verification` | 合并前或发生阻塞 / 责任变化时。 |
+| `artifact.business-ticket-set` | 上游业务 Ticket 集 | `stage.harness-entry` | 只读消费已批准战略来源，核验业务 Ticket 与原 FR/AC、规则和场景，随后细化实现 Slice。 |
 
 ### 2.3 执行证据
 

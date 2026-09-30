@@ -66,3 +66,7 @@ Slice v3 的当前执行结果须按 `references/yss-skill-execution-result.md` 
 
 
 仅消费战略交接包时，按 [跨仓承接核验](references/strategic-handoff-routing.md) 追加当前摘要与逐规则承接检查；本 profile 的主控批准边界不变。
+
+## 业务来源
+
+按 `.template-spec/process/business-tickets.md` 执行 Spec 业务草案、Design 校准与业务正式化。业务票放在 `business-tickets/`，集合引用进入 Spec / map / checkpoint；业务票不授予实现资格。实现票仍在 `issues/`，受工程准备、当前 Slice 合同批准和完整就绪检查约束。 新规则项目必须验证 business_ticket_refs 与 acceptance_refs，使用现有 basis.business_ticket_set 绑定当前集合原字节；原始验收仍从 basis.spec 定位，不升级 Slice 主 schema。业务票及阶段工作项不能充当实现票。来源过期返回战略/技术分析，不由编译器重写批准。
