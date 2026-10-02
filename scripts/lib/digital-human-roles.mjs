@@ -1,3 +1,4 @@
+import { validateReviewCapabilityPolicy } from './review-capabilities.mjs';
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { parseDocument } from "../vendor/yaml.mjs";
@@ -18,6 +19,8 @@ const REQUIRED_ROLES = [
 const REQUIRED_RUNTIMES = ["runtime.generic", "runtime.skill-projection", "runtime.grok"];
 const STRING_GATE_BUCKETS = [
   "evidence_only",
+  "orchestrator",
+  "product_digital_human_with_biological_veto",
   "biological_human"
 ];
 const COUNTERSIGN_STRING_BUCKETS = ["biological_human"];
@@ -197,22 +200,34 @@ export function collectCountersignGateIds(policy) {
     const gates = policy?.[bucket];
     if (Array.isArray(gates)) ids.push(...gates);
   }
-  for (const rule of policy?.digital_human_review || []) {
+  for (const rule of [...(policy?.digital_human_review || []), ...(policy?.check_reviews || [])]) {
     if (rule?.gate) ids.push(rule.gate);
   }
   for (const rule of policy?.dual_digital_human || []) {
     if (rule?.gate) ids.push(rule.gate);
   }
-  return ids;
+  return [...new Set(ids)];
 }
 
 export function countersignRuleForGate(policy, gateId) {
+  const internal = (policy?.check_reviews || []).find(rule => rule.gate === gateId);
+  if (internal) return { bucket: "check_reviews", ...internal };
   const dual = (policy?.dual_digital_human || []).find((rule) => rule.gate === gateId);
   if (dual) return { bucket: "dual_digital_human", ...dual };
   const review = (policy?.digital_human_review || []).find((rule) => rule.gate === gateId);
   if (review) return { bucket: "digital_human_review", ...review };
+  if ((policy?.product_digital_human_with_biological_veto || []).includes(gateId)) {
+    return { bucket: "product_digital_human_with_biological_veto", gate: gateId, countersigners: ["role.product-manager"] };
+  }
   if ((policy?.biological_human || []).includes(gateId)) {
     return { bucket: "biological_human", gate: gateId, countersigners: [BIOLOGICAL_ROLE_ID] };
+  }
+  if ((policy?.evidence_only || []).includes(gateId) || (policy?.orchestrator || []).includes(gateId)) return null;
+  if ((policy?.automatic_checks || []).includes(gateId)) return null;
+  if (policy?.default_if_unlisted === 'reject-unlisted') {
+    const error = new TypeError(`GATE_POLICY_REQUIRED: 未分类门禁或检查 ${gateId}`);
+    error.code = 'GATE_POLICY_REQUIRED';
+    throw error;
   }
   return null;
 }
@@ -234,7 +249,7 @@ export function taskPackageDefaults(roleId, doc) {
   };
 }
 
-export function validateDigitalHumanRoles(doc, { skillIds, stageIds, gateIds, artifactIds, evidenceIds, workUnitIds, skillRegistry } = {}) {
+export function validateDigitalHumanRoles(doc, { skillIds, stageIds, gateIds, artifactIds, evidenceIds, workUnitIds, skillRegistry, checkIds: suppliedCheckIds } = {}) {
   if (!doc || typeof doc !== "object" || Array.isArray(doc)) fail("数字人角色注册表必须是对象");
   if (doc.schema_version !== 1) fail("schema_version 必须为 1");
   if (doc.registry_id !== "yss.digital-human-roles") fail("registry_id 必须为 yss.digital-human-roles");
@@ -294,7 +309,7 @@ export function validateDigitalHumanRoles(doc, { skillIds, stageIds, gateIds, ar
 
   const policy = doc.gate_policy;
   if (!policy || typeof policy !== "object") fail("缺少 gate_policy");
-  if (policy.default_if_unlisted !== "biological-human") fail("default_if_unlisted 必须为 biological-human");
+  if (policy.default_if_unlisted !== "reject-unlisted") fail("GATE_POLICY_REQUIRED: default_if_unlisted 必须为 reject-unlisted");
   if (policy.runtime_side_effect_approval !== "biological-human") fail("runtime_side_effect_approval 必须为 biological-human");
   if (policy.commercial_contract !== "biological-human") fail("commercial_contract 必须为 biological-human");
   if (policy.unlisted_kept_biological) {
@@ -304,12 +319,8 @@ export function validateDigitalHumanRoles(doc, { skillIds, stageIds, gateIds, ar
     }
   }
   const claimed = new Set();
-  requireStringArray(policy.orchestrator, "gate_policy.orchestrator");
-  for (const gate of policy.orchestrator) {
-    if (!gateIds.has(gate)) fail(`gate_policy.orchestrator 引用了未知门禁: ${gate}`);
-  }
   for (const bucket of STRING_GATE_BUCKETS) {
-    requireStringArray(policy[bucket], `gate_policy.${bucket}`);
+    if (policy[bucket]?.length !== 0) requireStringArray(policy[bucket], `gate_policy.${bucket}`);
     for (const gate of policy[bucket]) {
       if (!gateIds.has(gate)) fail(`gate_policy.${bucket} 引用了未知门禁: ${gate}`);
       if (claimed.has(gate)) fail(`门禁被多个会签桶重复占用: ${gate}`);
@@ -323,6 +334,16 @@ export function validateDigitalHumanRoles(doc, { skillIds, stageIds, gateIds, ar
     if (typeof rule === "string") fail("digital_human_review 必须是含 gate 与 countersigners 的规则");
     validateSignRule(rule, { actors, gateIds, claimed, field: `digital_human_review[${index}]` });
   }
+  const checkIds = suppliedCheckIds || new Set((loadRegistry().checks || []).map(check => check.id));
+  const checkClaimed = new Set();
+  for (const id of policy.automatic_checks || []) {
+    if (!checkIds.has(id) || checkClaimed.has(id)) fail(`未知或重复自动检查: ${id}`);
+    checkClaimed.add(id);
+  }
+  for (const [index, rule] of (policy.check_reviews || []).entries()) {
+    validateSignRule(rule, { actors, gateIds: checkIds, claimed: checkClaimed, field: `check_reviews[${index}]` });
+  }
+  if (checkClaimed.size !== checkIds.size) fail("内部检查职责覆盖不完整");
   if (!policy.biological_human.includes("gate.merge-approved")) {
     fail("gate.merge-approved 必须属于 biological_human");
   }
@@ -344,13 +365,13 @@ export function validateDigitalHumanRoles(doc, { skillIds, stageIds, gateIds, ar
       fail(`${rule.work_unit}.implementer_must_differ 必须为 true`);
     }
   }
-  if (!Array.isArray(policy.dual_digital_human) || policy.dual_digital_human.length === 0) {
-    fail("缺少 dual_digital_human");
-  }
+  if (!Array.isArray(policy.dual_digital_human)) fail("dual_digital_human 必须为数组");
   for (const [index, rule] of policy.dual_digital_human.entries()) {
     validateSignRule(rule, { actors, gateIds, claimed, field: `dual_digital_human[${index}]` });
     if (!rule.drafter) fail(`${rule.gate} 双数字人会签必须有 drafter`);
   }
+  if ((policy.unlisted_kept_biological || []).length) fail("reject-unlisted 不允许 unlisted_kept_biological");
+  validateReviewCapabilityPolicy(doc, { skillIds, gateIds, checkIds });
   return {
     role_count: doc.roles.length,
     group_count: doc.stage_groups.length,
@@ -370,6 +391,7 @@ export function validateDefaultDigitalHumanRoles() {
     skillIds: skillIdsFromRegistry(skills),
     stageIds: idsFromCollection(lifecycle.stages, "stages"),
     gateIds: idsFromCollection(lifecycle.gates, "gates"),
+    checkIds: idsFromCollection(lifecycle.checks || [], "checks"),
     artifactIds: idsFromCollection(lifecycle.artifacts, "artifacts"),
     evidenceIds: idsFromCollection(lifecycle.evidence, "evidence"),
     workUnitIds: idsFromCollection(lifecycle.work_units, "work_units"),

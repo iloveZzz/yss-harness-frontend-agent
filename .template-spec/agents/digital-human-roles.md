@@ -30,3 +30,5 @@ Slice Implementation Contract 的固定分区是 `architecture`、`frontend`、`
 `runtime.grok` 只是运行时适配器，群聊上限为 4 人；超出时使用 1:1 交接，不改变逻辑协作组或四角色集合。`.agents/skills` 是技能权威目录，其他 Agent 目录仅为生成投影。
 
 任务包 Schema：`.template-spec/process/schemas/digital-human-task-package.schema.json`。
+
+专业审查能力与当前绑定以本 profile 的 `digital-human-roles.yaml` 为准；核心 / 禁止技能、端范围与主控批准权保持，正式 Reviewer / Verifier 才能加载 `review_skills`。组合记录逐项留结论，pending 草案不放行。

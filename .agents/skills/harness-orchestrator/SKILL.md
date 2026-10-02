@@ -17,7 +17,7 @@ description: 编排前端专职 Harness 的输入接收、合同、任务派发�
 ## 边界
 
 - 不起草领域行为、前端页面、后端业务代码或测试代码。
-- 不替专业 Agent 修改技术决策；遇到领域、交互、实现或可验证性冲突时暂停并升级。
+- 不替专业 Agent 修改技术决策；遇到领域、交互、实现或可验证性冲突时先调查实际影响并派发适用专家，阻断依赖动作；缺少真实决定或必要输入时才询问。
 - 不批准自己生成的专业资产，不把 实现合同编译器 草案当成 approved，也不以聊天消息代替证据。
 - 只有当前版本 `Slice Implementation Contract` 满足就绪公式时，才能设置 `ready-for-agent`。
 
@@ -59,3 +59,11 @@ description: 编排前端专职 Harness 的输入接收、合同、任务派发�
 
 <!-- HARNESS_UPGRADE_ROUTE -->
 既有实例的模板升级、布局迁移和恢复使用 `yss-harness-upgrade`，遵循 `.template-spec/process/harness-upgrade.md`；升级不推进阶段或改写历史批准。
+
+<!-- SKILL_PREFLIGHT_ROUTE -->
+专项技能调用前，运行 `scripts/query-lifecycle-context --work-unit <当前工作单元> --check-skills`；多运行时指定 `--agent-runtime`，条件用 `--when`。按合同 `skill_preflight` 处理缺失、漂移与冲突，在既有授权内核对补装计划、应用后重验。预检不授予执行或批准。Matt 上游为 https://github.com/mattpocock/skills，生效版本以根 `skills-lock.json` 为准。
+
+<!-- USER_PROGRESS_REPORT -->
+每轮返回或暂停按合同 `user_progress_report` 给出中文状态：当前阶段与本轮结果、下一阶段/单元与进入条件、问题/阻塞、已登记责任方、解除动作及复验、主控下一动作与用户待决定项。未知写“待核验”，负责人缺失写“未登记”；目标不代表批准，已授权工作继续执行。发送前核对证据、状态及结构化结果一致；写法见 `.template-spec/process/document-writing.md`。
+
+专业审查按能力和独立实例执行，正式 v1 补充只读技能、当前批准、专业等待与定向复审见 [专业审查与恢复](references/professional-review.md)。

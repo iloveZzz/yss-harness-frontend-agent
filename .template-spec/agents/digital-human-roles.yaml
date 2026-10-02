@@ -250,13 +250,9 @@ stage_groups:
   - role.architecture-agent
   - role.test-agent
 gate_policy:
-  default_if_unlisted: biological-human
+  default_if_unlisted: reject-unlisted
   runtime_side_effect_approval: biological-human
   commercial_contract: biological-human
-  unlisted_kept_biological:
-  - gate.high-risk-architecture-confirmed
-  - gate.openapi-freeze-confirmed
-  - gate.merge-approved
   orchestrator:
   - gate.slice-contract-approved
   - gate.slice-ready-for-agent
@@ -272,22 +268,34 @@ gate_policy:
     drafter: role.test-agent
     countersigners:
     - role.architecture-agent
+    capability_ids:
+    - capability.implementation-assurance
   digital_human_review_work_units:
   - work_unit: work-unit.frontend-engineering-design
     countersigners:
     - role.test-agent
     implementer_must_differ: true
+    capability_ids:
+    - capability.frontend-engineering
+    - capability.openapi-contract
+    - capability.engineering-baseline
   - work_unit: work-unit.slice-implementation
     countersigners:
     - role.test-agent
     implementer_must_differ: true
-  dual_digital_human:
-  - gate: gate.slice-contract-approved
-    drafter: role.architecture-agent
-    countersigners:
-    - role.frontend-agent
-    - role.backend-agent
-    - role.test-agent
+    capability_ids:
+    - capability.implementation-assurance
+  dual_digital_human: []
+  check_reviews: []
+  automatic_checks: []
+  product_digital_human_with_biological_veto: []
+  review_execution:
+    default_owner_count: 1
+    default_independent_reviewer_count: 1
+    additional_reviewers: uncovered-expertise-or-external-requirement
+    adjacent_checks: one-review-with-per-check-conclusions
+    suggestions: backlog-without-blocking
+    violations_or_missing_evidence: blocking
 
 # 只用于读取原始用户决定证据；不新增产品设计批准门禁。
 user_decision_policy:
@@ -305,3 +313,32 @@ user_decision_policy:
   expiry: basis-change-or-revocation-only
   record_schema: .template-spec/process/schemas/user-decision.schema.json
   verifier: scripts/verify-user-decision
+
+review_capabilities:
+- id: capability.frontend-engineering
+  name: 前端工程设计与边界审查
+  eligible_roles:
+  - role.test-agent
+  review_skills:
+  - codebase-design
+  - code-review
+- id: capability.openapi-contract
+  name: 冻结接口消费与客户端适配审查
+  eligible_roles:
+  - role.test-agent
+  - role.backend-agent
+  review_skills:
+  - yss-openapi-draft-review
+- id: capability.engineering-baseline
+  name: 前端工程基线与验证审查
+  eligible_roles:
+  - role.test-agent
+  review_skills:
+  - code-review
+- id: capability.implementation-assurance
+  name: 前端实现与交付证据审查
+  eligible_roles:
+  - role.test-agent
+  - role.architecture-agent
+  review_skills:
+  - code-review
