@@ -11,7 +11,7 @@ Slice v3 的当前执行结果须按 `references/yss-skill-execution-result.md` 
 
 本技能是确定性的实现合同编译器，不是生命周期主控。它消费已批准且版本当前的输入，输出 draft、blocked 或 ready-for-lifecycle-review 的合同草案，由 `harness-orchestrator` 批准、持久化并设置 ready-for-agent。
 
-文档输出时按 `lifecycle-document-output` 条件调用 `i-have-adhd`，读取 `.template-spec/process/document-writing.md`；作用域仅限当前产物，派发时传递条件及引用。
+撰写实现合同解释正文或切片交接说明时，按 `lifecycle-document-output` 条件调用 `i-have-adhd`，读取 `.template-spec/process/document-writing.md` 的共用写法及工程契约 / Ticket 指引。作用域仅限当前产物；派发时传递条件及引用，不改变结构化合同、批准状态或就绪条件。
 
 ## 输入
 
@@ -42,7 +42,7 @@ Slice v3 的当前执行结果须按 `references/yss-skill-execution-result.md` 
 ## 硬规则
 
 - 编译器不得输出 approved、ready-for-agent 或 completed。
-- Registry、编译器合同或 Slice Contract schema v1 一律拒绝并返回迁移提示；不自动升级，不提供旧技能名 alias。
+- Registry 使用其权威 schema v3，编译规则保持 schema v2；新 Slice 使用 v3，旧 Slice v2 按原规则读取和显式迁移。已停止支持的 schema 一律拒绝，不自动升级，不提供未登记的旧技能名兼容。
 - 任一 Registry/Compiler digest 变化使合同 `stale`；重新编译后仍须由 `harness-orchestrator` 再批准。
 - 发现后端业务规则、架构、状态或持久化变化时回交后端 / 战略方，不路由本地 Domain 实现。
 - API、状态、Visual Baseline 版本或 digest、数据模型、写路径、测试 seam 或验证命令变化时，必须返回 new_impacts / drift 并完整重路由。

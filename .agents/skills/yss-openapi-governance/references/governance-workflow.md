@@ -12,9 +12,9 @@
 2. **运行结构与治理校验**
    - 先执行项目锁定的 `pnpm exec redocly lint` 或等价 CI 脚本。
    - 检查 YAML 可解析、`$ref` 可解析、路径参数完整、operationId 唯一、examples 合法、schema 命名稳定。
-   - 先运行 `scripts/verify-yss-dto-openapi-profile`，并记录 profile 版本；检查 `/api/v1/` 版本策略（或记录例外）、`x-yss-response-wrapper`、`YssResultMeta` + `allOf` 具体 schema、统一错误结构、分页、幂等 / 乐观锁和契约测试 seam。
-   - 每个响应都必须落成具体 endpoint schema：`SingleResult` 的 `data` 是具体对象或显式 nullable schema，`MultiResult` / `PageResult` 的 `data` 是数组；Java 的 `SingleResult<T>` / `PageResult<T>` 只能作为语义说明，不能直接写成 OAS type 或 `$ref`。
-   - `code` 按 profile 只允许 `string | integer | null`，`dataType` 按 profile 为 `string | null`；`offset`、`needTotalCount`、`tempTotalCount` 不得进入客户端分页输入；`totalPages` 只有目标 HTTP mapper / fixture 证明后才能进入契约。Spec 明确改变认证或授权行为时，把对应 `401` / `403`、资源过滤和错误语义作为普通 API 行为检查。
+   - 先运行 `scripts/verify-yss-dto-openapi-profile`，并记录 profile 版本；检查 `/api/v1/` 版本策略（或记录例外）。普通采用 YSS wrapper 的接口检查 `x-yss-response-wrapper`、`YssResultMeta` + `allOf` 具体 schema；下载、流式和第三方回调检查其批准媒体类型、状态、Header 和错误边界。按实际协议检查分页、幂等 / 乐观锁和契约测试 seam，不强套 wrapper 或豁免证据。
+   - 每个响应按实际协议落成具体 endpoint schema。采用 YSS wrapper 时，`SingleResult` 的 `data` 是具体对象或显式 nullable schema，`MultiResult` / `PageResult` 的 `data` 是数组；Java 的 `SingleResult<T>` / `PageResult<T>` 只能作为语义说明，不能直接写成 OAS type 或 `$ref`。
+   - 采用 YSS wrapper 时，`code` 按 profile 只允许 `string | integer | null`，`dataType` 为 `string | null`；采用 YSS 分页协议时，`offset`、`needTotalCount`、`tempTotalCount` 不得进入客户端分页输入。`totalPages` 等计算字段只有目标 HTTP mapper / fixture 证明后才能进入契约。Spec 明确改变认证或授权行为时，把对应 `401` / `403`、资源过滤和错误语义作为普通 API 行为检查。
 
 3. **独立 Draft Review 与 Freeze**
    - 将 fresh lint 证据交给 `yss-openapi-draft-review`；阻断项未关闭前，YAML 仍是 review-only Draft，不得生成生产客户端。

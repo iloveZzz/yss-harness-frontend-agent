@@ -1,11 +1,13 @@
 ---
 name: yss-skill-source-index-refresh
-description: Refresh frontend YSS UI documentation entry-point indexes when component, hook, or page-module references change; frontend maintenance only.
+description: 前端 YSS UI 组件、Hook 或页面模块文档入口变化后，刷新已安装技能的文档入口索引；仅用于前端维护。
 ---
 
 # 前端技能文档索引刷新
 
 仅维护已安装前端技能的 `references/frontend-docs.md`。映射与文档入口由 `scripts/refresh-yss-skill-index.mjs` 中的 `FRONTEND` / `URLS` 定义。
+
+索引用于定位，不代替组件兼容核验。只读查阅或排障时使用现有索引；仅在文档入口变化且刷新范围明确后运行，不因每次调用自动刷新。
 
 ```bash
 export YSS_SKILLS_ROOT="/path/to/.agents/skills"

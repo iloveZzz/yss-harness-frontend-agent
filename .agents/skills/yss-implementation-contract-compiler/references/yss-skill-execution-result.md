@@ -2,9 +2,12 @@
 
 核心 YSS skill 必须消费已批准合同版本，并返回：
 
+以下为当前 Slice v3 的填写结构。`project_root`、`dependency_roots` 仅按跨仓及来源解析合同填写。历史 Slice v2 使用末节所述兼容路径，不能把此示例当作自动迁移指令。
+
 ```yaml
 execution_result:
   schema_version: 2
+  evidence_binding_version: 1
   skill:
   slice_id:
   work_unit_id:
@@ -13,6 +16,7 @@ execution_result:
     contract_ref:
     contract_id:
     contract_version:
+    contract_digest: # 已批准 Slice 文件原始字节 SHA-256
     registry_digest:
     compiler_contract_digest:
     component_bindings_digest: # 合同含 component_bindings 时必填
@@ -21,10 +25,19 @@ execution_result:
       contract_area: common | frontend | backend | contract | cross_repo
   evidence_files:
     - path:
+      digest: # 证据文件原始字节 SHA-256
       evidence_type: code | test | generated | review | verification
       behavior_ref:
+  source_bindings:
+    - path:
+      digest: # 实际消费的来源原始字节 SHA-256；删除使用 deleted: true, digest: null
   verification_results:
-    - command:
+    - verification_id:
+      acceptance_refs: [] # 对应验证项的完整稳定验收 ID
+      evidence_refs: [] # 覆盖全部关联验收及预期文件
+      command:
+      cwd:
+      exit_code: # 实际整数退出码
       result:
       executed_at:
   constraint_results:
