@@ -151,8 +151,8 @@ work_unit_routes:
     skills:
       - code-review
       - maintaining-skills
-    applies_when: template_maintenance_review
-    not_applicable_reason: no_template_maintenance
+    applies_when: explicit_independent_template_maintenance_review
+    not_applicable_reason: maintainer_self_check_or_no_independent_review
   work-unit.release-and-rollback:
     primary_skill: maintaining-skills
     supporting_skills:

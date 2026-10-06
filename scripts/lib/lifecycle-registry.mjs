@@ -9,6 +9,7 @@ export const DEFAULT_REGISTRY = path.join(ROOT, ".template-spec/process/lifecycl
 export const DEFAULT_BASELINE = path.join(ROOT, ".template-spec/process/lifecycle-registry-baseline.json");
 const ID_PATTERN = /^(stage|gate|artifact|work-unit|evidence)\.[a-z0-9][a-z0-9-]*$/;
 const COLLECTIONS = ["stages", "gates", "artifacts", "work_units", "evidence"];
+const PUBLIC_WORK_UNIT_FIELDS = new Set(["public_name", "public_output", "public_completion"]);
 
 function fail(message) {
   throw new TypeError(message);
@@ -51,7 +52,10 @@ function canonicalize(value) {
 }
 
 export function semanticProjection(registry) {
-  return COLLECTIONS.flatMap((kind) => registry[kind].map((record) => ({ kind, record: canonicalize(record) })))
+  return COLLECTIONS.flatMap((kind) => registry[kind].map((record) => ({
+    kind,
+    record: canonicalize(Object.fromEntries(Object.entries(record).filter(([key]) => !(kind === "work_units" && PUBLIC_WORK_UNIT_FIELDS.has(key)))))
+  })))
     .sort((left, right) => left.record.id.localeCompare(right.record.id));
 }
 
@@ -117,6 +121,10 @@ export function validateRegistry(registry, { baseline = DEFAULT_BASELINE } = {})
       const prefix = collection === "work_units" ? "work-unit." : collection === "evidence" ? "evidence." : `${collection.slice(0, -1)}.`;
       if (!id.startsWith(prefix)) fail(`${id} 与 ${collection} 类型不匹配`);
       if (typeof record.name !== "string" || record.name.length === 0) fail(`${id} 缺少名称`);
+      for (const [key, value] of Object.entries(record).filter(([key]) => key.startsWith("public_"))) {
+        if (collection !== "work_units" || !PUBLIC_WORK_UNIT_FIELDS.has(key)) fail(`${id}.${key} 不是支持的展示字段`);
+        if (typeof value !== "string" || value.trim().length === 0) fail(`${id}.${key} 必须是非空字符串`);
+      }
       ids.set(id, collection);
     }
   }
@@ -161,7 +169,7 @@ export function renderLifecycleStructure(registry) {
 
 export function renderWorkUnits(registry) {
   const lines = ["<!-- lifecycle-registry:work-units:start -->", "> 此表由 `.template-spec/process/lifecycle-registry.yaml` 生成；工作单元按 `scope` 区分模板维护与项目实例流程。", "", "| 稳定 ID | 范围 | 工作单元 | 输入 | 输出 | 完成条件 |", "|---|---|---|---|---|---|"];
-  for (const unit of registry.work_units) lines.push(`| \`${unit.id}\` | ${unit.scope} | ${unit.name} | ${unit.input} | ${unit.output} | ${unit.completion} |`);
+  for (const unit of registry.work_units) lines.push(`| \`${unit.id}\` | ${unit.scope} | ${unit.public_name ?? unit.name} | ${unit.input} | ${unit.public_output ?? unit.output} | ${unit.public_completion ?? unit.completion} |`);
   lines.push("<!-- lifecycle-registry:work-units:end -->");
   return `${lines.join("\n")}\n`;
 }

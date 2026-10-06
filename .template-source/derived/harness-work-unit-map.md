@@ -11,8 +11,8 @@
 | `work-unit.verification` | project-instance | 独立验证 | 实现候选、合同、验收标准和测试 seam。 | Fresh Verification、Review 结果和 checkpoint。 | 测试 Agent 独立验证通过，且无阻塞信号。 |
 | `work-unit.ssot-update` | template-source | Harness 权威资产更新 | 模板维护变更合同。 | 权威文档、schema、脚本或技能。 | 权威资产可被校验器读取。 |
 | `work-unit.skill-projection-sync` | template-source | 技能投影同步 | .agents/skills 和 skills-lock.json。 | 各 Agent runtime root 的同步投影。 | scripts/sync-skills --check 通过。 |
-| `work-unit.intensity-aware-verification` | template-source | 分级 Fresh Verification | 变更仓库、维护强度和最低证据。 | 校验命令输出与维护证据。 | 命中等级的结构、行为和压力验证通过。 |
-| `work-unit.intensity-aware-review` | template-source | 分级独立审查 | 变更 diff、维护强度和验证证据。 | self-check、聚焦审查或正式独立审查结论。 | 没有未处理阻断项。 |
+| `work-unit.intensity-aware-verification` | template-source | 分级 Fresh Verification | 变更仓库、维护强度和最低证据。 | 校验命令输出与维护证据。 | 日常按当前影响及依赖完成分级证据：L1 相关实际检查，L2 最小反例、自检和 Fresh Verification，L3 自检和 Fresh Verification；仅命中风险触发项补定向反例。等级不强制完整套件；main 集成验证和正式发布另核验完整适用集合。 |
+| `work-unit.intensity-aware-review` | template-source | 分级审查 | 变更 diff、维护强度和验证证据。 | 维护者自检结论与阻断项；按需记录独立审查结果。 | 日常完成维护者自检并处理适用阻断项；L2/L3 不自动要求独立审查或冻结候选，明确采用独立审查路径时执行其严格合同。 |
 | `work-unit.release-and-rollback` | template-source | Harness Checkpoint 与回滚 | 已审查模板资产。 | Checkpoint、回滚点和发布说明。 | 变更边界和恢复动作可追溯。 |
 | `work-unit.frontend-engineering-design` | project-instance | 前端工程设计 | 当前战略与后端联合接收结果、视觉基线、真实接口和实现仓约束。 | 前端工程设计、frontend_implementation_plan 草案与可执行验收用例。 | 输入仍然有效，设计可审阅且可进入前端 Slice Contract 准备；不放行代码实现。 |
 <!-- lifecycle-registry:work-units:end -->

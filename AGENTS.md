@@ -9,6 +9,8 @@
 - `template-source` 使用模板维护流程，不生成具体产品的 Spec、原型、OpenAPI 或垂直切片 Ticket。
 - `project-instance` 使用 `harness.frontend-delivery`，从已批准 Spec 或 Strategic Design Handoff 进入开发落地流程。
 - 文件缺失、schema 不支持或模式非法时停止路由并执行迁移检查；不得根据目录、Git 远程或占位符猜测身份，也不得继承父目录或兄弟仓的 `AGENTS.md`。
+- 只读问答、状态查询和问题定位：读取根 `CONTEXT.md` 与相关来源后回答或调查；只有写正式资产、申请批准或流转时才进入工作单元。只读诊断不创建 Ticket / checkpoint，不改批准与状态，也不启动回归套件。
+- 行动请求先复用当前资产和登记，再补本轮缺项；按当前任务和实际影响加载下文引用，不逐节执行整份入口。
 
 ## 2. 单一事实来源
 
@@ -23,30 +25,34 @@
 | 实现仓登记与边界 | `.template-spec/process/implementation-repo-integration.md` |
 
 README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义第二套规则。
+读取注册表的名称、输入、产出和完成条件时优先消费对应 `public_*` 公开说明；稳定 ID 的历史字段保持兼容，当前执行策略仍按所引用的合同核验。
 
 ## 3. 语言与 Context Contract
 
 - 业务、产品、架构、实现、审查和验证文档正文使用简体中文；代码标识、API、schema、命令、文件名和协议 metadata 保持原样。
 - 创建或修改稳定资产前必须读取并持续消费根 `CONTEXT.md`；无法读取时返回 `blocked`。
 - 稳定术语先在根 `CONTEXT.md` 登记 PascalCase 英文标识，再进入契约、Ticket、代码或证据。每仓仅允许一个根 `CONTEXT.md`；术语引用使用 `<ContextId>/<EnglishIdentifier>`，真正共享的术语使用 `Global/<EnglishIdentifier>`。
-- `project-instance` 每个工作单元流转或申请批准前完成 `context_reconciliation`：先回写稳定术语，再核对 `document_digest` 与 `referenced_terms_digest`；缺失、冲突或漂移即 `blocked`。模板源只校验该合同并记录有理由的 `not-applicable`。
+- `project-instance` 每个正式工作单元流转或申请批准前完成 `context_reconciliation`：先回写稳定术语，再核对 `document_digest` 与 `referenced_terms_digest`；缺失、冲突或漂移即 `blocked`。模板源只校验该合同并记录有理由的 `not-applicable`。
 - 当前流程使用 `harness-entry`、`frontend-engineering-design`、`slice-contract`、`slice-implementation`、`verification`；退役入口以 `.template-spec/agents/skill-migrations.md` 为准，不参与当前路由。
 
 ## 4. `template-source` 维护
 
 在用户已授权的模板维护范围内，继续完成受影响 Skill、投影、锁文件和分发快照的同步与适用验证；按当前影响面读取文档。首次编辑完成不等于交付完成。只有新增决定、缺失必要输入或命中既有审批边界时才暂停；提交、推送、发布仍按本仓授权规则执行。
 
-- 创建、修改或退役 skill 时使用 `maintaining-skills`；维护强度和证据以裁剪文档为准，日常停在 `implementation-ready`，发布前执行完整门禁。
+- 创建、修改或退役 skill 时使用 `maintaining-skills`，按 `.template-source/process/maintenance-intensity.yaml` 判定 L1/L2/L3；日常验证与交付按本节执行，正式发布按发布合同执行。
 - `.agents/skills` 是共享技能权威内容；`.codex/skills`、`.cursor/skills`、`.pi/skills` 是生成投影，不得分别手改。
-- 依次使用 `scripts/verify-template-fast`、显式候选时的 `scripts/verify-template-candidate` 和发布前不可裁剪的 `scripts/verify-template`。未完成 `create-yss-harness-frontend` 固定快照及生成实例验证，不得宣称可发布。
+- 日常维护交付默认执行本轮改动及其直接 / 传递依赖的定向检查，补齐 L1/L2/L3 适用证据后交付 `implementation-ready`。不因交付措辞、L3、当前分支为 main 或缺少发布 baseline 自动运行全量检查，也不把 fast → candidate → release 当作固定顺序。
+- 使用 `scripts/verify-template-fast` 前先看 `--plan`；计划若扩大到全量，日常交付改为执行上述定向检查，记录范围、实际命令、退出码及未覆盖风险。发现本轮缺陷或新增影响时，只补受影响检查；影响无法确定时先调查，不用全量检查代替影响分析。日常维护不强制独立审查或候选冻结。
+- PR 候选使用 `scripts/verify-template-candidate`；main 集成验证及正式发布任务使用 `scripts/verify-template`，适用检查与回退由验证 profile 和发布合同定义，不能用日常定向检查冒充通过。未完成 `create-yss-harness-frontend` 固定快照及生成实例验证，不得宣称可发布。
 
 ## 5. `project-instance` 前端交付路由
 
-先读 `.template-spec/process/harness-profile.yaml`，再按影响面裁剪。本仓只执行以下主链，终点为 `work-unit.verification`：
+先读 `.template-spec/process/harness-profile.yaml` 和裁剪文档，从最近可信阶段恢复。本仓生命周期导航如下，终点为 `work-unit.verification`；只推进本轮触发的工作单元及其依赖：
 
 `work-unit.harness-entry` → `work-unit.frontend-engineering-design` → `work-unit.slice-contract` → `work-unit.slice-implementation` → `work-unit.verification`
 
 - 默认输入是已批准 Spec 或 Strategic Design Handoff；Discovery 不是默认阶段。`to-spec`、`to-tickets` 只能作为用户显式兼容入口，并回交 `harness-orchestrator` 验收。
+- 小改动从分诊处理，中等变更从最近可信的 Spec / 架构恢复，高风险变更复核冻结基线；已批准上游资产和既有工程先核验复用。未来阶段尚未要求的产物不作为当前任务缺项，不重走本仓职责以外的战略流程。
 - 后端领域模型只读消费；发现聚合、不变量、持久化或数据模型变化时回交后端 / 战略方，本地由 `architecture-agent` 形成前端工程设计。
 - API 消费以已冻结 OpenAPI 为输入；接口变化回交后端形成 Draft、审查和 Freeze；无 API 影响必须有当前记录。随后正式化为可独立验证的窄垂直切片，不得按技术层横向拆分。
 - 架构、前端、后端和测试只在同一个当前 Slice Implementation Contract 下工作。命中的条件门禁必须完成；未命中才可记录 `not-applicable`，不生成空文档。
@@ -58,34 +64,38 @@ README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义�
 
 - 功能父 Ticket 汇总批准资产、阻塞项和证据；Spec、Draft 和待冻结资产使用 `ready-for-human`。
 - 只有合同已批准且当前、必要门禁通过、阻塞清除并可直接实现的窄垂直切片，才能设为 `ready-for-agent`。
+- 现有 Slice 合同当前且覆盖本轮范围时核验复用，缺失、漂移或新增影响再回编译器；流程裁剪不授予越过合同及允许写范围的业务实现资格。
 - Tracker 按 `.template-spec/agents/issue-tracker.md` 选择，不得从 Git remote 推断；平台不可用时生成待发布草案。
 
 ## 7. 实现硬门禁
 
-- 实现前读取 `.template-spec/process/implementation-repo-integration.md`，登记目标仓、项目根、分支、CI、验证命令和回滚点；再由 `yss-implementation-contract-compiler` 编译最小技能集与合同草案。编译器不批准合同、不设置状态、不宣布完成。
+- 进入工程接入或正式切片实现时，读取 `.template-spec/process/implementation-repo-integration.md`，核验目标仓、项目根、分支、CI、验证命令和回滚点；已有登记当前且适用时复用，缺项先补齐。正式切片由 `yss-implementation-contract-compiler` 编译最小技能集与合同草案；只读任务和未触发切片的小改动按裁剪路线处理。编译器不批准合同、不设置状态、不宣布完成。
 - 前端工程使用 `yss-frontend-scaffold-generator`；后端工程和架构选择回交后端项目。
-- 脚手架仅在 `scaffold_status=required`、`scaffold-architecture-decisions.yaml` 已确认且批准、schema v3 生成合同已持久化后运行；生成器无交互、无回退，只产机械骨架。既有工程不覆盖，DDD / MVC 转换另立迁移工作单元；业务行为回到合同编译器并使用 `behavior-tdd`。
+- 脚手架仅在 `scaffold_status=required`、`scaffold-architecture-decisions.yaml` 已确认且当前、schema v4 生成合同已持久化并获批准后运行；生成器无交互、无回退，只产机械骨架。既有工程不覆盖；业务行为回到合同编译器并使用 `behavior-tdd`。
 - UI 影响切片在 `ready-for-agent` 前必须有通过校验的 `frontend_implementation_plan`，实现后补齐 `frontend_implementation_verification`，包含截图 / 视觉、状态与交互、console warning 和真实命令退出码证据。
-- 前端测试、type-check、构建优先 `pnpm`；后端优先项目根 `./mvnw`。缺失时记录受控例外和实际命令。
-- 路径越界、证据缺失、未验证、`drift`、`violation` 或 `new_impacts` 时停止实现并重新路由。
+- 前端验证优先 `pnpm`，按当前合同、工程基线和已采纳 CI 条件选择测试、type-check 与构建；后端验证回交后端项目。缺失工具时记录受控例外和实际命令。
+- 路径越界、必要证据缺失或验证未执行时停止受影响实现，先修复或补证据。`violation` 修复后定向复验；`drift` / `new_impacts` 先调查并更新影响面，使受影响合同 `stale` 后回编译器。无依赖的已授权工作可继续。
 
 ## 8. 专项入口
 
 - 技术事实、标准或第三方行为影响决策时使用 `yss-research`；竞品、市场或用户口碑事实使用 `competitive-intelligence`。
-原型由 `yss-prototype-stage` 统一生成离线 HTML；项目视觉规范是根 `DESIGN.md`，实际生产组件仍在实现阶段核验。
+- 命中产品设计影响时，由 `yss-prototype-stage` 统一生成离线 HTML；项目视觉规范是根 `DESIGN.md`，实际生产组件在实现阶段核验。既有 UI 无变化时按已登记基线处理。
 - Bug、测试失败或性能回退先用 `diagnosing-bugs` 建立复现，再使用 `tdd`；业务行为默认按 `behavior-tdd` 逐切片实现，不适用时记录理由和可执行验证。
 - 四个专业 Agent 不另起生命周期、不批准自己起草的合同，也不替实现者完成独立验证；协同边界见 `.template-spec/agents/digital-human-roles.yaml`。
 
 ## 9. 工作区与实现仓边界
 
-运行时代码优先位于已登记的 `external-repository`。只有用户明确选择当前仓承载代码时，才使用 `apps/backend/<project>/`、`apps/frontend/<project>/`（`harness-apps`）或登记的 `git-submodule`。
+前端运行时代码优先位于已登记的 `external-repository`。只有用户明确选择当前仓承载前端代码时，才使用 `apps/frontend/<project>/`（`harness-apps`）或登记的 `git-submodule`；后端实现回交后端项目。
 
 `app/backend/`、`app/frontend/` 及其子路径禁止作为输出；submodule 不得登记成 `harness-apps` 或复制源码冒充挂载。空 gitlink、detached HEAD 和 `--force` 覆盖不得当普通目录。
 
 ## 10. 审查、验证与 Git
 
-- 实现者不承担命中的独立审查。任何完成、可合并结论必须基于本轮 fresh verification。
-- 会签按 `.template-spec/agents/digital-human-roles.yaml` 关闭并由 `scripts/verify-approval-record` 校验；高风险架构、OpenAPI Freeze、合并、商务承诺和运行时外部副作用仍须生物人。
+- 产品实现的独立代码审查及命中的专业审查由 Reviewer 执行，实施者不自审，Reviewer 不写实现，代码审查使用 `code-review`；模板日常维护的 self-check 按第 4 节执行。默认一个推进负责人和一个独立审查者，候选角色不要求逐个签字；相邻检查可组合并逐项留结论。
+- Fresh Verification 指当前任务范围、资产与触发合同的真实验证，不等于全仓 / 全套检查。只执行当前切片及直接 / 传递依赖的适用检查，记录实际命令、退出码与未覆盖项；区分局部任务完成、前端可验收、可合并和整体业务完成。产品实例不运行模板投影、生成器回归或模板发布检查，除非另有明确的模板维护 / 回归任务。
+- 同一边界且资产 / 上游字节、校验器 / schema、命令参数及仓库根均未变时，可复用已执行检查；输入变化只重验受影响依赖。恢复、handoff、进入实现、合并和发布时重验当前边界，当前性不明即重跑适用检查。首轮覆盖适用审查项，修复后按差异和依赖定向复审，复用结论绑定当前候选。
+- 命中会签时按 `.template-spec/agents/digital-human-roles.yaml`，运行 `scripts/verify-approval-record --require-approved --checkpoint <current checkpoint>`；期望上下文来自当前 checkpoint / 任务。高风险架构、OpenAPI Freeze、合并命中本仓生物人政策时先核验当前有效的原始真实回复与批准，只有缺失、失效或实质变化时展示资产后询问。商务承诺和运行时外部副作用仍须生物人。
+- 专业审查等待由主控按角色表自主派发并等待，无依赖的已授权工作继续；非阻断建议进入待办，必要证据和真实缺陷仍阻断，仅缺真实决定或无法自主取得的必要输入时询问用户。
 - 在暂停、handoff、进入实现和验证边界同步范围、证据、风险、会签点、Ticket 状态和下一步。
 - Git checkpoint 只含本轮范围；获得用户授权后才提交或推送。返工或 IMPORTANT / CRITICAL finding 触发简体中文复盘并修订权威资产。
 
@@ -99,6 +109,6 @@ README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义�
 
 ## 13. 专职交付边界
 
-正式前端任务必须同时接收批准战略和后端真实接口交付；按 `.template-spec/process/frontend-backend-delivery.md` 在启动、恢复及阶段边界重验。仅 Harness Entry 的无写权限 Explorer 可先诊断缺口。输入通过后可准备工程计划和合同，代码仍需合同已批准且当前及既有 ready-for-agent 条件。
+前端按 `.template-spec/process/harness-profile.yaml` 的 `frontend_delivery` 和 `.template-spec/process/frontend-backend-delivery.md` 验证输入。批准战略与战略预检通过后可起草前端工程设计和实现计划；只有 API / Backend / Data 影响命中时，最终接收才要求真实后端交付，纯 UI 路径使用有依据且当前的 `backend-not-applicable`。启动、恢复和规定阶段边界重验，预检通过不授予实现资格；代码仍需合同已批准且当前及既有 `ready-for-agent` 条件。
 
-`work-unit.frontend-engineering-design` 承载前端工程设计；后端领域模型作为上游输入消费，无本地领域影响记录有理由的 not-applicable，不编造后端 Tactical Design。后端实现、脚手架、API Freeze 和数据结构修改回交后端仓；本仓只生成前端工程并以真实接口完成视觉、交互和 pnpm 验证。
+`work-unit.frontend-engineering-design` 承载前端工程设计；后端领域模型作为上游输入消费，无本地领域影响记录有理由的 not-applicable，不编造后端 Tactical Design。后端实现、脚手架、API Freeze 和数据结构修改回交后端仓；本仓只生成前端工程，按当前接收路线完成视觉、交互和 `pnpm` 验证，命中后端依赖时必须使用真实接口。

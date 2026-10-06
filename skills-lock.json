@@ -285,7 +285,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/harness-orchestrator/SKILL.md",
-        "effectiveHash": "16ac6415b31f0327c0cc287dea21f22ada55d61ddb595568775b5137e3188629",
+        "effectiveHash": "dc858fe331f51ba412792633063509f138e946d6f62e14bb4ce9d2dd82cb37b6",
         "targets": [
           ".agents/skills",
           ".codex/skills",
@@ -351,7 +351,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/maintaining-skills/SKILL.md",
-        "effectiveHash": "6f3d906fc8b9aeaddcfc42592f551a9938ac21814c3322297042831e78aa74a5",
+        "effectiveHash": "19c4f914e2eef3c86c29d430d3cfcbd925f42adda1da6a2838bd950416e6f3d3",
         "targets": [
           ".agents/skills",
           ".codex/skills",
