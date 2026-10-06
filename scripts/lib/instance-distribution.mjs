@@ -135,7 +135,7 @@ export function validateInstantiationPointers(documents = {}) {
   if(!guide.includes(INSTANTIATION.metadata_file))fail("初始化指南必须绑定本端 metadata");
   if(!guide.includes(command))fail("初始化指南必须绑定本家族 profile 原生初始化入口");
   if([readme,guide].some(text=>/npm create yss-harness-dev/.test(text)))fail("专职入口不得路由通用 CLI");
-  if(isTemplateSource(ROOT)&&!existsSync(path.join(ROOT,"scripts/instantiate-harness")))fail("旧入口退役提示脚本不可读");
+  if(isTemplateSource(ROOT)&&existsSync(path.join(ROOT,"scripts/instantiate-harness")))fail("旧入口已退役，模板源不得保留 initializer 壳");
   return {cli_package:INSTANTIATION.cli_package,metadata_file:INSTANTIATION.metadata_file};
 }
 

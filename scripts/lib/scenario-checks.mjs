@@ -80,11 +80,13 @@ const profiles = {
   }
 };
 
-export function runScenario(name) {
+export function runScenario(name, { testAssets = null } = {}) {
+  const assetFile = ref => testAssets?.has(ref) ? testAssets.get(ref) : path.join(root,ref);
+  const assetRead = ref => readFileSync(assetFile(ref),"utf8");
   const profile = profiles[name];
   if (!profile) throw new TypeError("未知 Node 场景: " + name);
-  for (const file of profile.files) ensure(exists(file), "缺少场景资产: " + file);
-  for (const [file, marker] of profile.markers) ensure(read(file).includes(marker), "场景资产缺少标记 " + marker + ": " + file);
+  for (const file of profile.files) ensure(existsSync(assetFile(file)), "缺少场景资产: " + file);
+  for (const [file, marker] of profile.markers) ensure(assetRead(file).includes(marker), "场景资产缺少标记 " + marker + ": " + file);
   if (name === "lifecycle") {
     verifyHarnessContract();
     const result = spawnSync("scripts/verify-lifecycle-registry", [], { cwd: root, encoding: "utf8" });

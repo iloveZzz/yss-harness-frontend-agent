@@ -5,7 +5,7 @@ description: 前端只读核验后端冻结 OpenAPI、JSON 派生与交付证据
 
 # YSS OpenAPI Governance
 
-已有生命周期资产优先用 `scripts/contract view <资产> --kind <类型>` 阅读；执行任务用 `--profile task --unit <ID>`，绑定与校验明细用 `--profile full`。视图不授予执行权限，仍按本 Skill 的原始来源和批准门禁处理。类型、准备和迁移见 `.template-spec/process/contract-reading.md`。
+先消费已判定的交付路径；本技能不自行授予 `daily`。只有 Spec 的 `request_triage.delivery_path` 已启用且固定 CLI 支持 `yss lifecycle route|verify-daily` 时可使用普通路径；其他 Profile / 旧 CLI 明确不支持。本任务的正式绑定保留 `governed`。正式资产按 `.template-spec/process/contract-reading.md` 阅读，普通任务直接消费其 API 段和权威 YAML。
 
 本 skill 在前端仓只消费 YSS OpenAPI 的 **YAML-first** 工作流结果：
 
@@ -13,7 +13,7 @@ description: 前端只读核验后端冻结 OpenAPI、JSON 派生与交付证据
 Spec / 设计输入 → OpenAPI YAML Draft → 审查与 Freeze → JSON 派生物 → 下游既有前端代码生成流程
 ```
 
-`docs/.scratch/<feature>/api/<feature>.yaml` 是唯一权威的 OpenAPI 3.1 契约。JSON 只能由冻结后的 YAML 可复现地产生，用于前端代码生成或分发；不得手写、不得反向覆盖 YAML、不得把运行时代码当成设计契约来源。
+`governed` 的 `docs/.scratch/<feature>/api/<feature>.yaml`，或普通任务绑定的既有项目 OAS YAML，是各自唯一权威的 OpenAPI 3.1 契约；普通小改不为了目录约定搬迁现有合同。JSON 只能由冻结后的 YAML 可复现地产生，用于前端代码生成或分发；不得手写、不得反向覆盖 YAML、不得把运行时代码当成设计契约来源。
 
 YSS DTO 的可复用 HTTP/JSON 映射由 `.agents/skills/yss-openapi-governance/references/openapi-wire-profile.yaml` 提供只读快照。它描述公开 wire shape，不是 Java 字段或 getter 清单；本 skill 必须消费 profile，不能在治理文档、feature YAML 和 JSON 中各自发明 `SingleResult`、`PageResult` 或 `PageQuery` 字段表。
 
@@ -26,6 +26,8 @@ YSS DTO 的可复用 HTTP/JSON 映射由 `.agents/skills/yss-openapi-governance/
 本地只读审查冻结 YAML、JSON 派生物和 wire profile；profile 是后端规范的只读分发快照，不在前端另行定义；来源仓、完整提交、源路径与 SHA-256 绑定在 `references/openapi-wire-source.json`。默认校验只证明离线快照完整，不代表已检查上游最新版本。下文涉及 Draft、Freeze、后端 mapper 或 schema 修订的步骤由后端项目执行，前端只提交消费需求与问题证据。不得在本仓起草后端契约或批准 Freeze。
 
 ## 边界与职责
+
+普通 API 小改执行 [普通 API 交付步骤](references/governance-workflow.md#普通任务-api)。只允许 CLI 能证明旧 operation 及其可达引用、路径继承和全局契约规范化完全相同的新增独立 operation；unknown、breaking 或跨仓停止受影响实施并进入 `governed`。普通 Ticket 的 API 段保留 YAML Draft、锁定 lint / refs / YSS wire、兼容检查、独立语义审查、当前摘要 Freeze 和契约测试；不强制另建 validation YAML、API Contract Decision、工程批准包或 Slice，不写 `approved` / `ready-for-agent`。以下独立正式资产及阶段要求用于 `governed`，技术校验仍按实际 API 影响适用。
 
 使用 `yss-openapi-governance`：
 
@@ -49,11 +51,11 @@ YSS DTO 的可复用 HTTP/JSON 映射由 `.agents/skills/yss-openapi-governance/
 
 ## 治理流程
 
-当前任务涉及 Draft、结构校验、Review / Freeze 或派生交接时，读取 [治理分阶段步骤](references/governance-workflow.md) 中对应步骤。阶段顺序保持 Draft → 校验 → 独立 Review / Freeze → JSON → 下游；任何前置证据缺失不得越过阶段。前端 profile 仅消费后端权威，不能执行后端批准。
+当前任务涉及 Draft、结构校验、Review / Freeze 或派生交接时，读取 [治理分阶段步骤](references/governance-workflow.md) 中当前路径的步骤。两条路径均保持 Draft → 校验 → 独立 Review / Freeze → 必要 JSON → 实现/测试，任何前置证据缺失不得越过。前端 profile 仅消费后端权威，不能执行后端批准或自行启用普通路径。
 
 ## 阻断规则
 
-阻断 OpenAPI Freeze 或 JSON 导出，若：
+以下通用技术条件阻断两条路径的 Freeze / JSON 导出；其中独立 validation YAML / verifier 只适用于 `governed`，普通任务对应核验同一 Ticket API 段的当前 lint、引用、wire、兼容、独立审查及摘要证据。若：
 
 - YAML 不是单一 OAS 3.1 document，或其根节点混入生命周期元数据。
 - YAML / `$ref` / lint 不通过，operationId 不稳定或不唯一，或路径参数、schema、examples 无法解析。
@@ -111,4 +113,4 @@ scripts/verify-yss-dto-openapi-scenarios
 
 带 `--source-root` 的校验同时核验源仓身份、固定提交字节和当前源工作树。源内容变化时重新审阅并同步快照及绑定；离线消费继续使用已绑定版本，已知上游变化不能被离线校验掩盖。
 
-API Contract Decision 可用 `scripts/api-contract-decision prepare` 自动生成来源摘要；v1 显式迁移用 `migrate --version <新版本> --output <新路径>`。候选保持 draft，审查、Freeze 绑定和工程契约批准仍由现有生命周期核验。
+`governed` API Contract Decision 可用 `scripts/api-contract-decision prepare` 自动生成来源摘要；v1 显式迁移用 `migrate --version <新版本> --output <新路径>`。候选保持 draft，审查、Freeze 绑定和工程契约批准仍由现有生命周期核验；普通 API 小改不为了这些字段生成正式工程资产。
