@@ -129,9 +129,11 @@ export function validateInstantiationPointers(documents = {}) {
   const agents=documents.agents??read("AGENTS.md");
   const readme=documents.readme??read("README.md");
   const guide=documents.guide??read(".template-spec/user-guide/CLI使用说明.md");
-  if(!agents.includes(INSTANTIATION.cli_package))fail("AGENTS.md 必须声明专职初始化入口");
-  if(isTemplateSource(ROOT)&&!readme.includes(`npx ${INSTANTIATION.cli_package}`))fail("README.md 必须提供专职 CLI 初始化命令");
+  const command=`${INSTANTIATION.cli_package} init --profile ${INSTANTIATION.native_profile} --root`;
+  if(!agents.includes(command)||!agents.includes(INSTANTIATION.metadata_file))fail("AGENTS.md 必须声明本家族原生初始化入口与 metadata");
+  if(isTemplateSource(ROOT)&&!readme.includes(command))fail("README.md 必须提供本家族原生 CLI 初始化命令");
   if(!guide.includes(INSTANTIATION.metadata_file))fail("初始化指南必须绑定本端 metadata");
+  if(!guide.includes(command))fail("初始化指南必须绑定本家族 profile 原生初始化入口");
   if([readme,guide].some(text=>/npm create yss-harness-dev/.test(text)))fail("专职入口不得路由通用 CLI");
   if(isTemplateSource(ROOT)&&!existsSync(path.join(ROOT,"scripts/instantiate-harness")))fail("旧入口退役提示脚本不可读");
   return {cli_package:INSTANTIATION.cli_package,metadata_file:INSTANTIATION.metadata_file};

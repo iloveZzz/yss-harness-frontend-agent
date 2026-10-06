@@ -1,10 +1,12 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { loadHarnessProfile } from "./harness-profile.mjs";
+import { loadHarnessProfile, INSTANTIATION } from "./harness-profile.mjs";
 import { ROOT } from "./lifecycle-registry.mjs";
 import { loadSkillRegistry } from "./skill-registry.mjs";
+import { isTemplateSource } from "./repository-mode.mjs";
 
 export const ENTRY_RULES = path.join(ROOT, "AGENTS.md");
+export const REPO_INTRO = path.join(ROOT, "README.md");
 export const GLOSSARY = path.join(ROOT, "CONTEXT.md");
 export const HARNESS_PROFILE_PATH = ".template-spec/process/harness-profile.yaml";
 
@@ -33,17 +35,22 @@ export function loadEntryAlignmentSources({
   skills = loadSkillRegistry(),
   agentsText = readUtf8(ENTRY_RULES),
   glossaryText = readUtf8(GLOSSARY),
+  readmeText = readUtf8(REPO_INTRO),
 } = {}) {
-  return { profile, skills, agentsText, glossaryText };
+  return { profile, skills, agentsText, glossaryText, readmeText };
 }
 
 export function checkEntryAlignment(sources = {}) {
-  const { profile, skills, agentsText, glossaryText } = loadEntryAlignmentSources(sources);
+  const { profile, skills, agentsText, glossaryText, readmeText } = loadEntryAlignmentSources(sources);
   const errors = [];
   const note = (condition, message) => {
     if (!condition) errors.push(message);
   };
 
+  const nativeCommand = `${INSTANTIATION.cli_package} init --profile ${INSTANTIATION.native_profile} --root`;
+  note(["cli_package", "native_profile", "metadata_file", "template_source"].every(field => profile?.instantiation?.[field] === INSTANTIATION[field]), "Harness profile 原生入口来源字段必须与本家族 native 合同一致");
+  note(agentsText.includes(nativeCommand) && agentsText.includes(INSTANTIATION.metadata_file), "AGENTS.md 必须声明本家族原生初始化入口与 native metadata");
+  if (isTemplateSource(ROOT)) note(readmeText.includes(nativeCommand), "README.md 必须提供本家族原生初始化入口");
   const profileId = profile?.profile_id;
   const entry = profile?.lifecycle?.entry_work_unit;
   const terminal = profile?.lifecycle?.terminal_work_unit;

@@ -30,13 +30,18 @@ export const FORBIDDEN_WORK_UNITS = [
   "work-unit.release-and-rollback",
 ];
 export const INSTANTIATION = Object.freeze({
-  cli_package: "create-yss-harness-frontend",
-  npm_create: "npm create yss-harness-frontend@latest",
-  metadata_file: ".yss-harness-frontend.json",
+  cli_package: "yss",
+  native_profile: "frontend",
+  metadata_file: ".yss.json",
   foreign_metadata_files: [".yss-template.json", ".yss-harness-dev.json", ".yss-harness-backend.json"],
   template_source: "github:iloveZzz/yss-harness-frontend-agent",
   distribution_manifest: ".template-source/distribution/template.manifest.json",
-  pin_env: "YSS_HARNESS_TEMPLATE_REF",
+  command: "yss init --profile frontend --root <directory>",
+});
+
+const LEGACY_INSTANTIATION = Object.freeze({
+  legacy_cli_package: "create-yss-harness-frontend",
+  legacy_metadata_file: ".yss-harness-frontend.json",
 });
 
 function fail(message) {
@@ -164,6 +169,10 @@ export function validateHarnessProfile(profile = loadHarnessProfile(), {
       fail(`instantiation.${field} 必须为 ${expected}`);
     }
   }
+  for (const [field, expected] of Object.entries(LEGACY_INSTANTIATION)) {
+    if (instantiation[field] !== undefined && instantiation[field] !== expected) fail(`instantiation.${field} 历史来源不匹配`);
+  }
+  for (const field of ["npm_create", "pin_env"]) if (field in instantiation) fail(`instantiation.${field} 是历史 CLI 默认入口，不属于原生合同`);
   if (isTemplateSource(ROOT)) {
     const manifestPath = path.resolve(ROOT, instantiation.distribution_manifest);
     if (!existsSync(manifestPath)) {
@@ -176,6 +185,8 @@ export function validateHarnessProfile(profile = loadHarnessProfile(), {
     target_user_roles: [...profile.audience.target_user_roles],
     terminal_work_unit: profile.lifecycle.terminal_work_unit,
     cli_package: instantiation.cli_package,
+    native_profile: instantiation.native_profile,
+    metadata_file: instantiation.metadata_file,
   };
 }
 
