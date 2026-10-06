@@ -62,7 +62,7 @@ description: 编排前端专职 Harness 的输入接收、合同、任务派发�
 按 `.template-spec/process/business-tickets.md` 执行 Spec 业务草案、Design 校准与业务正式化。业务票放在 `business-tickets/`，集合引用进入 Spec / map / checkpoint；业务票不授予实现资格。实现票仍在 `issues/`，受工程准备、当前 Slice 合同批准和完整就绪检查约束。 接收新能力交接时核验业务集合、规则/场景映射与原始验收；依赖未知时保守阻断范围，不无依据缩小影响。不把战略交接 approved 等同工程可实现。
 
 <!-- HARNESS_UPGRADE_ROUTE -->
-既有实例的同家族模板升级、旧身份迁移和事务恢复使用 `yss-harness-upgrade`，遵循 `.template-spec/process/harness-upgrade.md`；升级不推进阶段或改写历史批准。
+YSS CLI 安装与升级、治理工程新建与接管、实例模板同步、旧身份迁移、资源补装及事务恢复回退使用 `yss-harness-upgrade`，遵循 `.template-spec/process/harness-upgrade.md`；默认查询 GitHub 最新正式 Release 后固定来源，不推进阶段或改写历史批准。
 
 <!-- SKILL_PREFLIGHT_ROUTE -->
 专项技能调用前，运行 `scripts/query-lifecycle-context --work-unit <当前工作单元> --check-skills`；多运行时指定 `--agent-runtime`，条件用 `--when`。按合同 `skill_preflight` 处理缺失、漂移与冲突，在既有授权内核对补装计划、应用后重验。预检不授予执行或批准。Matt 上游为 https://github.com/mattpocock/skills，生效版本以根 `skills-lock.json` 为准。
