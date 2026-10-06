@@ -102,7 +102,7 @@ context_schema_version: 1
 | 模板实例仓库（`project-instance`） | 由模板初始化后生成、承载某个具体产品研发生命周期资产的仓库身份。 | — | 不作为通用流程模板的权威来源。 |
 | 模板实例分发面 | 模板源中应随 CLI 快照进入 `project-instance` 的共享生命周期、模板、用户指南和验证资产集合。 | — | 不包含模板源审查、研究、发布路线、源仓库专属 ADR 或源仓库 LLM Wiki 编译树。本仓权威清单为 `.template-source/distribution/template.manifest.json`。 |
 | Harness Profile | 某个 Harness 模板源的受众、允许工作单元、禁止产物、上游输入和实例化 CLI 边界的机器可读配置。 | — | 不是角色表，也不替代生命周期注册表。本仓 `profile_id` 为 `harness.frontend-delivery`。 |
-| 前端落地 Harness CLI | 将本仓前端专职 Harness 快照为 `project-instance` 的外部 npm CLI。 | — | 包名为 `create-yss-harness-frontend`；不要与全生命周期 CLI 或 dev 综合模板混用。 |
+| 前端落地 Harness CLI | 统一 `yss` 的 `frontend` Profile 将本仓五阶段前端专职 Harness 固定 Bundle 生成 `project-instance`，入口为 `yss init --profile frontend --root`。 | — | 原生元数据为 `.yss.json`；`create-yss-harness-frontend` 和 `.yss-harness-frontend.json` 仅作历史来源识别，旧实例先显式迁移或用匹配固定执行器恢复。 |
 | 模板源治理区 | 仅供 `template-source` 使用、保存审查证据、研究记录、跨仓契约、发布路线、源仓库治理决策和源仓库 LLM Wiki 编译树的归档区域。 | — | 不随 CLI 分发；不等于产品实例的研发管理资产。`wiki-root` 为 `.template-source/wiki`。 |
 | 仓库身份清单 | 显式声明仓库身份和清单结构版本的机器可读资产。 | — | 不承载项目名称、团队规模、Tracker 或其他易变业务配置。 |
 
