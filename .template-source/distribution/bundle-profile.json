@@ -58,7 +58,8 @@
       "docs/reviews",
       "docs/adr",
       "scripts/instantiate-harness",
-      "scripts/verify-strategic-handoff-tools-lock"
+      "scripts/verify-strategic-handoff-tools-lock",
+      ".work"
     ],
     "renderPaths": [
       "README.md",
@@ -71,6 +72,49 @@
     "initExcludeRootFiles": [
       "yss-public-skills.json"
     ],
-    "initExcludePaths": []
+    "initExcludePaths": [],
+    "ownershipPolicy": {
+      "version": 1,
+      "default": "managed",
+      "rules": [
+        {
+          "pattern": ".work/**",
+          "ownership": "user-owned"
+        }
+      ]
+    }
+  },
+  "upgradePolicy": {
+    "schemaVersion": 1,
+    "assets": [
+      {
+        "paths": [
+          "CONTEXT.md",
+          "yss-project.yaml",
+          ".template-spec/agents/issue-tracker.md",
+          "README.md"
+        ],
+        "kind": "preserve"
+      },
+      {
+        "paths": [
+          "AGENTS.md",
+          ".gitignore",
+          "DESIGN.md"
+        ],
+        "kind": "customizable"
+      },
+      {
+        "paths": [
+          "skills-lock.json",
+          ".template-spec/process/harness-profile.yaml",
+          ".agents/skills/.public-skills.json",
+          ".agents/skills/.skills-manifest.json"
+        ],
+        "kind": "generated",
+        "generator": "native-bundle"
+      }
+    ],
+    "rules": []
   }
 }

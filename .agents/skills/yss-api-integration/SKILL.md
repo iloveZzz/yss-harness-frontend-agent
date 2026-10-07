@@ -3,6 +3,8 @@ name: yss-api-integration
 description: "在 Vue3 YSS UI 中对接 Orval API；核验生成方法、mutator、错误反馈、loading 与长整型精度。"
 ---
 
+功能包根只从 `.template-spec/agents/issue-tracker.md` 的 `tracker.root` 读取；本文 `.work/` 路径是新项目示例，已有项目沿用已配置的根。
+
 # API 集成 Skill
 
 本技能的 canonical 名称为 `yss-api-integration`。历史名称 `api-integration` 只由注册表与实现合同编译器解析，不维护第二份内容。
@@ -23,7 +25,7 @@ description: "在 Vue3 YSS UI 中对接 Orval API；核验生成方法、mutator
 
 1. **契约状态已明确**：
    - 已有生成客户端：先核验冻结契约、JSON 派生记录和真实导出，输入当前且一致时可以直接集成。
-   - 新增或变更 API：回交后端权威项目，由后端先在 `docs/.scratch/<feature>/api/<feature>.yaml` 形成 OpenAPI Draft，经工程基线 / 架构 / Spec Delta 设计和设计审查后 Freeze。冻结的 OpenAPI YAML 是唯一权威，JSON 仅为它的受控派生物。
+   - 新增或变更 API：回交后端权威项目，由后端先在 `.work/<feature>/api/<feature>.yaml` 形成 OpenAPI Draft，经工程基线 / 架构 / Spec Delta 设计和设计审查后 Freeze。冻结的 OpenAPI YAML 是唯一权威，JSON 仅为它的受控派生物。
    - 如果接口尚未冻结、JSON 派生记录缺失或生成函数不存在，先回到 `harness-orchestrator` / `yss-openapi-governance`，不要手写临时路径、DTO 或响应结构。
 2. **API 已生成**：在目标前端实现仓库中，按其既有的手动代码生成命令（例如 `pnpm generate:api`）刷新 API；本 Harness 不配置、不执行该命令，也不把它加入 CI。
 3. **了解 OpenAPI**：查看 Freeze 记录、JSON 派生记录和 `openapi/openapi.json` 了解接口定义；不得把 JSON 或生成 TypeScript 当成可手改的源文件。
@@ -40,7 +42,7 @@ description: "在 Vue3 YSS UI 中对接 Orval API；核验生成方法、mutator
   → 类型检查与调用方验证
 ```
 
-1. 读取 `yss-openapi-governance` 产出的 OpenAPI Freeze 记录和 `docs/.scratch/<feature>/api/<feature>-json-export.md`；确认 YAML SHA-256、JSON SHA-256、Redocly CLI 版本、lockfile 引用和 JSON 校验均通过。治理 JSON 的唯一产物路径是 `docs/.scratch/<feature>/api/<feature>.json`。
+1. 读取 `yss-openapi-governance` 产出的 OpenAPI Freeze 记录和 `.work/<feature>/api/<feature>-json-export.md`；确认 YAML SHA-256、JSON SHA-256、Redocly CLI 版本、lockfile 引用和 JSON 校验均通过。治理 JSON 的唯一产物路径是 `.work/<feature>/api/<feature>.json`。
 2. JSON 导出由 `yss-openapi-governance` 负责。`yss-api-integration` 只接受该 skill 留下的派生记录；记录中的锁定 `redocly bundle` 命令是治理导出证据，不是前端集成任意重跑的入口。
 3. **受控交接**：若前端实现仓库需要本地输入，批准的 Cross-repo 子合同或项目脚本只能将上述治理 JSON 原样物化为 `<frontend>/openapi/openapi.json`；物化后的 SHA-256 必须与派生记录一致。禁止从 URL、Draft YAML、后端运行时或任意本地文件临时替换输入。
 4. `yss-api-integration` 只核对 JSON 派生记录、交接路径和 SHA-256，并把原始 JSON 交给既有前端代码生成流程；本 Harness 可只读核对目标前端的生成器配置与真实导出，但不修改该配置，不在此仓库执行生成，也不建立生成 CI 门禁。若 JSON SHA 与派生记录不一致，停止交接并回到治理流程。

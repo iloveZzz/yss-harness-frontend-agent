@@ -3,6 +3,8 @@ name: yss-openapi-governance
 description: 前端只读核验后端冻结 OpenAPI、JSON 派生与交付证据；契约修订或 Freeze 回交后端权威方。
 ---
 
+功能包根只从 `.template-spec/agents/issue-tracker.md` 的 `tracker.root` 读取；本文 `.work/` 路径是新项目示例，已有项目沿用已配置的根。
+
 # YSS OpenAPI Governance
 
 先消费已判定的交付路径；本技能不自行授予 `daily`。只有 Spec 的 `request_triage.delivery_path` 已启用且固定 CLI 支持 `yss lifecycle route|verify-daily` 时可使用普通路径；其他 Profile / 旧 CLI 明确不支持。本任务的正式绑定保留 `governed`。正式资产按 `.template-spec/process/contract-reading.md` 阅读，普通任务直接消费其 API 段和权威 YAML。
@@ -13,7 +15,7 @@ description: 前端只读核验后端冻结 OpenAPI、JSON 派生与交付证据
 Spec / 设计输入 → OpenAPI YAML Draft → 审查与 Freeze → JSON 派生物 → 下游既有前端代码生成流程
 ```
 
-`governed` 的 `docs/.scratch/<feature>/api/<feature>.yaml`，或普通任务绑定的既有项目 OAS YAML，是各自唯一权威的 OpenAPI 3.1 契约；普通小改不为了目录约定搬迁现有合同。JSON 只能由冻结后的 YAML 可复现地产生，用于前端代码生成或分发；不得手写、不得反向覆盖 YAML、不得把运行时代码当成设计契约来源。
+`governed` 的 `.work/<feature>/api/<feature>.yaml`，或普通任务绑定的既有项目 OAS YAML，是各自唯一权威的 OpenAPI 3.1 契约；普通小改不为了目录约定搬迁现有合同。JSON 只能由冻结后的 YAML 可复现地产生，用于前端代码生成或分发；不得手写、不得反向覆盖 YAML、不得把运行时代码当成设计契约来源。
 
 YSS DTO 的可复用 HTTP/JSON 映射由 `.agents/skills/yss-openapi-governance/references/openapi-wire-profile.yaml` 提供只读快照。它描述公开 wire shape，不是 Java 字段或 getter 清单；本 skill 必须消费 profile，不能在治理文档、feature YAML 和 JSON 中各自发明 `SingleResult`、`PageResult` 或 `PageQuery` 字段表。
 
@@ -31,13 +33,13 @@ YSS DTO 的可复用 HTTP/JSON 映射由 `.agents/skills/yss-openapi-governance/
 
 使用 `yss-openapi-governance`：
 
-- 向后端提交消费需求，由后端基于冻结前的 Spec、产品设计、架构约束创建或更新 `docs/.scratch/<feature>/api/<feature>.yaml`。
+- 向后端提交消费需求，由后端基于冻结前的 Spec、产品设计、架构约束创建或更新 `.work/<feature>/api/<feature>.yaml`。
 - 保证 YAML 是单一 YAML document、根节点为 `openapi: 3.1.0`，且不把 `pipeline`、`stage`、`status`、`owner` 等生命周期元数据写入 OpenAPI 根节点。
 - 采用 YSS wrapper / 分页协议时，按只读 HTTP/JSON wire profile 校验 `com.yss.cloud.dto.result` canonical 包、`YssResultMeta` 公共字段、具体 wrapper schema、请求 / 响应方向和分页负向字段；其他批准协议记录适用性及实际契约检查。
 - 运行受项目 lockfile 约束的 lint / bundle，检查 `$ref`、operationId、响应包装、错误、分页、幂等和契约测试 seam；只有 Spec 明确改变认证或授权行为时才检查对应契约。
 - 在 OpenAPI Freeze 后，用锁定的 Redocly CLI 将 YAML bundle 为 JSON，并记录可重现证据。
 - 消费后端治理及 Freeze 记录，维护本地 JSON 派生与客户端生成记录。
-- Spec Delta 影响存在时，在 `docs/.scratch/<feature>/spec-delta/` 记录与冻结 YAML 的关系；没有影响时明确记录 `not-applicable`。
+- Spec Delta 影响存在时，在 `.work/<feature>/spec-delta/` 记录与冻结 YAML 的关系；没有影响时明确记录 `not-applicable`。
 
 不使用本 skill 来替代：
 
@@ -76,7 +78,7 @@ Wrapper 与分页检查按实际协议填写：采用 YSS 协议时记录 profil
 <Draft / Approved for Freeze / Blocked / JSON Exported>
 
 ### YAML Authority
-- YAML: <docs/.scratch/<feature>/api/<feature>.yaml>
+- YAML: <.work/<feature>/api/<feature>.yaml>
 - OAS: 3.1.0
 - YAML SHA-256: <sha256>
 - Freeze record: <path / ref>
@@ -89,7 +91,7 @@ Wrapper 与分页检查按实际协议填写：采用 YSS 协议时记录 profil
 - Blocking findings: <file:line grounded finding>
 
 ### JSON Derivative
-- JSON: <docs/.scratch/<feature>/api/<feature>.json>
+- JSON: <.work/<feature>/api/<feature>.json>
 - JSON SHA-256: <sha256>
 - Redocly CLI / lockfile: <version and lock reference>
 - Bundle command and metafile: <command / path>
