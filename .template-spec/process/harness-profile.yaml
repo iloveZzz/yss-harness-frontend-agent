@@ -42,8 +42,8 @@ upstream:
   discovery_is_default: false
   strategic_design_handoff:
     schema_ref: .template-spec/process/schemas/strategic-design-handoff.schema.json
-    accepted_schema_versions: [3, 4]
-    current_schema_version: 4
+    accepted_schema_versions: [3, 4, 5]
+    current_schema_version: 5
     ui_impact_requires_visual_baseline_schema_version: 1
     stale_baseline_policy: block-and-reroute
   compatibility_skills:

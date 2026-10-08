@@ -152,11 +152,11 @@ export function validateHarnessProfile(profile = loadHarnessProfile(), {
   }
   const handoff = profile.upstream?.strategic_design_handoff;
   if (handoff?.schema_ref !== ".template-spec/process/schemas/strategic-design-handoff.schema.json"
-    || !equalArray(handoff?.accepted_schema_versions, [3, 4])
-    || handoff?.current_schema_version !== 4
+    || !equalArray(handoff?.accepted_schema_versions, [3, 4, 5])
+    || handoff?.current_schema_version !== 5
     || handoff?.ui_impact_requires_visual_baseline_schema_version !== 1
     || handoff?.stale_baseline_policy !== "block-and-reroute") {
-    fail("upstream.strategic_design_handoff 必须兼容 v3、以 Handoff v4 为当前版本并固定 Visual Baseline v1 与 stale 阻断策略");
+    fail("upstream.strategic_design_handoff 必须兼容 v3/v4、以 Handoff v5 为当前版本并固定 Visual Baseline v1 与 stale 阻断策略");
   }
   if (!equalArray(profile.handoff?.consumer_capabilities, CONSUMER_CAPABILITIES)) fail("handoff.consumer_capabilities 必须为 frontend-engineering-design");
 
@@ -199,8 +199,8 @@ export const harnessProfileContract = Object.freeze({
   consumer_capabilities: CONSUMER_CAPABILITIES,
   forbidden_work_units: FORBIDDEN_WORK_UNITS,
   strategic_design_handoff: Object.freeze({
-    accepted_schema_versions: [3, 4],
-    current_schema_version: 4,
+    accepted_schema_versions: [3, 4, 5],
+    current_schema_version: 5,
     visual_baseline_schema_version: 1,
     stale_baseline_policy: "block-and-reroute",
   }),

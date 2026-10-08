@@ -38,7 +38,7 @@ const mutations = [
   ["extra target role", (candidate) => candidate.audience.target_user_roles.push("role.product-manager"), /target_user_roles/],
   ["wrong terminal", (candidate) => { candidate.lifecycle.terminal_work_unit = "work-unit.tactical-design"; }, /terminal_work_unit/],
   ["discovery default", (candidate) => { candidate.upstream.discovery_is_default = true; }, /discovery_is_default/],
-  ["missing current handoff", (candidate) => { candidate.upstream.strategic_design_handoff.current_schema_version = 3; }, /Handoff v4/],
+  ["missing current handoff", (candidate) => { candidate.upstream.strategic_design_handoff.current_schema_version = 3; }, /Handoff v5/],
   ["missing visual baseline", (candidate) => { delete candidate.upstream.strategic_design_handoff.ui_impact_requires_visual_baseline_schema_version; }, /Visual Baseline v1/],
   ["foreign cli", (candidate) => { candidate.instantiation.cli_package = "create-yss-spec"; }, /cli_package/],
 ];

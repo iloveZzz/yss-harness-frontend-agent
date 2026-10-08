@@ -285,7 +285,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/harness-orchestrator/SKILL.md",
-        "effectiveHash": "a4902cd90696f8671073acd95d87dbfe779b965df4f706555844a155b077cd60",
+        "effectiveHash": "c47c3d01cec9d1998bb4e5d387e34cd6d275e78b7a094e93af02465229c065eb",
         "targets": [
           ".agents/skills",
           ".codex/skills",
@@ -389,6 +389,18 @@
           ".pi/skills"
         ]
       },
+      "publish-skills-sh": {
+        "source": "project",
+        "sourceType": "local",
+        "skillPath": ".agents/skills/publish-skills-sh/SKILL.md",
+        "effectiveHash": "f483f253c72778cbe267f4a4373da2d5d7df12fba4b835f87b4e9defb2bd2048",
+        "targets": [
+          ".agents/skills",
+          ".codex/skills",
+          ".cursor/skills",
+          ".pi/skills"
+        ]
+      },
       "resolving-merge-conflicts": {
         "source": "mattpocock/skills",
         "sourceType": "github",
@@ -412,6 +424,18 @@
         "sourceRevision": "0ab1b63a410a03d3627979a109c8695de27af954",
         "upstreamHash": "80cd6b5be4f67913f1b10f5acd97fccaeb6401682ae7ff3a971460cb73d86cbe",
         "adaptationRef": ".template-source/process/MATT-POCOCK-ENGINEERING-SKILLS.md",
+        "targets": [
+          ".agents/skills",
+          ".codex/skills",
+          ".cursor/skills",
+          ".pi/skills"
+        ]
+      },
+      "setup-yss-harness": {
+        "source": "project",
+        "sourceType": "local",
+        "skillPath": ".agents/skills/setup-yss-harness/SKILL.md",
+        "effectiveHash": "3db4ad068ded1e0d432597608b463ae156ea582bc80b209bc26f7fe50beff1b7",
         "targets": [
           ".agents/skills",
           ".codex/skills",
@@ -632,18 +656,6 @@
           ".pi/skills"
         ]
       },
-      "yss-harness-upgrade": {
-        "source": "project",
-        "sourceType": "local",
-        "skillPath": ".agents/skills/yss-harness-upgrade/SKILL.md",
-        "effectiveHash": "5e316c4c99bfae5525ad1adf9ff4f7b03b872635233a72eeacd33bf42262f96c",
-        "targets": [
-          ".agents/skills",
-          ".codex/skills",
-          ".cursor/skills",
-          ".pi/skills"
-        ]
-      },
       "yss-hook": {
         "source": "project",
         "sourceType": "local",
@@ -660,7 +672,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/yss-implementation-contract-compiler/SKILL.md",
-        "effectiveHash": "8ab1266b357ca6c4d7e428ee8fc081b8ce7c17f14c4f230782ebba1c69257010",
+        "effectiveHash": "8af8b5a2330dd8476b2c8aa26f22b3cc3748032d25be41cce897416d7a474273",
         "targets": [
           ".agents/skills",
           ".codex/skills",
@@ -684,7 +696,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/yss-openapi-governance/SKILL.md",
-        "effectiveHash": "c9a22a9564e89a06e8b8fe115c8bb4cde71775cef91f84fc60ed32a500986efc",
+        "effectiveHash": "f943b79b6a246bf306ac5ec5b2a3c1fd5022bab352c4e2acd1d64af4faa7bcd3",
         "targets": [
           ".agents/skills",
           ".codex/skills",
@@ -696,7 +708,7 @@
         "source": "iloveZzz/yss-harness-design-agent",
         "sourceType": "git-submodule",
         "skillPath": ".agents/skills/yss-prototype-stage/SKILL.md",
-        "effectiveHash": "c7652ddb003aa345dec21dad59462a68db2e041e467a317d5213db77d0d27afc",
+        "effectiveHash": "8465a43c74cc194936f1b1311ffccc300ba79e756c74be6920122d971181898e",
         "sourceRevision": "79e66e694a378d78f06c63399a494d0a69543ba3",
         "upstreamHash": "0e82e8c0f6b5446dbe48aec8df092574ab895be303efe33d8fc8457bce98d02e",
         "adaptationRef": ".template-source/agents/strategic-design-skills-integration.md",

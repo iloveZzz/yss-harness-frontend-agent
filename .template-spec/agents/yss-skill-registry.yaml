@@ -187,7 +187,7 @@ skill_dependencies:
     - skill: yss-openapi-governance
       type: context-conditional
       when: regeneration
-  yss-harness-upgrade:
+  setup-yss-harness:
     - skill: i-have-adhd
       type: context-conditional
       when: lifecycle-document-output
@@ -446,6 +446,13 @@ skills:
     aliases: []
     impacts:
       - template-maintenance
+  - id: publish-skills-sh
+    layer: core
+    maturity: verified
+    instance_default_discoverable: true
+    aliases: []
+    impacts:
+      - template-maintenance
   - id: prototype
     layer: maintainer-only
     maturity: supported
@@ -663,7 +670,7 @@ skills:
     aliases: []
     impacts:
       - frontend
-  - id: yss-harness-upgrade
+  - id: setup-yss-harness
     layer: core
     maturity: supported
     instance_default_discoverable: true
