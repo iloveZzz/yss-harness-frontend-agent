@@ -69,6 +69,9 @@ YSS CLI 安装与升级、治理工程新建与接管、实例模板同步、旧
 <!-- SKILL_PREFLIGHT_ROUTE -->
 专项技能调用前，运行 `scripts/query-lifecycle-context --work-unit <当前工作单元> --check-skills`；多运行时指定 `--agent-runtime`，条件用 `--when`。按合同 `skill_preflight` 处理缺失、漂移与冲突，在既有授权内核对补装计划、应用后重验。预检不授予执行或批准。Matt 上游为 https://github.com/mattpocock/skills，生效版本以根 `skills-lock.json` 为准。
 
+
+一般任务先用固定 CLI 的 `skills list --details` 按描述选择内置技能，再执行 `skills resolve <id...> --agent-runtime codex --json`。消费整体 `result.status`：`ready` 直接读取闭包的绝对 `entryPath` 并记录 `contentDigest`；`missing` 仅在已有授权覆盖且无冲突时 ensure plan/apply 后重验；`blocked` 停止受影响调用。条件用逗号分隔的 `--when`；调用模式及边界见 [资源补装](../setup-yss-harness/references/project-operations.md)，旧 CLI 沿用工作单元预检。
+
 <!-- USER_PROGRESS_REPORT -->
 每轮返回或暂停按合同 `user_progress_report` 给出中文状态：当前阶段与本轮结果、下一阶段/单元与进入条件、问题/阻塞、已登记责任方、解除动作及复验、主控下一动作与用户待决定项。未知写“待核验”，负责人缺失写“未登记”；目标不代表批准，已授权工作继续执行。发送前核对证据、状态及结构化结果一致；写法见 `.template-spec/process/document-writing.md`。
 
