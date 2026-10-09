@@ -39,6 +39,20 @@ stages:
     goal: 确认目标、业务边界、关键规则、MVP / 非目标、优先级和交接责任，为 Spec 提供战略输入；按影响面探索并复用仍有效的结论。
     exit_criteria: 命中的战略与阶段决策检查通过，用户统一批准当前 Plan；影响业务边界、关键规则或 MVP
       的问题已解决，其他未决项有责任人和解决时点；下游可进入 Spec，不代表可实现。
+    spec_entry:
+      required_checks:
+        - goals
+        - scope_and_priority
+        - boundaries_and_rules
+        - open_questions
+        - handoff
+        - context_reconciliation
+        - grill_exit
+      gate_impacts:
+        gate.plan-approved: plan
+      check_impacts:
+        check.domain-strategy-approved: domain_strategy
+        check.stage-decision-package-approved: stage_decision
   - id: stage.spec-architecture
     name: Spec / 功能架构
     goal: 固化解决方案和功能边界。

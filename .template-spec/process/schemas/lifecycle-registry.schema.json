@@ -109,6 +109,40 @@
           "exit_criteria": {
             "type": "string",
             "minLength": 1
+          },
+          "spec_entry": {
+            "type": "object",
+            "required": [
+              "required_checks",
+              "gate_impacts"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "required_checks": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "gate_impacts": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "check_impacts": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
           }
         }
       }
