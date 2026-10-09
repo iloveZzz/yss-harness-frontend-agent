@@ -8,6 +8,8 @@ description: 编排前端专职 Harness 的输入接收、合同、任务派发�
 
 # Harness Orchestrator
 
+本入口是前端专职协作方。本端职责终点由真实前端验收及当前接收、合同、视觉交互和构建证据决定；不写 Spec 主控的推进意图配置，不保存第二套整体进度。主控只汇总显式同功能 checkpoint 与当前 Receipt。无生产 UI 影响时显示前端项不适用，不能伪造前端完成；本端验收不等于完整业务验收或 Git 发布授权。
+
 前端工程消费已批准战略；战略预检通过后可起草工程设计与实现计划。仅 Backend / API / Data 影响命中时，最终接收才要求真实后端交付；UI-only 路径按当前合同记录 `backend-not-applicable`。后端架构、API 或数据变更回交后端项目，代码实现仍须当前已批准的 Slice 合同与就绪检查。
 
 这是本专职 Harness 的唯一编排入口。它负责读取 `yss-project.yaml` 与 `CONTEXT.md`、判断影响面、选择下一个未阻塞工作单元、编译任务包、维护合同版本、汇合执行结果和触发重路由。
@@ -74,3 +76,5 @@ YSS CLI 安装与升级、治理工程新建与接管、实例模板同步、旧
 
 <!-- PROFILE_GUIDANCE -->
 当前职责完成、状态查询或恢复时，消费合同 `profile_guidance` 与 `yss lifecycle status --root <当前工程> --checkpoint <当前checkpoint>` 给出下游 Profile 建议；不按邻近目录猜初始化状态。Spec 默认继续当前职责；没有当前战略交接时，可经用户明确选择交给独立 Design。Spec 或 Design 已形成经核验的当前战略交接后，按消费者路由建议 Backend、Frontend 或同时准备，两者仍在独立目录执行；设计完成声明不能替代交接及来源批准，显式交接失效时先解除阻断。目标 Design 接入已批准 Spec 走 `spec-baseline` 冻结包与 Receipt、目标 Context 对账后从设计继续，不重走 Plan，不复制源 checkpoint 批准到目标；目标 Backend / Frontend 使用战略接收记录及各自消费合同。建议不改变当前工作单元、不授予批准或执行，下游推荐不扩展本 Profile 的实现写范围。
+
+当前 Slice v3 在 `stage.slice-contract` 先执行 `check.design-reviewed`，独立架构或测试审查者加载本端工程审查能力，绑定当前持久化编译合同的 ID、版本和原字节摘要。`gate.slice-contract-approved` 依赖这项审查；旧 Technical Design/Frontend Engineering 批准不能充当 Slice 审查，起草者不得自审。历史 v2 只按既有历史读取政策处理，不因此取得新的实施或交付资格。

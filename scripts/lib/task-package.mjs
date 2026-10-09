@@ -1,6 +1,7 @@
 import { compileReviewCapabilities, compileWorkUnitReviewCapabilities, validateReviewTaskBinding } from './review-capabilities.mjs';
 import { validateReadOnlyIntake } from './read-only-intake.mjs';
 import { assertTrackingEntry } from './stage-tracking.mjs';
+import { assertProgressionEntry } from './lifecycle-progression.mjs';
 import { normalizeSliceContract } from './slice-contract.mjs';
 import { assertSliceV3TaskPackage } from './slice-task-package.mjs';
 export { compileSliceTaskPackage, assertSliceV3TaskPackage } from './slice-task-package.mjs';
@@ -82,6 +83,7 @@ function validateSkillSource(value, registry) {
 
 function validateCommon(value, registry, lifecycle) {
   if (value.allowed_write_paths?.length && value.contract.kind === "lifecycle-work-unit") assertTrackingEntry(value.work_unit_id, value, { root: ROOT });
+  if (value.allowed_write_paths?.length && value.contract.kind !== 'template-maintenance' && ['Drafter', 'Worker'].includes(value.execution_state) && !['resolved', 'failed'].includes(value.workflow_status)) assertProgressionEntry(value.work_unit_id, {root: ROOT, checkpointRef: value.checkpoint_ref || value.result?.checkpoint_ref, assetRef: value.contract.slice_contract_ref || value.contract.lifecycle_ref});
   const workUnit = lifecycle.work_units.find((item) => item.id === value.work_unit_id);
   if (!workUnit && value.contract.kind !== "slice-implementation") fail(`未知 work_unit_id: ${value.work_unit_id}`);
   const roleDefaults = taskPackageDefaults(value.role_id, registry);

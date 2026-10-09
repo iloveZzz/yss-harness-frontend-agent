@@ -2,7 +2,7 @@ schema_version: 2
 profile_id: harness.frontend-delivery
 status: active
 name: 前端专职交付 Harness
-purpose: 联合接收批准战略与后端交付，形成前端工程计划和合同，完成实现、视觉交互验证及前端验收。
+purpose: 联合接收批准战略与后端交付，形成前端工程计划和合同，完成实现、视觉交互验证及前端验收；可按需协作于显式 Spec 主控，前端职责完成不等于整体业务验收。
 audience:
   target_user_roles:
   - role.architecture-agent

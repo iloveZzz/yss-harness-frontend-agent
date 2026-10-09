@@ -85,7 +85,7 @@ orchestrator:
   - yss-domain
   - yss-ui
   - implement
-  description: 负责四角色 Harness Agent 的入口、影响面、合同版本、任务包、状态转移、证据汇合和重路由。 不写业务代码，不替专业角色做领域或产品决策，不自行关闭独立验证门禁。
+  description: 负责四角色 Harness Agent 的入口、影响面、合同版本、任务包、状态转移、证据汇合和重路由。 不写业务代码，不替专业角色做领域或产品决策，不自行关闭独立验证门禁。协作汇总只消费显式同功能 checkpoint 和当前 Receipt，不改写综合 Spec 的推进意图，不把前端职责完成宣布为整体业务验收。
 roles:
 - id: role.architecture-agent
   name: 架构 Agent
@@ -286,7 +286,13 @@ gate_policy:
     capability_ids:
     - capability.implementation-assurance
   dual_digital_human: []
-  check_reviews: []
+  check_reviews:
+  - gate: check.design-reviewed
+    countersigners:
+      - role.architecture-agent
+      - role.test-agent
+    capability_ids:
+      - capability.frontend-engineering
   automatic_checks: []
   product_digital_human_with_biological_veto: []
   review_execution:
@@ -319,6 +325,7 @@ review_capabilities:
   name: 前端工程设计与边界审查
   eligible_roles:
   - role.test-agent
+  - role.architecture-agent
   review_skills:
   - codebase-design
   - code-review

@@ -1,4 +1,23 @@
 schema_version: 1
+progression_target:
+  schema_version: 1
+  required_capabilities: [ lifecycle-target-v1 ]
+  config_file: progression-target.json
+  writer_profiles: []
+  default_target: profile-terminal
+  coordinator: explicit-spec-root-and-same-feature-checkpoint
+  no_second_progress_state: true
+  business_completion: not-evaluated-local-terminal-only
+  completion_policy:
+    profile-terminal:
+      public_name: 前端验收职责完成
+      required_gates: [ gate.slice-contract-approved, gate.fresh-verification-passed ]
+      required_checks: [ frontend-implementation ]
+    frontend-accepted:
+      public_name: 前端验收
+      required_gates: [ gate.slice-contract-approved, gate.fresh-verification-passed ]
+      required_checks: [ frontend-implementation ]
+      no_ui_presentation: not-applicable-with-current-impact-evidence
 document_writing:
   supporting_skill: i-have-adhd
   condition: lifecycle-document-output
@@ -59,6 +78,13 @@ frontend_engineering_design:
   owner: role.architecture-agent
   review_by: role.test-agent
 slice_contract:
+  professional_review:
+    required_from_schema_version: 3
+    check_id: check.design-reviewed
+    stage_id: stage.slice-contract
+    subject: current-persisted-compiled-slice-by-id-version-and-raw-digest
+    independence: reviewer-principal-must-differ-from-actual-drafter
+    prior_engineering_approval: not-a-slice-review
   id: slice-implementation-contract-v2
   one_contract_per_slice: true
   shared_version_required: true
@@ -464,3 +490,5 @@ profile_guidance:
   unregistered_target: unknown-never-inferred-from-neighbor-directories
   design_intake: frozen-spec-baseline-then-target-context-reconciliation
   role_boundary: recommend-downstream-profile-without-dispatching-its-implementation
+  progression_intent: one-spec-controller-with-optional-specialists
+  specialist_terminal_is_business_acceptance: false
