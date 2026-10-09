@@ -3,7 +3,7 @@ export default {
   "schema_version": 1,
   "kind": "test-only-canonical-source",
   "source_repository": "yss-spec-project-template",
-  "source_head": "ff9a9a78456bbe0540acae060f2a9ddb3627acbd",
+  "source_head": "8de0e1dbd0c26843a0ad31cea1c088d9a120e108",
   "source_state": "working-tree",
   "files": [
     {
@@ -297,7 +297,7 @@ export default {
       "path": ".agents/skills/yss-implementation-contract-compiler/references/compiler-contract.yaml",
       "source_path": ".agents/skills/yss-implementation-contract-compiler/references/compiler-contract.yaml",
       "storage_path": ".agents/skills/yss-implementation-contract-compiler/references/compiler-contract.yaml",
-      "sha256": "ba0f1d09fa78ffe55ce688e8c446c77b1b1fedc675812dd289d92fab38309e5f",
+      "sha256": "662092de5d9fc201113daf8cd46a62e69b3470017dce2561a519a5c4a3f14f47",
       "mode": 420
     },
     {

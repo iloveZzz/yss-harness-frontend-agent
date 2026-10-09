@@ -22,7 +22,7 @@ Slice v3 的当前执行结果须按 `references/yss-skill-execution-result.md` 
 后端 DDD / MVC 技术设计、架构确认和脚手架由后端项目持有；本仓只读消费适用的冻结 API、上游联合交付或当前本地批准资产与页面工程约束。两类战略交接合同均可导入，不为前端切片补造后端技术设计。
 
 
-接入与导出先按 `.template-spec/process/delivery-preflight.md` 执行对应阶段只读预检；既有工程身份按 `.template-spec/process/existing-backend-architecture.md` 读取原始证据，不补造生成器来源。无 UI 改动可承接当前确认的 `existing-ui-baseline`，新设计仍走原型；当前批准后仅允许登记与合同交集内的输出增量。
+接入与导出先按 `.template-spec/process/delivery-preflight.md` 执行对应阶段只读预检；适用的既有后端工程身份按 `.template-spec/process/existing-backend-architecture.md` 只读消费原始证据，不补造生成器来源。无 UI 改动可承接当前确认的 `existing-ui-baseline`，新设计仍走原型；当前批准后仅允许登记与合同交集内的输出增量。
 
 ## 编译结果
 
