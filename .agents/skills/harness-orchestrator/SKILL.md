@@ -81,3 +81,7 @@ YSS CLI 安装与升级、治理工程新建与接管、实例模板同步、旧
 当前职责完成、状态查询或恢复时，消费合同 `profile_guidance` 与 `yss lifecycle status --root <当前工程> --checkpoint <当前checkpoint>` 给出下游 Profile 建议；不按邻近目录猜初始化状态。Spec 默认继续当前职责；没有当前战略交接时，可经用户明确选择交给独立 Design。Spec 或 Design 已形成经核验的当前战略交接后，按消费者路由建议 Backend、Frontend 或同时准备，两者仍在独立目录执行；设计完成声明不能替代交接及来源批准，显式交接失效时先解除阻断。目标 Design 接入已批准 Spec 走 `spec-baseline` 冻结包与 Receipt、目标 Context 对账后从设计继续，不重走 Plan，不复制源 checkpoint 批准到目标；目标 Backend / Frontend 使用战略接收记录及各自消费合同。建议不改变当前工作单元、不授予批准或执行，下游推荐不扩展本 Profile 的实现写范围。
 
 当前 Slice v3 在 `stage.slice-contract` 先执行 `check.design-reviewed`，独立架构或测试审查者加载本端工程审查能力，绑定当前持久化编译合同的 ID、版本和原字节摘要。`gate.slice-contract-approved` 依赖这项审查；旧 Technical Design/Frontend Engineering 批准不能充当 Slice 审查，起草者不得自审。历史 v2 只按既有历史读取政策处理，不因此取得新的实施或交付资格。
+
+## 本地业务分析与本端交付
+
+原始需求可在本项目完成目标与验收、Plan、业务边界和规则、Spec，再进入本端设计、实现、测试与独立审查；无需先创建独立 Spec/Design 工程。已有上游批准输入时复用当前来源，冲突回交权威方确认，禁止静默改写。小任务按主控合同 `request_triage.delivery_path` 与 `yss lifecycle route` 选择 daily；高风险或已正式绑定任务保留 governed。分析角色不授予另一端代码写入；本端交付完成不等于跨端业务验收。纯 UI 记录后端不适用的原因和当前依据；真实 API、数据与跨仓依赖必须对齐。独立脚手架只生成机械结构，不授予业务实施。

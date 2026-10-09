@@ -282,7 +282,8 @@ export function validateDigitalHumanRoles(doc, { skillIds, stageIds, gateIds, ar
     roleIds.push(role.id);
   }
   if (new Set(roleIds).size !== roleIds.length) fail("roles.id 重复");
-  if (roleIds.slice().sort().join("\0") !== REQUIRED_ROLES.slice().sort().join("\0")) {
+  const supported = [REQUIRED_ROLES, [...REQUIRED_ROLES, "role.requirements-manager", "role.product-manager"]];
+  if (!supported.some(ids => roleIds.slice().sort().join("\0") === ids.slice().sort().join("\0"))) {
     fail(`v1 必须恰好包含: ${REQUIRED_ROLES.join(", ")}`);
   }
   if (roleIds.includes(orchestrator.id)) fail("orchestrator 不得再出现在 roles");

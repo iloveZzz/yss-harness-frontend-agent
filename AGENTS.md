@@ -113,3 +113,7 @@ README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义�
 前端按 `.template-spec/process/harness-profile.yaml` 的 `frontend_delivery` 和 `.template-spec/process/frontend-backend-delivery.md` 验证输入。批准战略与战略预检通过后可起草前端工程设计和实现计划；只有 API / Backend / Data 影响命中时，最终接收才要求真实后端交付，纯 UI 路径使用有依据且当前的 `backend-not-applicable`。启动、恢复和规定阶段边界重验，预检通过不授予实现资格；代码仍需合同已批准且当前及既有 `ready-for-agent` 条件。
 
 `work-unit.frontend-engineering-design` 承载前端工程设计；后端领域模型作为上游输入消费，无本地领域影响记录有理由的 not-applicable，不编造后端 Tactical Design。后端实现、脚手架、API Freeze 和数据结构修改回交后端仓；本仓只生成前端工程，按当前接收路线完成视觉、交互和 `pnpm` 验证，命中后端依赖时必须使用真实接口。
+
+## 本地业务分析与本端交付
+
+原始需求可在本项目完成目标与验收、Plan、业务边界和规则、Spec，再进入本端设计、实现、测试与独立审查；无需先创建独立 Spec/Design 工程。已有上游批准输入时复用当前来源，冲突回交权威方确认，禁止静默改写。小任务按主控合同 `request_triage.delivery_path` 与 `yss lifecycle route` 选择 daily；高风险或已正式绑定任务保留 governed。分析角色不授予另一端代码写入；本端交付完成不等于跨端业务验收。纯 UI 记录后端不适用的原因和当前依据；真实 API、数据与跨仓依赖必须对齐。独立脚手架只生成机械结构，不授予业务实施。
