@@ -198,9 +198,11 @@ roles:
     draft_artifact_ids:
       - artifact.test-strategy
       - artifact.test-seams
+      - artifact.frontend-implementation-verification
     owned_evidence_ids:
       - evidence.fresh-verification
       - evidence.frontend-verification
+      - evidence.frontend-implementation-verification
       - evidence.backend-verification
     core_skills:
       - test-agent
@@ -388,6 +390,12 @@ gate_policy:
       countersigners:
         - role.product-manager
   check_reviews:
+    - gate: check.frontend-implementation-verified
+      drafter: role.frontend-agent
+      countersigners:
+        - role.test-agent
+      capability_ids:
+        - capability.implementation-assurance
     - gate: check.design-reviewed
       countersigners:
         - role.architecture-agent

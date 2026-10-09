@@ -43,6 +43,7 @@
 
 | 稳定 ID | 检查 | 所属阶段 | 触发条件 | 必须留下的证据 |
 |---|---|---|---|---|
+| `check.frontend-implementation-verified` | 前端实现还原验证 | `stage.verification` | UI 影响切片完成实现并准备合并、发布或阶段完成。 | `evidence.frontend-implementation-verification` |
 | `check.design-reviewed` | Slice 工程设计独立审查 | `stage.slice-contract` | 当前编译并持久化的 Slice v3 在批准实施前；独立专业审查绑定当前合同 ID、版本、原字节摘要与审查主体，不复用旧工程设计批准。 | `evidence.contract-approval`、`evidence.approval-record` |
 | `check.domain-strategy-approved` | 业务边界与规则评审 | `stage.plan` | 存在 DDD 战略设计影响或需要确定领域边界、统一语言和核心规则。 | `evidence.domain-strategy-review`、`evidence.approval-record` |
 | `check.stage-decision-package-approved` | 阶段决策包评审 | `stage.plan` | Plan 到 Spec 入口需要稳定的阶段决策合同。 | `evidence.stage-decision-package`、`evidence.approval-record` |
@@ -53,6 +54,7 @@
 
 | 稳定 ID | 产物 | 所属阶段 | 触发条件 |
 |---|---|---|---|
+| `artifact.frontend-implementation-verification` | 前端实现还原验证记录 | `stage.verification` | UI 影响切片完成实现并准备合并、发布或阶段完成。 |
 | `artifact.impact-assessment` | 影响面分析 | `stage.harness-entry` | 每次进入 Harness。 |
 | `artifact.upstream-inputs` | 上游输入包 | `stage.harness-entry` | 进入前端工程设计前。 |
 | `artifact.frontend-engineering-design` | 前端工程设计 | `stage.frontend-engineering-design` | 存在 UI 或前端工程影响。 |
@@ -86,6 +88,7 @@
 
 | 稳定 ID | 证据 | 说明 |
 |---|---|---|
+| `evidence.frontend-implementation-verification` | 前端实现还原验证证据 | UI 实现相对冻结原型和 Spec 的桌面/窄屏视觉、状态、交互、控制台与 pnpm 验证记录。 |
 | `evidence.repository-identity-check` | 仓库身份校验结果 | yss-project.yaml 合法性与 repository_mode 裁决。 |
 | `evidence.upstream-input-check` | 上游输入校验结果 | Spec、战略设计、原型、OpenAPI、数据架构和工程约束的版本与批准状态。 |
 | `evidence.frontend-engineering-design-review` | 前端工程设计评审证据 | 组件边界、状态与交互、API 消费、视觉基线和前端测试 seam 的评审结果。 |
