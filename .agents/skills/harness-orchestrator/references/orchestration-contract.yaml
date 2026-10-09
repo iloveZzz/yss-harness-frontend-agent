@@ -69,7 +69,6 @@ entry:
   required:
     - yss-project.yaml
     - CONTEXT.md
-    - verified-strategy-and-backend-delivery
     - raw-requirements-or-current-authoritative-inputs
   rejected:
     - missing-context

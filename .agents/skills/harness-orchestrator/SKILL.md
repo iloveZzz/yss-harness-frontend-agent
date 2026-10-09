@@ -10,7 +10,7 @@ description: 编排前端专职 Harness 的输入接收、合同、任务派发�
 
 本入口是前端专职协作方。本端职责终点由真实前端验收及当前接收、合同、视觉交互和构建证据决定；不写 Spec 主控的推进意图配置，不保存第二套整体进度。主控只汇总显式同功能 checkpoint 与当前 Receipt。无生产 UI 影响时显示前端项不适用，不能伪造前端完成；本端验收不等于完整业务验收或 Git 发布授权。
 
-前端工程消费已批准战略；战略预检通过后可起草工程设计与实现计划。仅 Backend / API / Data 影响命中时，最终接收才要求真实后端交付；UI-only 路径按当前合同记录 `backend-not-applicable`。后端架构、API 或数据变更回交后端项目，代码实现仍须当前已批准的 Slice 合同与就绪检查。
+upstream 模式的前端工程消费当前批准战略，战略预检后起草工程设计与实现计划；standalone 模式消费本功能当前批准的本地 Plan/Spec 与适用产品设计，不要求另建 Spec/Design 工程。仅 Backend / API / Data 影响命中时，最终接收才要求真实后端交付；UI-only 路径按当前合同记录 `backend-not-applicable`。后端架构、API 或数据变更回交后端项目，代码实现仍须当前已批准的 Slice 合同与就绪检查。
 
 这是本专职 Harness 的唯一编排入口。它负责读取 `yss-project.yaml` 与 `CONTEXT.md`、判断影响面、选择下一个未阻塞工作单元、编译任务包、维护合同版本、汇合执行结果和触发重路由。
 
@@ -25,7 +25,7 @@ description: 编排前端专职 Harness 的输入接收、合同、任务派发�
 
 ## 前端联合接收
 
-专职前端 profile 或显式 `frontend_delivery` 输入，按 `.template-spec/process/frontend-backend-delivery.md` 执行战略预检，再起草前端工程设计与实现计划。最终接收按实际后端依赖核验后端交付或有依据的 `backend-not-applicable`；合同批准且当前并满足就绪检查后才派发 Worker。接收、恢复与验收按规定边界重验，缺口回交权威方。通用研发 profile 未选择该路线时维持原行为。
+upstream 模式或显式 `frontend_delivery` 输入，按 `.template-spec/process/frontend-backend-delivery.md` 执行战略预检，再起草前端工程设计与实现计划。最终接收按实际后端依赖核验后端交付或有依据的 `backend-not-applicable`；合同批准且当前并满足就绪检查后才派发 Worker。接收、恢复与验收按规定边界重验，缺口回交权威方。通用研发 profile 未选择该路线时维持原行为。
 
 ## 按影响面选择工作
 
@@ -33,10 +33,10 @@ description: 编排前端专职 Harness 的输入接收、合同、任务派发�
 
 ## 主流程
 
-1. 校验上游输入、仓库身份、实现仓库、影响面和当前合同版本。
+1. 校验仓库身份和业务输入模式：standalone 从原始需求完成本端 Plan/Spec 的分析、独立审查与批准；upstream 核验当前上游批准输入，冲突回交权威方。随后按实际影响核验实现仓与当前合同版本。
 2. 在 `work-unit.frontend-engineering-design` 调度 `architecture-agent` 完成前端工程设计；本地无领域影响记录 not-applicable，不制造 Tactical Design。
 3. 形成 frontend_implementation_plan；需要前端脚手架时遵守已批准生成合同。
-4. 将同版联合接收摘要与本端实现计划编入 Slice Implementation Contract，另一端分区仅引用已交付合同。
+4. 将当前本地批准输入或同版联合接收摘要与本端实现计划编入 Slice Implementation Contract；实际后端/API 依赖须显式绑定当前 Backend 与冻结接口，另一端分区仅引用已交付合同。
 5. 先调度 `test-agent` 建立测试 seam，再调度前端 Worker。
 6. 收集每个任务包的 `workflow-execution-result-v1`，完成当前范围的 Fresh Verification；输入或边界变化时重跑受影响检查。
 7. 由独立 `test-agent` 返回验证结论；没有阻塞信号时才关闭前端任务，整体切片由统一管理方验收。

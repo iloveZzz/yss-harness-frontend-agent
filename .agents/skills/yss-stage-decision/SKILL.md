@@ -24,7 +24,7 @@ description: 编排 Plan 到 Spec 入口的方案决策与业务边界、协作�
 
 Plan 的目标与退出条件由 `.template-spec/process/lifecycle-registry.yaml` 持有；从 `.template-spec/plan/templates/plan-template.md` 汇总输入。旧资产按 `.template-spec/process/plan-migration.md` 重新整理并核查，关键未决项不得延期到 Spec，非关键项记录责任人、解决时点与接收方。
 
-1. 读取 `yss-project.yaml`、`CONTEXT.md`、既有 Plan/Spec、ADR 和当前 profile 的主索引/checkpoint；按 `yss-product-lifecycle` 的 `request-triage` 区分事实确认、产品决定、门禁确认和普通澄清。
+1. 读取 `yss-project.yaml`、`CONTEXT.md`、既有 Plan/Spec、ADR 和当前 profile 的主索引/checkpoint；按 `harness-orchestrator` 的 `request-triage` 区分事实确认、产品决定、门禁确认和普通澄清。
 2. 分离事实、决策、假设、约束和未决项；技术事实走 `yss-research` 的 `technical-evidence`，领域边界、业务规则、MVP、非目标、成功标准或阶段推进依据等决策证据走 `strategy-evidence`，市场/竞品事实走 `competitive-intelligence`。
 3. 从业务故事、已发生的事实、规则、责任人和失败路径识别业务板块与业务责任区，不从数据库表或调用链直接反推边界。
 4. 为每个业务责任区建立统一业务词汇；对跨责任区协作记录规则提供方、规则使用方、业务决策权、信息传递方向和口径转换负责人。
@@ -56,7 +56,7 @@ Plan 专业审查只消费生命周期主控 `planning.review_control` 和 check
 - 业务边界与规则设计是本类事实的权威资产，方案决策包只通过内部字段 `domain_strategy_ref` 引用它。两个合同的 `context_snapshot.context_ref` 必须精确为仓库根 `CONTEXT.md`，禁止子目录、`CONTEXT-MAP.md`、绝对路径和 Markdown 伪锚点。
 - 进入 `check.domain-strategy-approved` 或 `check.stage-decision-package-approved` 的外部决策证据必须引用通过校验的 `yss-research` `evidence-audited` 研究包；研究包只提供证据，不得直接修改本技能资产或批准门禁。
 - `stage_decision_package` 必须经过 `draft → ready-for-human → approved`；起草者不得自签。
-- 内部专业审查为 `check.domain-strategy-approved` 和 `check.stage-decision-package-approved`，汇入 `gate.plan-approved` 一次确认，实际状态由 `yss-product-lifecycle` 维护。新 Plan 流程由产品经理在一个 `review-bundle.plan` 任务中逐项给出结论，并以相同 `review_session_id` 汇总到 Plan 门禁；未命中项只记录有依据的 `not-applicable`。资产的 `approval_ref` 可指向该 bundle 中自己的唯一结论；验证器按 check ID 选择，旧单条批准继续兼容。
+- 内部专业审查为 `check.domain-strategy-approved` 和 `check.stage-decision-package-approved`，汇入 `gate.plan-approved` 一次确认，实际状态由 `harness-orchestrator` 维护。新 Plan 流程由产品经理在一个 `review-bundle.plan` 任务中逐项给出结论，并以相同 `review_session_id` 汇总到 Plan 门禁；未命中项只记录有依据的 `not-applicable`。资产的 `approval_ref` 可指向该 bundle 中自己的唯一结论；验证器按 check ID 选择，旧单条批准继续兼容。
 - 下游只能消费批准且版本当前的包；发现语义冲突返回 `drift` / `new_impacts`，不得静默修改上游。
 
 ## 结果合同

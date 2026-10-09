@@ -7,7 +7,7 @@
 每个任务先读取当前仓库根的 `yss-project.yaml`：
 
 - `template-source` 使用模板维护流程，不生成具体产品的 Spec、原型、OpenAPI 或垂直切片 Ticket。
-- `project-instance` 使用 `harness.frontend-delivery`，从已批准 Spec 或 Strategic Design Handoff 进入开发落地流程。
+- `project-instance` 使用 `harness.frontend-delivery`，可以从原始业务需求分析本端 Plan/Spec，也可以消费当前批准的 Spec 或 Strategic Design Handoff；按唯一政策选择日常或正式路线。
 - 文件缺失、schema 不支持或模式非法时停止路由并执行迁移检查；不得根据目录、Git 远程或占位符猜测身份，也不得继承父目录或兄弟仓的 `AGENTS.md`。
 - 只读问答、状态查询和问题定位：读取根 `CONTEXT.md` 与相关来源后回答或调查；只有写正式资产、申请批准或流转时才进入工作单元。只读诊断不创建 Ticket / checkpoint，不改批准与状态，也不启动回归套件。
 - 行动请求先复用当前资产和登记，再补本轮缺项；按当前任务和实际影响加载下文引用，不逐节执行整份入口。
@@ -34,7 +34,7 @@ README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义�
 - 创建或修改稳定资产前必须读取并持续消费根 `CONTEXT.md`；无法读取时返回 `blocked`。
 - 稳定术语先在根 `CONTEXT.md` 登记 PascalCase 英文标识，再进入契约、Ticket、代码或证据。每仓仅允许一个根 `CONTEXT.md`；术语引用使用 `<ContextId>/<EnglishIdentifier>`，真正共享的术语使用 `Global/<EnglishIdentifier>`。
 - `project-instance` 每个正式工作单元流转或申请批准前完成 `context_reconciliation`：先回写稳定术语，再核对 `document_digest` 与 `referenced_terms_digest`；缺失、冲突或漂移即 `blocked`。模板源只校验该合同并记录有理由的 `not-applicable`。
-- 当前流程使用 `harness-entry`、`frontend-engineering-design`、`slice-contract`、`slice-implementation`、`verification`；退役入口以 `.template-spec/agents/skill-migrations.md` 为准，不参与当前路由。
+- 本地需求先按注册表完成 Plan、业务规则与 Spec；当前本端正式交付使用 `harness-entry`、`frontend-engineering-design`、`slice-contract`、`slice-implementation`、`verification`；退役入口以 `.template-spec/agents/skill-migrations.md` 为准，不参与当前路由。
 
 ## 4. `template-source` 维护
 
@@ -52,7 +52,7 @@ README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义�
 
 `work-unit.harness-entry` → `work-unit.frontend-engineering-design` → `work-unit.slice-contract` → `work-unit.slice-implementation` → `work-unit.verification`
 
-- 默认输入是已批准 Spec 或 Strategic Design Handoff；Discovery 不是默认阶段。`to-spec`、`to-tickets` 只能作为用户显式兼容入口，并回交 `harness-orchestrator` 验收。
+- 输入可以是原始业务需求或当前批准的本地/上游业务资产；本地路线先分析和批准适用 Plan/Spec，上游路线保留来源批准与冲突回交。`to-spec`、`to-tickets` 只能作为用户显式兼容入口，并回交 `harness-orchestrator` 验收。
 - 小改动从分诊处理，中等变更从最近可信的 Spec / 架构恢复，高风险变更复核冻结基线；已批准上游资产和既有工程先核验复用。未来阶段尚未要求的产物不作为当前任务缺项，不重走本仓职责以外的战略流程。
 - 后端领域模型只读消费；发现聚合、不变量、持久化或数据模型变化时回交后端 / 战略方，本地由 `architecture-agent` 形成前端工程设计。
 - API 消费以已冻结 OpenAPI 为输入；接口变化回交后端形成 Draft、审查和 Freeze；无 API 影响必须有当前记录。随后正式化为可独立验证的窄垂直切片，不得按技术层横向拆分。
