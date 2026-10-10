@@ -88,7 +88,7 @@ README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义�
 
 前端运行时代码优先位于已登记的 `external-repository`。只有用户明确选择当前仓承载前端代码时，才使用 `apps/frontend/<project>/`（`harness-apps`）或登记的 `git-submodule`；后端实现回交后端项目。
 
-`app/backend/`、`app/frontend/` 及其子路径禁止作为输出；submodule 不得登记成 `harness-apps` 或复制源码冒充挂载。空 gitlink、detached HEAD 和 `--force` 覆盖不得当普通目录。
+实现位置按已登记的项目根和批准写范围核验；submodule 不得登记成 `harness-apps` 或复制源码冒充挂载。空 gitlink、detached HEAD 和 `--force` 覆盖不得当普通目录。
 
 ## 10. 审查、验证与 Git
 
