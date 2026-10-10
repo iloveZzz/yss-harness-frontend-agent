@@ -1,1 +1,3 @@
-先读取当前仓库根 `yss-project.yaml`、`AGENTS.md` 与 `CONTEXT.md`。职责及专职输入条件以 `.template-spec/process/harness-profile.yaml` 为准。
+@AGENTS.md
+
+本文件只让 Claude Code 导入 `AGENTS.md`；入口、硬门禁与阅读地图以 `AGENTS.md` 为准，不在此重复。
