@@ -49,9 +49,9 @@ const contract = {
 
 const maintenance = {
   schema_version: 1,
-  intensity: "L3",
+  intensity: "L2",
   classification_reason: "四角色 Harness Agent 行为合同替换场景",
-  triggers: ["lifecycle-gate", "ticket-state", "core-validator"],
+  triggers: ["lifecycle-gate", "core-validator"],
   changed_assets: ["scenario-fixture"],
   verification_evidence: [
     { kind: "red", command: "scenario", result: "pass" },

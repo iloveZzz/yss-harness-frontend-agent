@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import assert from "node:assert/strict";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -36,12 +37,13 @@ const base = {
 
 const accepted = [
   { ...base, intensity: "L1", triggers: ["textual-only"], verification_evidence: evidence("relevant-check"), review_mode: "self-check" },
-  { ...base, intensity: "L2", triggers: ["local-rule"], verification_evidence: [...evidence("counterexample", "fresh-verification"), { kind: "focused-independent-review", command: focusedReview, result: "pass" }], review_mode: "focused-independent" },
-  { ...base, intensity: "L2", triggers: [], verification_evidence: [...evidence("counterexample", "fresh-verification"), { kind: "focused-independent-review", command: focusedReview, result: "pass" }], review_mode: "focused-independent" },
-  { ...base, intensity: "L3", triggers: ["lifecycle-gate"], verification_evidence: [...evidence("red", "green", "refactor", "pressure-scenario", "fresh-verification"), fixture.evidence, { kind: "formal-independent-review", command: formalReview, result: "pass" }], review_mode: "formal-independent" }
+  { ...base, intensity: "L2", triggers: ["local-rule"], verification_evidence: [...evidence("fresh-verification"), { kind: "focused-independent-review", command: focusedReview, result: "pass" }], review_mode: "focused-independent" },
+  { ...base, intensity: "L2", triggers: [], verification_evidence: [...evidence("fresh-verification"), { kind: "focused-independent-review", command: focusedReview, result: "pass" }], review_mode: "focused-independent" },
+  { ...base, intensity: "L2", triggers: ["lifecycle-gate"], verification_evidence: [...evidence("red", "green", "refactor", "pressure-scenario", "fresh-verification"), fixture.evidence, { kind: "formal-independent-review", command: formalReview, result: "pass" }], review_mode: "formal-independent" }
 ];
 
 for (const checkpoint of accepted) validateMaintenanceCheckpoint(checkpoint);
+validateMaintenanceCheckpoint({ ...accepted[3], intensity: "L3" }, { history: true });
 
 const pendingFormalReview = {
   ...accepted[3],
@@ -52,11 +54,18 @@ let pendingPassedStrictClosure = true;
 try { validateMaintenanceCheckpoint(pendingFormalReview); } catch { pendingPassedStrictClosure = false; }
 if (pendingPassedStrictClosure) throw new TypeError("待审合同不得通过最终 checkpoint 校验");
 
+assert.throws(() => validateMaintenanceCheckpoint({ ...accepted[0], triggers: ["generation-semantics"] }), /至少要求 L2/);
+for (const trigger of ["ticket-state", "historical-important-escape", "aggregate-behavior-change", "release-candidate"]) {
+  const checkpoint = { ...base, intensity: "L2", triggers: [trigger], verification_evidence: evidence("fresh-verification", "self-check"), review_mode: "self-check" };
+  assert.throws(() => validateMaintenanceCheckpoint(checkpoint), new RegExp(`未知 trigger: ${trigger}`));
+  assert.equal(validateMaintenanceCheckpoint({ ...checkpoint, intensity: "L3" }, { history: true }).current_state, "historical-only");
+}
+
 const rejected = [
   { ...accepted[1], verification_evidence: evidence("fresh-verification") },
-  { ...accepted[1], verification_evidence: evidence("counterexample", "fresh-verification") },
+  { ...accepted[1], verification_evidence: evidence("fresh-verification") },
   { ...accepted[0], triggers: ["release-semantics"] },
-  { ...accepted[0], triggers: ["aggregate-behavior-change"] },
+  { ...accepted[0], triggers: ["generation-semantics"] },
   { ...accepted[2], verification_evidence: evidence("red", "green", "refactor", "pressure-scenario") },
   { ...accepted[2], verification_evidence: [...evidence("red", "green", "refactor", "pressure-scenario", "fresh-verification"),fixture.evidence] },
   { ...accepted[1], escalation: "发现发布语义影响但仍维持 L2", triggers: ["release-semantics"] },
@@ -131,7 +140,7 @@ try {
   rmSync(symlinkFixture, { recursive: true, force: true });
 }
 
-process.stdout.write("模板维护 L1/L2/L3 强度场景验证通过\n");
+process.stdout.write("模板维护 L1/L2 强度与历史 L3 兼容场景验证通过\n");
 
 const mustReject=(fn,label)=>{let rejected=false;try{fn();}catch{rejected=true;}if(!rejected)throw new Error(label);};
 mustReject(()=>validateMaintenanceCheckpoint({...accepted[3],verification_evidence:accepted[3].verification_evidence.filter(x=>x!==fixture.evidence)}),'missing actual counterexample must reject');
