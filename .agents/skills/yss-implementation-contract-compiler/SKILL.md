@@ -5,7 +5,9 @@ description: "编译或重验 YSS Slice Implementation Contract、最小 Skill �
 
 # YSS Implementation Contract Compiler
 
-已有生命周期资产优先用 `scripts/contract view <资产> --kind <类型>` 阅读；执行任务用 `--profile task --unit <ID>`，绑定与校验明细用 `--profile full`。视图不授予执行权限，仍按本 Skill 的原始来源和批准门禁处理。类型、准备和迁移见 `.template-spec/process/contract-reading.md`。
+当前任务先一次性读取 `yss capabilities --json`；仅当 `result.readingViews.schemaVersion: 1` 且对应入口和模式已声明时，Slice 优先用 `yss contract view --root <项目> --kind slice --file <合同>` 阅读，任务加 `--view task --unit <唯一 ID>`，明细加 `--view full`。JSON 只消费结构化 `content`、绑定及检查范围；v3 任务仅展开关联验收，诊断其他验收时按 `full_acceptance_ref` 定向读取。全局、专项和未分类约束必须完整消费。旧 CLI 或其他合同继续用 `scripts/contract view <资产> --kind <类型> [--profile task --unit <ID>|--profile full]`，不向旧 CLI 追加新参数。视图不授予执行权限；原始来源和批准门禁仍适用。类型、准备和迁移见 `.template-spec/process/contract-reading.md`。
+
+同一任务已读且未变化的内容继续使用；来源变化、新影响、冲突、恢复或交接时刷新。证据先读结论与引用，需要诊断才定向读正文。验证复用须同时绑定资产与上游字节、工具及 Schema、参数、仓库根和相关环境；改变的输入只使受影响证据失效，不重复执行同输入命令，不建立跨会话校验缓存。
 
 Slice v3 的当前执行结果须按 `references/yss-skill-execution-result.md` 绑定验收、验证项、合同原字节、实际证据和执行来源；`legacy-evidence-binding-missing` 表示历史可读但不能据此完成当前任务，不补造历史执行信息。
 

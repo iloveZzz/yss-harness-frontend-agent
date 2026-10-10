@@ -2,9 +2,9 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
-import { parseDocument } from "../vendor/yaml.mjs";
-import { lifecycleTransitionContract, validateNextRoute, validateSliceContractReadiness } from "./lifecycle-transition.mjs";
-import { loadDigitalHumanRoles, validateDefaultDigitalHumanRoles } from "./digital-human-roles.mjs";
+import { parseDocument } from "../../scripts/vendor/yaml.mjs";
+import { lifecycleTransitionContract, validateNextRoute, validateSliceContractReadiness } from "../../scripts/lib/lifecycle-transition.mjs";
+import { loadDigitalHumanRoles, validateDefaultDigitalHumanRoles } from "../../scripts/lib/digital-human-roles.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const read = (relative) => readFileSync(path.join(root, relative), "utf8");

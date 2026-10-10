@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { spawnSync } from "node:child_process";
-import { runScenario } from "../../scripts/lib/scenario-checks.mjs";
+import { runScenario } from "../helpers/scenario-checks.mjs";
 
 try {
   runScenario("implementationContractCompiler");
