@@ -4,7 +4,7 @@
 
 本仓库是 Harness Agent 的 `template-source`。入口见 [AGENTS.md](AGENTS.md)，职责见 [profile](.template-spec/process/harness-profile.yaml)，接力合同见 [战略与后端交付](.template-spec/process/frontend-backend-delivery.md)。
 
-本仓从通用研发 Harness 分出，继续共享校验工具和技能来源；运行时代码通过登记的实现仓接入。前端必须同时具备批准战略与后端交付，真实服务版本重验通过后才继续正式任务。
+本仓从通用研发 Harness 分出，继续共享校验工具和技能来源；运行时代码通过登记的实现仓接入。涉及后端的正式任务须具备批准战略与当前后端交付，并重验真实服务版本；纯 UI 按当前合同记录后端不适用。日常任务按 AGENTS.md 中的政策核验与证据要求推进。
 
 ## 初始化
 

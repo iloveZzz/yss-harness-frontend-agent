@@ -1,18 +1,21 @@
 # Matt技能体系
 
-Matt Engineering Skills 是来自 `mattpocock/skills` 的轻量工程流程技能集合，用于澄清、Spec、Ticket、实现、TDD、诊断、审查和架构治理，不替代 [[YSS工程技能体系]]。
+Matt Engineering Skills 提供澄清、文档、诊断、TDD、审查与架构方法，不能替代 YSS 专项规则、仓库身份或生命周期批准。锁定来源以当前 skills-lock.json 为准，不复制 README 的历史 revision。
 
-当前锁定 revision 以 `skills-lock.json` 的 `sources` 为准。不要抄可能过期的 README hash。上游技能基线不等于项目当前生效内容；YSS 适配必须同时保留上游内容哈希、有效内容哈希和适配依据（见 [[技能投影与锁定]]）。
+技术事实用 yss-research，竞品事实用 competitive-intelligence；问题先调查可复现行为，业务实施消费适用 YSS 技术技能。文档按 writing-for-agents 和 i-have-adhd 当前写入范围组织。
 
-`to-spec`、`to-tickets` 只是用户显式兼容入口。新功能或较大变更的默认路径是 `harness-orchestrator` 的五阶段：`harness-entry` → `tactical-design` → `slice-contract` → `slice-implementation` → `verification`（见 [[产品研发生命周期]]）。旧入口 `yss-product-lifecycle` 已退役。禁止只按 Adapter / Application / Domain / Infrastructure 横向拆分（见 [[垂直切片Ticket]]）。
+项目实例先消费本地 `harness-orchestrator` 的 `request_triage.delivery_path`，用具备该能力的 `yss lifecycle route` 核验任务、实现仓与完整基线 SHA。daily 维护同一 Ticket/PR，绑定范围、验收、工程/基线、Skills、实际测试、独立审查与回滚，不要求阶段 checkpoint、正式 Slice 合同或多级批准；`yss lifecycle verify-daily` 失败、缺独立审查或阻断未关闭时不能完成。
 
-[[Agent入口规则]] 规定的强制入口包括：领域影响走 `architecture-agent` + `yss-tactical-design`；技术事实走 `research`；竞品走 `competitive-intelligence`；Bug 先 `diagnosing-bugs` 再 `tdd`；冲突走 `resolving-merge-conflicts`；架构治理走 `codebase-design` / `codebase-design`；跨线程或过长上下文走 `handoff`。
-
-业务行为默认按 `tdd` 使用已确认的公开 seam 逐切片实现。一次性一手资料走 `research`；要把研究结果落成持久 wiki 则走 [[LLM Wiki]]。
+旧入口只作历史识别，当前支持项及替代路径以 Skill 迁移说明、注册表和锁文件为准；工具调用成功不等于获得正式批准或外部 Git 权限。参见 [[Agent入口规则]]、[[YSS工程技能体系]]。
 
 ## 来源
 
-- `CONTEXT.md`
-- `AGENTS.md`
-- `skills-lock.json`
-- `.template-source/agents/skills-maintenance.md`
+- `AGENTS.md:97-103`：本页路由、授权及完成边界依据当前入口的 ## 8. 专项入口。
+- `AGENTS.md:99-99`：技术事实使用 yss-research，竞品与市场或用户口碑事实使用 competitive-intelligence。
+- `AGENTS.md:54-54`：日常资格唯一消费本地 harness-orchestrator request_triage.delivery_path；lifecycle route 核验任务、实现仓和完整 SHA，政策能力或资格未证明不得启用 daily。
+- `AGENTS.md:58-58`：daily 只更新同一 Ticket/PR 并保留范围、验收、工程基线、Skills、实际测试、独立审查和回滚；无需阶段 checkpoint 或正式 Slice；verify-daily 失败、缺独立审查或阻断未关闭不能完成。
+- `AGENTS.md:60-60`：已有正式绑定任务不得降级；无关正式资产不阻断 daily；新排除风险保留证据并恢复 governed，超出兼容范围的 API 走正式 Draft、审查和 Freeze。
+- `AGENTS.md:118-119`：授权消费本地 harness-orchestrator user-decisions；有效范围授权复用，commit/push/publish 分别核验用户授权；返工或重要缺陷触发中文复盘。
+- `CONTEXT.md:1-15`：根 Context 持有稳定业务语言与消费约定，正文不能授予实现权限。
+- `.template-source/agents/skills-maintenance.md:5-13`：共享内容、平台专属来源、投影与锁各按其事实所有权维护。
+- `skills-lock.json:1-12`：当前锁的版本、canonicalRoot 与来源元数据是技能来源记录；名称摘录是派生视图。

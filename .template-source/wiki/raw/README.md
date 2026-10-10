@@ -1,132 +1,38 @@
-# YSS Harness Agent 模板源
+# YSS 前端专职 Harness 模板
 
-> 四角色、五阶段 Harness：`harness-entry` → `tactical-design` → `slice-contract` → `slice-implementation` → `verification`。
+可按需协作于一个 Spec 综合研发主控；主控通过显式同功能 checkpoint 与当前 Receipt 汇总。前端验收是本端职责完成，整个业务仍由综合主控核验；无生产 UI 的功能显示前端项不适用，不生成空验收证据。
 
-## 定位
+本仓库是 Harness Agent 的 `template-source`。入口见 [AGENTS.md](AGENTS.md)，职责见 [profile](.template-spec/process/harness-profile.yaml)，接力合同见 [战略与后端交付](.template-spec/process/frontend-backend-delivery.md)。
 
-本仓库是 Harness Agent 的 `template-source`。Agent 只读取**当前仓库根**的 `yss-project.yaml` 与 `AGENTS.md`，不要把父目录或其他 submodule 的入口文件当作本仓路由。本仓默认作为研发管理仓库，保留流程文档、契约模板、Agent skills 和协作约定。前端 / 后端源码默认位于独立实现仓库；只有用户明确选择本仓库承载实现代码时，才按需创建 `apps/backend/`、`apps/frontend/`。
+本仓从通用研发 Harness 分出，继续共享校验工具和技能来源；运行时代码通过登记的实现仓接入。涉及后端的正式任务须具备批准战略与当前后端交付，并重验真实服务版本；纯 UI 按当前合同记录后端不适用。日常任务按 AGENTS.md 中的政策核验与证据要求推进。
 
-README 只解释上述入口，不另定义阶段、门禁或技能分层。
+## 初始化
 
-## 项目结构
-
-```text
-├── .agents/                 ← 跨 Agent 共享 skills 的权威内容
-├── .claude/                 ← Claude skills 投影与平台专属 skills
-├── .codex/                  ← Codex skills 投影与平台专属 skills
-├── .cursor/                 ← Cursor skills 投影
-├── .pi/                     ← Pi skills 投影与平台专属 skills
-├── .qoder/                  ← Qoder skills 投影与平台专属 skills
-├── .trae/                   ← Trae skills 投影与平台专属 skills
-├── AGENTS.md                ← AI 指令
-├── CONTEXT.md               ← 领域词汇表
-├── yss-project.yaml         ← 仓库身份清单
-├── docs/
-│   ├── api/                 ← OpenAPI 3.1 契约
-│   ├── adr/                 ← 架构决策记录
-│   ├── requirements/        ← Spec / 用户故事 / 需求草案 / 垂直切片
-│   ├── discovery/           ← 机会探索、市场、竞品和用户材料
-│   ├── design/              ← 产品设计、原型、交互说明和状态矩阵
-│   ├── architecture/        ← 架构设计与审查模板
-│   ├── releases/            ← 发布说明
-│   ├── implementation/      ← 实施方案、上线记录和回滚方案
-│   ├── testing/             ← 测试策略和验证记录
-│   ├── agents/              ← Agent 协作规范、Ticket/Triage/领域文档约定
-│   ├── templates/           ← 通用文档模板
-│   └── process/             ← 生命周期、裁剪、Scrum 和技能治理说明
-└── scripts/                 ← 模板轻量校验脚本
-```
-
-项目需要生成度量、外部实现仓库记录或其他临时产物时再按需创建对应目录。前后端实现仓库接入规则见 `.template-spec/process/implementation-repo-integration.md`。
-
-## Quickstart
-
-1. 先读取当前仓库根 `yss-project.yaml`，按 `repository_mode` 选择模板维护或产品研发生命周期。
-2. 必读入口为 `AGENTS.md` 与 `CONTEXT.md`；流程事实以 `.template-spec/process/lifecycle-registry.yaml` 和 `.template-spec/process/harness-process-tailoring.md` 为准。
-3. `template-source` 修改后默认执行 `scripts/verify-template-fast`；共享 skill 变化时再执行必要的投影与 lock 更新。PR 使用 candidate 核验，发布使用完整门禁。
-4. `project-instance` 先做影响面分诊，再走 `harness-orchestrator`：`harness-entry` → `tactical-design` → `slice-contract` → `slice-implementation` → `verification`。领域影响由 `architecture-agent` 使用 `yss-tactical-design`。`grill-with-docs`、`to-spec`、`to-tickets` 只作为用户显式兼容入口。
-5. 实现仓库接入、YSS 路由、独立审查、fresh verification 和 Git checkpoint 以 `AGENTS.md` 的硬门禁为准。
-
-YSS skills 的公开发布投影维护在 [iloveZzz/yss-spec-dev-skills](https://github.com/iloveZzz/yss-spec-dev-skills)，发布清单和导出命令见 [skills 维护说明](./.template-source/agents/skills-maintenance.md)。
-
-## 模板初始化 CLI
-
-开发落地 Harness 的实例化入口是独立 GitHub 仓库 [iloveZzz/create-yss-harness-dev](https://github.com/iloveZzz/create-yss-harness-dev)。本仓库不包含 CLI 源码、测试或发布配置，只保留分发契约和面向实例使用者的实践指南：
-
-- [create-yss-harness-dev 外部 CLI 实践指南](./.template-spec/user-guide/外部命令行工具实践指南.md)
-
-推荐入口：
+统一 CLI `yss` 使用 `frontend` Profile 创建 `harness.frontend-delivery` 实例。使用已验收的固定二进制，先运行 `yss bundle inspect --profile frontend --json` 核对模板提交和 Bundle 来源。
 
 ```bash
-npm create yss-harness-dev@latest
+yss init --profile frontend --root /absolute/path/to/project --plan --out /absolute/path/to/init-plan.json --json
+yss init --profile frontend --root /absolute/path/to/project --apply --plan-file /absolute/path/to/init-plan.json --json
 ```
 
-`create-yss-spec` 属于全产品生命周期模板，不能用来初始化或同步本仓。首次使用前请确认独立仓库和 npm 包已完成与本仓固定 commit 的跨仓库验证。
+初始化只接受不存在或空目录，新实例元数据为 `.yss.json`。attach / sync 先保存计划，再用 `--apply --plan-file` 应用同一计划；不会把另一家族实例转换 Profile。工作树候选只供维护验证，不能当作已发布固定快照。
 
-## 模板配置取舍
+历史 `create-yss-harness-frontend`、`create-yss-harness-dev` 及 `.yss-harness-frontend.json` 只用于旧实例识别和匹配固定执行器恢复。旧实例先显式 `yss migrate plan`，通过来源和冲突检查后应用保存的计划。命令和恢复步骤见 [CLI 使用说明](.template-spec/user-guide/CLI使用说明.md)。
 
-`.agents/skills` 是共享技能的权威内容；其他 Agent root 只保存同步投影和平台专属技能。共享技能只能在权威目录修改，随后运行：
+## 维护与验收
 
-```bash
-scripts/sync-skills
-scripts/update-skill-lock
-```
+仅在本模板源码仓使用：共享技能与适配由 Spec 模板的 Profile 清单维护，本仓只维护专有技能。独立克隆后运行 `node scripts/prepare-skills --source <来源锁指定提交的Spec源码目录> --apply`；以后用 `node scripts/prepare-skills --check` 离线核验。准备过程中拒绝覆盖修改或未知占用，重复执行不写入。CLI 创建的业务实例已携带完整技能，不执行源码准备。
 
-Matt skills 固定来源：
+修改本端专有 `.agents/skills` 后运行 `scripts/sync-skills`、`scripts/update-skill-lock` 和 `scripts/verify-template-fast`。共享接力工具由综合模板源同步，避免分别维护。同一业务切片须由统一管理方汇总战略、接口、部署及前端版本的端到端证据；本端完成不能替代整体业务验收。
 
-```text
-mattpocock/skills
-main@6acc160e4e0cd062dbbbd7a1b26ae92855edf07e
-```
+原生实例使用同家族 yss sync；历史实例通过显式迁移接入。跨家族和无法证明身份来源的旧 repository-local 实例不自动转换。
 
-主研发流程使用 `skills/engineering`；`skills-lock.json` 同时记录本次安装的关联 `productivity`、`in-progress`、`deprecated`、`misc` 和 `personal` skill 路径。
+## 用户手册
 
-## 分级校验
+首次使用请从[本仓手册](.template-spec/user-guide/前端子项目用户手册.md)开始；练习见[设备借用职责案例](.template-spec/user-guide/设备借用贯穿案例.md)，全部入口见[索引](.template-spec/user-guide/用户手册索引.md)。
 
-```bash
-scripts/verify-template-fast
-scripts/verify-template-candidate
-scripts/verify-template
-```
+CLI 创建、接入、诊断、同步及恢复见 [CLI 使用说明](.template-spec/user-guide/CLI使用说明.md)。
 
-`fast` 按 Git 影响面选择检查组并并行执行；`candidate` 追加候选完整性检查；`verify-template` 保留不可裁剪的完整发布门禁。未映射路径和核心核验资产变化会自动升级到完整门禁。检查内容包括：
+## 本地业务分析与本端交付
 
-- `yss-project.yaml`、权威流程资产和模板是否完整。
-- 共享技能投影及 `skills-lock.json` 的完整树哈希是否一致。
-- 过时技能、路径和规范用语是否已清理。
-- 五类流程压力场景是否符合条件门禁和仓库身份路由。
-- Markdown 相对链接是否指向现有文件。
-- 示例 OpenAPI YAML 是否可解析。
-- Git diff 是否存在空白错误。
-
-## 关键文档
-
-| 文档 | 内容 |
-|------|------|
-| [AGENTS.md](./AGENTS.md) | 全局 AI 指令 + 工程基线入口 + Agent 协作 |
-| [.template-spec/user-guide/用户手册索引.md](./.template-spec/user-guide/用户手册索引.md) | 模板使用说明 |
-| [.template-spec/user-guide/产品生命周期工作流.md](./.template-spec/user-guide/产品生命周期工作流.md) | Harness Agent 五阶段使用手册 |
-| [.template-spec/user-guide/图示生成器使用指南.md](./.template-spec/user-guide/图示生成器使用指南.md) | Excalidraw 可视化辅助 skill 使用手册 |
-| [.template-spec/process/PDCA-SCRUM.md](./.template-spec/process/PDCA-SCRUM.md) | PDCA × Scrum × AI |
-| [.template-source/process/MATT-POCOCK-ENGINEERING-SKILLS.md](./.template-source/process/MATT-POCOCK-ENGINEERING-SKILLS.md) | Matt Pocock Engineering Skills 集成与使用 |
-| [.template-spec/process/lifecycle-registry.yaml](./.template-spec/process/lifecycle-registry.yaml) | 生命周期结构事实源：主阶段、门禁、产物、工作单元、证据与稳定 ID |
-| [.template-spec/process/harness-process-tailoring.md](./.template-spec/process/harness-process-tailoring.md) | 小改动 / 中等变更 / 新模块的流程裁剪指南 |
-| [.template-spec/process/harness-executive-blueprint.md](./.template-spec/process/harness-executive-blueprint.md) | 面向业务方和管理者的 Harness 一页式蓝图 |
-| [.template-spec/process/implementation-repo-integration.md](./.template-spec/process/implementation-repo-integration.md) | 外部前端 / 后端实现仓库接入与跨仓库切片绑定 |
-| [.template-spec/agents/README.md](./.template-spec/agents/README.md) | Agent 协作文档目录说明 |
-| [.template-source/agents/skills-maintenance.md](./.template-source/agents/skills-maintenance.md) | Agent skills 安装与维护 |
-| [.template-spec/user-guide/规格与任务迁移指南.md](./.template-spec/user-guide/规格与任务迁移指南.md) | 旧规格与任务入口迁移指南 |
-| [.template-spec/discovery/IDEATION.md](./.template-spec/discovery/IDEATION.md) | 机会构想方法 |
-| [.template-spec/architecture/README.md](./.template-spec/architecture/README.md) | 架构设计 + 审查清单 |
-| [docs/testing/README.md](./docs/testing/README.md) | 测试策略 |
-
-## 核心模板
-
-| 模板 | 用途 |
-|------|------|
-| [.template-spec/templates/spec-template.md](./.template-spec/templates/spec-template.md) | Spec，包含 OpenAPI 影响、测试决策、AI / 人工审查点 |
-| [.template-spec/templates/local-parent-ticket-template.md](./.template-spec/templates/local-parent-ticket-template.md) | Local Markdown 功能父 Ticket 与生命周期索引 |
-| [.template-spec/templates/vertical-slice-ticket-template.md](./.template-spec/templates/vertical-slice-ticket-template.md) | 垂直切片 Ticket |
-| [.template-spec/templates/implementation-repo-registry-template.md](./.template-spec/templates/implementation-repo-registry-template.md) | 外部实现仓库登记 |
-| [.template-spec/templates/cross-repo-slice-template.md](./.template-spec/templates/cross-repo-slice-template.md) | 跨仓库垂直切片记录 |
-| [.template-spec/architecture/templates/architecture-deepening-template.md](./.template-spec/architecture/templates/architecture-deepening-template.md) | 架构 deepening 候选与 seam 设计 |
+原始需求可在本项目完成目标与验收、Plan、业务边界和规则、Spec，再进入本端设计、实现、测试与独立审查；无需先创建独立 Spec/Design 工程。已有上游批准输入时复用当前来源，冲突回交权威方确认，禁止静默改写。小任务按主控合同 `request_triage.delivery_path` 与 `yss lifecycle route` 选择 daily；高风险或已正式绑定任务保留 governed。分析角色不授予另一端代码写入；本端交付完成不等于跨端业务验收。纯 UI 记录后端不适用的原因和当前依据；真实 API、数据与跨仓依赖必须对齐。独立脚手架只生成机械结构，不授予业务实施。

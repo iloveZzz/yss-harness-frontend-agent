@@ -1,14 +1,19 @@
 ---
+kind: vertical-slice-ticket
 status: ready-for-human
+business_ticket_set_ref: <current-business-ticket-set-ref>
+business_ticket_refs: [BT-001]
+acceptance_refs: [AC-001]
+requirement_version: v1
 ---
 
 # 垂直切片 Ticket：<标题>
 
-Status: ready-for-human
+冻结时状态见 frontmatter；当前执行状态、勾选结果和会签进度从主 tracker / 任务包读取。冻结后不得回写本文件，需求修改另存新版本并重新编译、审查与绑定批准。见 [Slice v3 冻结需求协议](../../.agents/skills/yss-implementation-contract-compiler/references/slice-implementation-contract.md#第二轮增量规则)。
 
 ## 父级
 
-<Spec：`docs/.scratch/<feature>/spec.md`；功能父 Ticket：`docs/.scratch/<feature>/parent-ticket.md` 或远程 Issue URL>
+<Spec：`.work/<feature>/spec.md`；功能父 Ticket：`.work/<feature>/parent-ticket.md` 或远程 Issue URL>
 
 ## 要构建什么
 
@@ -21,7 +26,7 @@ Status: ready-for-human
 ## OpenAPI 影响
 
 - [ ] 无
-- [ ] 基于冻结 OpenAPI：`docs/.scratch/<feature>/api/<feature>.yaml`
+- [ ] 基于冻结 OpenAPI：`.work/<feature>/api/<feature>.yaml`
 
 受影响端点：
 
@@ -112,7 +117,7 @@ Status: ready-for-human
 
 | 门禁 | 记录路径 | 会签角色 | 状态 |
 |---|---|---|---|
-|  | `docs/.scratch/<feature>/gates/<gate-id>-approval.yaml` | 见 `.template-spec/agents/digital-human-roles.yaml` | pending / approved / blocked / not-applicable |
+|  | `.work/<feature>/gates/<gate-id>-approval.yaml` | 见 `.template-spec/agents/digital-human-roles.yaml` | pending / approved / blocked / not-applicable |
 
 ## 状态
 
@@ -132,8 +137,8 @@ Status: ready-for-human
 - [ ] 实现完成
 - [ ] 已新增测试且测试通过
 - [ ] 已移除调试 / 原型代码
-- [ ] 已回勾 `Backend Slice Implementation Contract` 和 `Build Architecture Checklist`
-- [ ] 已回勾当前 `contract_id` / `contract_version`、全部工作单元和对应 `YSS Skill Execution Result`
+- [ ] 已在任务包核验 `Backend Slice Implementation Contract` 和 `Build Architecture Checklist`
+- [ ] 已在任务包核验当前 `contract_id` / `contract_version`、全部工作单元和对应 `YSS Skill Execution Result`
 - [ ] 实际 changed files 均在合同允许路径内，预期证据齐全，验证结果包含执行时间
 - [ ] `new_impacts`、`drift`、`violation` 和重路由状态均有明确结论，合同未处于 `stale`
 - [ ] 如领域或架构决策变化，已更新 `CONTEXT.md` / ADR；新增业务术语含 PascalCase `英文标识`，代码与契约字段能追溯到该词干

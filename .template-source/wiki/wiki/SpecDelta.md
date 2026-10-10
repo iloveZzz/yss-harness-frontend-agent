@@ -1,27 +1,22 @@
 # SpecDelta
 
-Spec Delta 只记录相对既有冻结 [[Spec基线]] 的 `ADDED / MODIFIED / REMOVED` 高风险行为差异，以及对应的验收场景和测试映射。它不是第二份完整 Spec，也不替代 OpenAPI 或架构资产。现行生命周期注册表没有 `artifact.spec-delta`；它是高风险变更在 `harness-entry` 必须带入的上游差异包，随后进入 `tactical-design` 与 `slice-contract`，而不是旧 Spec / 架构主阶段的产物。
+Spec Delta 记录相对既有冻结 Spec 的 ADDED / MODIFIED / REMOVED 行为、验收场景与测试映射，不代替完整 Spec、OpenAPI 或架构资产。
 
-触发面很窄。全新产品、全新模块和低风险调整不生成 Spec Delta。`.template-spec/process/harness-process-tailoring.md` 把「已有冻结基线的高风险变更」列为必需工作：Spec Delta、战术设计 / 数据 / 工程审查、契约复核、切片和回滚设计。未命中时按 [[条件强制门禁]] 与 [[影响面分诊与流程裁剪]] 记录 `not-applicable` 及原因，不写空 Delta。明确改变认证或授权行为时，把差异当作普通行为写入本 Delta，不另开专项 Delta。
+当前注册表保留 artifact.spec-delta，触发为已有冻结 Spec 的高风险行为变化；全新产品、全新模块与低风险调整不生成空 Delta。根据实际 UI/API/数据/风险影响恢复批准基线，保留可执行验证与回滚依据。
 
-模板 `.template-spec/templates/spec-delta-template.md` 用三列差异表达行为，不引入 OpenSpec CLI 或额外状态机。`ADDED` 是新增用户可见行为、API 行为、状态、权限或数据约束；`MODIFIED` 是已有行为的输入、输出、状态流、权限、错误结构、兼容性或验收标准变化；`REMOVED` 是删除或废弃已有行为、字段、入口、权限、状态或兼容路径。变更摘要还要挂相关 OpenAPI Draft / Freeze、架构 / 设计审查和 Ticket / 切片。
+governed 可以从原始业务需求完成本地适用 Plan/Spec，也可以复用当前批准的本地或上游输入；冲突回交权威方，不静默改写。正式实现仍须已批准、持久化且当前的 Slice Implementation Contract、必要门禁与允许写范围。
 
-受影响范围按维度勾选：UI / 页面 / 交互状态，API / OpenAPI schema / 错误结构，权限 / 认证 / 授权，状态机 / 业务流程，数据模型 / Repository / 查询索引，外部系统 / 跨端协作，发布 / 回滚 / 运维，风险 / 人审点。UI 勾选不等于自动构成 [[产品设计影响与原型]]；只有主流程、导航、权限体验、异常 / 恢复、状态流转或 API 反推才需要页面流和原型校准。API 勾选后必须走 [[OpenAPI契约]] 的 Draft → 审查 → Freeze；切片有 API 影响且契约进入实现时，由 `gate.openapi-freeze-confirmed` 确认。Freeze 后变更仍要回到 API 影响分析和设计审查。
+本仓只承担前端交付；另一端角色仅提供只读输入评审，不获得另一端代码写范围。本端完成不代表跨端业务验收，统一管理方核验整体证据。
 
-验收场景（`SD-001` 起）映射到测试与 fresh verification：单元 / 契约 / E2E / 手工验证，并记录命令、证据路径和 `planned / passed / blocked`。这直接支撑后续 [[垂直切片Ticket]] 的验收与测试 seam，也进入 [[Fresh验证与独立审查]]。结论栏仍问是否允许进入 OpenAPI Freeze / no API impact、是否允许进入 `to-tickets`、必须带入垂直切片的约束，以及 Git checkpoint 状态。`to-tickets` 只是用户显式兼容入口；OpenAPI Freeze 或无 API 影响记录完成后，由 `harness-orchestrator` 正式化为窄垂直切片。
-
-## Status
-
-- kind: Disputed
-- sources: .template-spec/templates/spec-delta-template.md, AGENTS.md, .template-spec/process/lifecycle-registry.yaml
-- note: Delta 模板结论栏仍写「是否允许进入 to-tickets」；现行正式化由 harness-orchestrator 完成，注册表也没有 artifact.spec-delta。
+Delta 不让正式绑定任务降级，不自行批准契约或授予实现资格。参见 [[Spec基线]]、[[影响面分诊与流程裁剪]]。
 
 ## 来源
 
-- `CONTEXT.md`
-- `AGENTS.md`
-- `.template-spec/templates/spec-delta-template.md`
-- `.template-spec/process/lifecycle-registry.yaml`
-- `.template-spec/process/harness-process-tailoring.md`
-- `.template-spec/templates/spec-template.md`
-- `.template-source/process/MATT-POCOCK-ENGINEERING-SKILLS.md`
+- `AGENTS.md:52-76`：本页路由、授权及完成边界依据当前入口的 ## 5. `project-instance` 前端交付路由。
+- `AGENTS.md:64-64`：governed 可从本地原始需求完成适用 Plan、业务规则和 Spec；上游批准输入先核验复用，冲突回交，阶段/Slice/门禁只用于 governed。
+- `AGENTS.md:70-74`：正式路线复用当前批准输入，只推进本轮职责；API 按 Draft/审查/Freeze，四专业同一当前 Slice 合同，命中门禁不能裁剪。
+- `AGENTS.md:66-68`：正式导航只推进本轮触发工作单元及依赖，生命周期本端终点为 work-unit.verification。
+- `AGENTS.md:58-58`：daily 只更新同一 Ticket/PR 并保留范围、验收、工程基线、Skills、实际测试、独立审查和回滚；无需阶段 checkpoint 或正式 Slice；verify-daily 失败、缺独立审查或阻断未关闭不能完成。
+- `AGENTS.md:60-60`：已有正式绑定任务不得降级；无关正式资产不阻断 daily；新排除风险保留证据并恢复 governed，超出兼容范围的 API 走正式 Draft、审查和 Freeze。
+- `.template-spec/process/lifecycle-registry.yaml:339-342`：Spec Delta 触发为已有冻结 Spec 的高风险行为变化。
+- `CONTEXT.md:1-15`：根 Context 持有稳定业务语言与消费约定，正文不能授予实现权限。

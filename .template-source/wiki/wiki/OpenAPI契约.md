@@ -1,23 +1,22 @@
 # OpenAPI契约
 
-API 契约变更先形成 OpenAPI 3.1 Draft，经必要的工程基线、数据架构和设计审查后 Freeze，再进入实现。Draft 是 review-only：Freeze 前不得作为前后端稳定实现契约，也不得用来生成客户端或固化契约测试。现行注册表把 `artifact.openapi-draft`、`artifact.api-boundary` 和（有数据影响时的）`artifact.data-architecture` 放在 `stage.slice-contract`；切片有 API 影响且契约进入实现时，由 `gate.openapi-freeze-confirmed` 确认。这不是旧的系统 / 数据架构主阶段。
+本仓只承担前端交付；另一端角色仅提供只读输入评审，不获得另一端代码写范围。本端完成不代表跨端业务验收，统一管理方核验整体证据。
 
-Draft 属于待冻结资产，状态为 `ready-for-human`，见 [[Ticket与流程状态]]。Spec 模板把 OpenAPI 影响写成「无 / 需要 API 影响分析 / 需要 review-only OpenAPI Draft」，Draft 路径为 `docs/.scratch/<feature>/api/<feature>.yaml`。该 YAML 必须是唯一权威的单一 OAS 3.1 document；JSON 只能在 Freeze 后由受锁定工具派生。有 UI 且尚未完成用户确认时，不得进入 OpenAPI Draft 评审。
+OpenAPI Draft 是 review-only，OAS 3.1 YAML 为权威合同；正式影响先 Draft、锁定工具校验、独立审查与 Freeze，再实施和契约测试。无 API 影响必须有当前依据，不能用空合同自证。
 
-`work-unit.slice-contract` 消费冻结 [[Spec基线]]、适用的战术设计或 `not-applicable`、原型和 API / 数据 / 工程影响面，产出当前版本 Slice Implementation Contract 和四角色任务包草案。存在 API 影响且需要进入 Freeze 审查时，同阶段产物是 `artifact.openapi-draft`；无 API 影响要有可读记录。相关现行门禁按影响面强制，未命中记 `not-applicable`：`gate.slice-contract-approved`、`gate.slice-ready-for-agent`、`gate.openapi-freeze-confirmed`，见 [[条件强制门禁]]。`gate.openapi-freeze-confirmed` 须生物人会签，证据是 `evidence.approval-record`。
+Freeze 后行为变化回到 API 影响分析与审查，不能把半成品接口或客户端当作权威。日常兼容范围以现行 delivery_path 与 yss-openapi-governance 为准，超出日常资格回正式治理。
 
-OpenAPI Freeze 是已通过评审、可作为前后端实现和契约测试输入的 OpenAPI 3.1 契约。Freeze 后变更必须回到 API 影响分析和设计审查，重新进入 Draft 循环，不能在实现中直接改契约冒充稳定来源。`yss-implementation-contract-compiler` 要求合同写明 API Freeze 或无 API 影响记录；半成品 backend 不得充当 source of truth。就绪公式含 `api_freeze_or_no_api_impact_recorded`。
-
-OpenAPI Freeze 或无 API 影响记录完成后，由 `harness-orchestrator` 正式化为可独立验证的窄垂直切片；用户显式 `to-tickets` 只是兼容入口。切片实现必须消费冻结契约或明确的无 API 影响记录，见 [[垂直切片Ticket]] 与 [[切片实现合同]]。需要页面动作反推端点时，先完成 [[产品设计影响与原型]]，再进入本契约循环。YSS 响应包装与 DTO wire shape 的专项规则由 [[YSS工程技能体系]] 在 Freeze 后执行，不把 Draft 当生成输入；合同编译见 [[YSS路由与合同编译]]。整条链路挂在 [[产品研发生命周期]] 的 `slice-contract` → `slice-implementation` → `verification`。
+前端消费冻结 OpenAPI；接口变化回交后端完成 Draft/审查/Freeze。本端接收预检不授予代码实施资格。 参见 [[产品设计影响与原型]]、[[切片实现合同]]。
 
 ## 来源
 
-- `CONTEXT.md`
-- `AGENTS.md`
-- `.template-spec/templates/spec-template.md`
-- `.template-spec/process/lifecycle-registry.yaml`
-- `.template-spec/api/templates/openapi-draft-review-checklist.md`
-- `.template-spec/agents/digital-human-roles.yaml`
-- `.agents/skills/yss-implementation-contract-compiler/SKILL.md`
-- `.agents/skills/yss-implementation-contract-compiler/references/compiler-contract.yaml`
-- `.agents/skills/yss-implementation-contract-compiler/references/slice-implementation-contract.md`
+- `AGENTS.md:52-76`：本页路由、授权及完成边界依据当前入口的 ## 5. `project-instance` 前端交付路由。
+- `AGENTS.md:129-135`：本页路由、授权及完成边界依据当前入口的 ## 13. 专职交付边界。
+- `AGENTS.md:64-64`：governed 可从本地原始需求完成适用 Plan、业务规则和 Spec；上游批准输入先核验复用，冲突回交，阶段/Slice/门禁只用于 governed。
+- `AGENTS.md:70-74`：正式路线复用当前批准输入，只推进本轮职责；API 按 Draft/审查/Freeze，四专业同一当前 Slice 合同，命中门禁不能裁剪。
+- `AGENTS.md:66-68`：正式导航只推进本轮触发工作单元及依赖，生命周期本端终点为 work-unit.verification。
+- `AGENTS.md:131-135`：前端按已登记接收路线核验：正式 API/Backend/Data 影响才要求真实后端交付，纯 UI 需当前 backend-not-applicable；接收预检不授实施资格，daily 消费第5节；只负责本端，不修改后端领域/API/数据。
+- `AGENTS.md:58-58`：daily 只更新同一 Ticket/PR 并保留范围、验收、工程基线、Skills、实际测试、独立审查和回滚；无需阶段 checkpoint 或正式 Slice；verify-daily 失败、缺独立审查或阻断未关闭不能完成。
+- `AGENTS.md:60-60`：已有正式绑定任务不得降级；无关正式资产不阻断 daily；新排除风险保留证据并恢复 governed，超出兼容范围的 API 走正式 Draft、审查和 Freeze。
+- `CONTEXT.md:1-15`：根 Context 持有稳定业务语言与消费约定，正文不能授予实现权限。
+- `.template-spec/process/lifecycle-registry.yaml:1-8`：active 生命周期注册表持有稳定 ID，本地执行仍受 Profile 允许范围限制。

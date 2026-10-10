@@ -351,7 +351,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/maintaining-skills/SKILL.md",
-        "effectiveHash": "d483fbdcb359e0fa2ab21dd79a12d494d56d959471b12d9d5d9041fb56a8c752",
+        "effectiveHash": "039abfd0e78cc08e83ee1a0799c3c15487005033830eceb5e8eb2b099eae01c5",
         "targets": [
           ".agents/skills",
           ".codex/skills",
@@ -435,7 +435,7 @@
         "source": "project",
         "sourceType": "local",
         "skillPath": ".agents/skills/setup-yss-harness/SKILL.md",
-        "effectiveHash": "b7ff5fec42a364c58cfe3fabd060de4777a81712c842f8afa0a5b7dcc5bfce48",
+        "effectiveHash": "1a00311501ce72a52540a096627fe5230b2ae53bc3bf9630e4451c7d035ef78b",
         "targets": [
           ".agents/skills",
           ".codex/skills",
@@ -447,7 +447,7 @@
         "source": "mattpocock/skills",
         "sourceType": "github",
         "skillPath": "skills/engineering/tdd/SKILL.md",
-        "effectiveHash": "c4151cd4785a1c6afcf54cb3df434fab35f0281b128f92b61186704177d1a29c",
+        "effectiveHash": "be220545da0cb2e93674aa378e8467d9f1c705b2794afa880d3542b0430fdc7e",
         "sourceRevision": "0ab1b63a410a03d3627979a109c8695de27af954",
         "upstreamHash": "28b5e430968370f51b03b88b4b4a046286192733d2f45bd5b8049e16f45fd234",
         "adaptationRef": ".template-source/process/MATT-POCOCK-ENGINEERING-SKILLS.md",
@@ -708,7 +708,7 @@
         "source": "iloveZzz/yss-harness-design-agent",
         "sourceType": "git-submodule",
         "skillPath": ".agents/skills/yss-prototype-stage/SKILL.md",
-        "effectiveHash": "8465a43c74cc194936f1b1311ffccc300ba79e756c74be6920122d971181898e",
+        "effectiveHash": "fb03623ff92b686df7b82821e4ed9fb5939a40a57d1e828051e671d1df1c1021",
         "sourceRevision": "79e66e694a378d78f06c63399a494d0a69543ba3",
         "upstreamHash": "0e82e8c0f6b5446dbe48aec8df092574ab895be303efe33d8fc8457bce98d02e",
         "adaptationRef": ".template-source/agents/strategic-design-skills-integration.md",
@@ -822,7 +822,7 @@
           "source": "project",
           "sourceType": "local",
           "skillPath": ".codex/skills/product-design/SKILL.md",
-          "effectiveHash": "5e49d34d508ea4aa4af203d45337d43e3137b9bb0c86531be693c62593fc4c08",
+          "effectiveHash": "b16d083a12da462cc92d1a77d599d7f774acccc0b65053bba12b89a4a30cc99d",
           "targets": [
             ".codex/skills"
           ]
