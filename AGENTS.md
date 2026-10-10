@@ -7,7 +7,7 @@
 每个任务先读取当前仓库根的 `yss-project.yaml`：
 
 - `template-source` 使用模板维护流程，不生成具体产品的 Spec、原型、OpenAPI 或垂直切片 Ticket。
-- `project-instance` 使用 `harness.frontend-delivery`，从已批准 Spec 或 Strategic Design Handoff 进入开发落地流程。
+- `project-instance` 使用 `harness.frontend-delivery`，可以从原始业务需求分析本端 Plan/Spec，也可以消费当前批准的 Spec 或 Strategic Design Handoff；按唯一政策选择日常或正式路线。
 - 文件缺失、schema 不支持或模式非法时停止路由并执行迁移检查；不得根据目录、Git 远程或占位符猜测身份，也不得继承父目录或兄弟仓的 `AGENTS.md`。
 - 只读问答、状态查询和问题定位：读取根 `CONTEXT.md` 与相关来源后回答或调查；只有写正式资产、申请批准或流转时才进入工作单元。只读诊断不创建 Ticket / checkpoint，不改批准与状态，也不启动回归套件。
 - 行动请求先复用当前资产和登记，再补本轮缺项；按当前任务和实际影响加载下文引用，不逐节执行整份入口。
@@ -34,7 +34,7 @@ README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义�
 - 创建或修改稳定资产前必须读取并持续消费根 `CONTEXT.md`；无法读取时返回 `blocked`。
 - 稳定术语先在根 `CONTEXT.md` 登记 PascalCase 英文标识，再进入契约、Ticket、代码或证据。每仓仅允许一个根 `CONTEXT.md`；术语引用使用 `<ContextId>/<EnglishIdentifier>`，真正共享的术语使用 `Global/<EnglishIdentifier>`。
 - `project-instance` 每个正式工作单元流转或申请批准前完成 `context_reconciliation`：先回写稳定术语，再核对 `document_digest` 与 `referenced_terms_digest`；缺失、冲突或漂移即 `blocked`。模板源只校验该合同并记录有理由的 `not-applicable`。
-- 当前流程使用 `harness-entry`、`frontend-engineering-design`、`slice-contract`、`slice-implementation`、`verification`；退役入口以 `.template-spec/agents/skill-migrations.md` 为准，不参与当前路由。
+- 本地需求先按注册表完成 Plan、业务规则与 Spec；当前本端正式交付使用 `harness-entry`、`frontend-engineering-design`、`slice-contract`、`slice-implementation`、`verification`；退役入口以 `.template-spec/agents/skill-migrations.md` 为准，不参与当前路由。
 
 ## 4. `template-source` 维护
 
@@ -52,7 +52,7 @@ README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义�
 
 `work-unit.harness-entry` → `work-unit.frontend-engineering-design` → `work-unit.slice-contract` → `work-unit.slice-implementation` → `work-unit.verification`
 
-- 默认输入是已批准 Spec 或 Strategic Design Handoff；Discovery 不是默认阶段。`to-spec`、`to-tickets` 只能作为用户显式兼容入口，并回交 `harness-orchestrator` 验收。
+- 输入可以是原始业务需求或当前批准的本地/上游业务资产；本地路线先分析和批准适用 Plan/Spec，上游路线保留来源批准与冲突回交。`to-spec`、`to-tickets` 只能作为用户显式兼容入口，并回交 `harness-orchestrator` 验收。
 - 小改动从分诊处理，中等变更从最近可信的 Spec / 架构恢复，高风险变更复核冻结基线；已批准上游资产和既有工程先核验复用。未来阶段尚未要求的产物不作为当前任务缺项，不重走本仓职责以外的战略流程。
 - 后端领域模型只读消费；发现聚合、不变量、持久化或数据模型变化时回交后端 / 战略方，本地由 `architecture-agent` 形成前端工程设计。
 - API 消费以已冻结 OpenAPI 为输入；接口变化回交后端形成 Draft、审查和 Freeze；无 API 影响必须有当前记录。随后正式化为可独立验证的窄垂直切片，不得按技术层横向拆分。
@@ -88,7 +88,7 @@ README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义�
 
 前端运行时代码优先位于已登记的 `external-repository`。只有用户明确选择当前仓承载前端代码时，才使用 `apps/frontend/<project>/`（`harness-apps`）或登记的 `git-submodule`；后端实现回交后端项目。
 
-`app/backend/`、`app/frontend/` 及其子路径禁止作为输出；submodule 不得登记成 `harness-apps` 或复制源码冒充挂载。空 gitlink、detached HEAD 和 `--force` 覆盖不得当普通目录。
+实现位置按已登记的项目根和批准写范围核验；submodule 不得登记成 `harness-apps` 或复制源码冒充挂载。空 gitlink、detached HEAD 和 `--force` 覆盖不得当普通目录。
 
 ## 10. 审查、验证与 Git
 
@@ -113,3 +113,7 @@ README、用户指南和 `CLAUDE.md` 只解释或指向上述事实，不定义�
 前端按 `.template-spec/process/harness-profile.yaml` 的 `frontend_delivery` 和 `.template-spec/process/frontend-backend-delivery.md` 验证输入。批准战略与战略预检通过后可起草前端工程设计和实现计划；只有 API / Backend / Data 影响命中时，最终接收才要求真实后端交付，纯 UI 路径使用有依据且当前的 `backend-not-applicable`。启动、恢复和规定阶段边界重验，预检通过不授予实现资格；代码仍需合同已批准且当前及既有 `ready-for-agent` 条件。
 
 `work-unit.frontend-engineering-design` 承载前端工程设计；后端领域模型作为上游输入消费，无本地领域影响记录有理由的 not-applicable，不编造后端 Tactical Design。后端实现、脚手架、API Freeze 和数据结构修改回交后端仓；本仓只生成前端工程，按当前接收路线完成视觉、交互和 `pnpm` 验证，命中后端依赖时必须使用真实接口。
+
+## 本地业务分析与本端交付
+
+原始需求可在本项目完成目标与验收、Plan、业务边界和规则、Spec，再进入本端设计、实现、测试与独立审查；无需先创建独立 Spec/Design 工程。已有上游批准输入时复用当前来源，冲突回交权威方确认，禁止静默改写。小任务按主控合同 `request_triage.delivery_path` 与 `yss lifecycle route` 选择 daily；高风险或已正式绑定任务保留 governed。分析角色不授予另一端代码写入；本端交付完成不等于跨端业务验收。纯 UI 记录后端不适用的原因和当前依据；真实 API、数据与跨仓依赖必须对齐。独立脚手架只生成机械结构，不授予业务实施。

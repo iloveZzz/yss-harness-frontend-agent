@@ -462,7 +462,7 @@ strategic_handoff_consumption:
   unknown_dependency: block-all
   compiler_must_not_approve: true
 frontend_delivery_readiness:
-  when: specialized-frontend-profile-or-explicit-frontend-delivery-binding
+  when: upstream-handoff-or-explicit-frontend-delivery-binding
   source: .template-spec/process/frontend-backend-delivery.md
   verifier: scripts/verify-frontend-delivery
   output_binding: frontend.delivery

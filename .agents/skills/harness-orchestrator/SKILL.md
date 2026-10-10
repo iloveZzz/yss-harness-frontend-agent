@@ -8,7 +8,9 @@ description: 编排前端专职 Harness 的输入接收、合同、任务派发�
 
 # Harness Orchestrator
 
-前端工程消费已批准战略；战略预检通过后可起草工程设计与实现计划。仅 Backend / API / Data 影响命中时，最终接收才要求真实后端交付；UI-only 路径按当前合同记录 `backend-not-applicable`。后端架构、API 或数据变更回交后端项目，代码实现仍须当前已批准的 Slice 合同与就绪检查。
+本入口是前端专职协作方。本端职责终点由真实前端验收及当前接收、合同、视觉交互和构建证据决定；不写 Spec 主控的推进意图配置，不保存第二套整体进度。主控只汇总显式同功能 checkpoint 与当前 Receipt。无生产 UI 影响时显示前端项不适用，不能伪造前端完成；本端验收不等于完整业务验收或 Git 发布授权。
+
+upstream 模式的前端工程消费当前批准战略，战略预检后起草工程设计与实现计划；standalone 模式消费本功能当前批准的本地 Plan/Spec 与适用产品设计，不要求另建 Spec/Design 工程。仅 Backend / API / Data 影响命中时，最终接收才要求真实后端交付；UI-only 路径按当前合同记录 `backend-not-applicable`。后端架构、API 或数据变更回交后端项目，代码实现仍须当前已批准的 Slice 合同与就绪检查。
 
 这是本专职 Harness 的唯一编排入口。它负责读取 `yss-project.yaml` 与 `CONTEXT.md`、判断影响面、选择下一个未阻塞工作单元、编译任务包、维护合同版本、汇合执行结果和触发重路由。
 
@@ -23,7 +25,7 @@ description: 编排前端专职 Harness 的输入接收、合同、任务派发�
 
 ## 前端联合接收
 
-专职前端 profile 或显式 `frontend_delivery` 输入，按 `.template-spec/process/frontend-backend-delivery.md` 执行战略预检，再起草前端工程设计与实现计划。最终接收按实际后端依赖核验后端交付或有依据的 `backend-not-applicable`；合同批准且当前并满足就绪检查后才派发 Worker。接收、恢复与验收按规定边界重验，缺口回交权威方。通用研发 profile 未选择该路线时维持原行为。
+upstream 模式或显式 `frontend_delivery` 输入，按 `.template-spec/process/frontend-backend-delivery.md` 执行战略预检，再起草前端工程设计与实现计划。最终接收按实际后端依赖核验后端交付或有依据的 `backend-not-applicable`；合同批准且当前并满足就绪检查后才派发 Worker。接收、恢复与验收按规定边界重验，缺口回交权威方。通用研发 profile 未选择该路线时维持原行为。
 
 ## 按影响面选择工作
 
@@ -31,10 +33,10 @@ description: 编排前端专职 Harness 的输入接收、合同、任务派发�
 
 ## 主流程
 
-1. 校验上游输入、仓库身份、实现仓库、影响面和当前合同版本。
+1. 校验仓库身份和业务输入模式：standalone 从原始需求完成本端 Plan/Spec 的分析、独立审查与批准；upstream 核验当前上游批准输入，冲突回交权威方。随后按实际影响核验实现仓与当前合同版本。
 2. 在 `work-unit.frontend-engineering-design` 调度 `architecture-agent` 完成前端工程设计；本地无领域影响记录 not-applicable，不制造 Tactical Design。
 3. 形成 frontend_implementation_plan；需要前端脚手架时遵守已批准生成合同。
-4. 将同版联合接收摘要与本端实现计划编入 Slice Implementation Contract，另一端分区仅引用已交付合同。
+4. 将当前本地批准输入或同版联合接收摘要与本端实现计划编入 Slice Implementation Contract；实际后端/API 依赖须显式绑定当前 Backend 与冻结接口，另一端分区仅引用已交付合同。
 5. 先调度 `test-agent` 建立测试 seam，再调度前端 Worker。
 6. 收集每个任务包的 `workflow-execution-result-v1`，完成当前范围的 Fresh Verification；输入或边界变化时重跑受影响检查。
 7. 由独立 `test-agent` 返回验证结论；没有阻塞信号时才关闭前端任务，整体切片由统一管理方验收。
@@ -67,6 +69,9 @@ YSS CLI 安装与升级、治理工程新建与接管、实例模板同步、旧
 <!-- SKILL_PREFLIGHT_ROUTE -->
 专项技能调用前，运行 `scripts/query-lifecycle-context --work-unit <当前工作单元> --check-skills`；多运行时指定 `--agent-runtime`，条件用 `--when`。按合同 `skill_preflight` 处理缺失、漂移与冲突，在既有授权内核对补装计划、应用后重验。预检不授予执行或批准。Matt 上游为 https://github.com/mattpocock/skills，生效版本以根 `skills-lock.json` 为准。
 
+
+一般任务先用固定 CLI 的 `skills list --details` 按描述选择内置技能，再执行 `skills resolve <id...> --agent-runtime codex --json`。消费整体 `result.status`：`ready` 直接读取闭包的绝对 `entryPath` 并记录 `contentDigest`；`missing` 仅在已有授权覆盖且无冲突时 ensure plan/apply 后重验；`blocked` 停止受影响调用。条件用逗号分隔的 `--when`；调用模式及边界见 [资源补装](../setup-yss-harness/references/project-operations.md)，旧 CLI 沿用工作单元预检。
+
 <!-- USER_PROGRESS_REPORT -->
 每轮返回或暂停按合同 `user_progress_report` 给出中文状态：当前阶段与本轮结果、下一阶段/单元与进入条件、问题/阻塞、已登记责任方、解除动作及复验、主控下一动作与用户待决定项。未知写“待核验”，负责人缺失写“未登记”；目标不代表批准，已授权工作继续执行。发送前核对证据、状态及结构化结果一致；写法见 `.template-spec/process/document-writing.md`。
 
@@ -74,3 +79,9 @@ YSS CLI 安装与升级、治理工程新建与接管、实例模板同步、旧
 
 <!-- PROFILE_GUIDANCE -->
 当前职责完成、状态查询或恢复时，消费合同 `profile_guidance` 与 `yss lifecycle status --root <当前工程> --checkpoint <当前checkpoint>` 给出下游 Profile 建议；不按邻近目录猜初始化状态。Spec 默认继续当前职责；没有当前战略交接时，可经用户明确选择交给独立 Design。Spec 或 Design 已形成经核验的当前战略交接后，按消费者路由建议 Backend、Frontend 或同时准备，两者仍在独立目录执行；设计完成声明不能替代交接及来源批准，显式交接失效时先解除阻断。目标 Design 接入已批准 Spec 走 `spec-baseline` 冻结包与 Receipt、目标 Context 对账后从设计继续，不重走 Plan，不复制源 checkpoint 批准到目标；目标 Backend / Frontend 使用战略接收记录及各自消费合同。建议不改变当前工作单元、不授予批准或执行，下游推荐不扩展本 Profile 的实现写范围。
+
+当前 Slice v3 在 `stage.slice-contract` 先执行 `check.design-reviewed`，独立架构或测试审查者加载本端工程审查能力，绑定当前持久化编译合同的 ID、版本和原字节摘要。`gate.slice-contract-approved` 依赖这项审查；旧 Technical Design/Frontend Engineering 批准不能充当 Slice 审查，起草者不得自审。历史 v2 只按既有历史读取政策处理，不因此取得新的实施或交付资格。
+
+## 本地业务分析与本端交付
+
+原始需求可在本项目完成目标与验收、Plan、业务边界和规则、Spec，再进入本端设计、实现、测试与独立审查；无需先创建独立 Spec/Design 工程。已有上游批准输入时复用当前来源，冲突回交权威方确认，禁止静默改写。小任务按主控合同 `request_triage.delivery_path` 与 `yss lifecycle route` 选择 daily；高风险或已正式绑定任务保留 governed。分析角色不授予另一端代码写入；本端交付完成不等于跨端业务验收。纯 UI 记录后端不适用的原因和当前依据；真实 API、数据与跨仓依赖必须对齐。独立脚手架只生成机械结构，不授予业务实施。
