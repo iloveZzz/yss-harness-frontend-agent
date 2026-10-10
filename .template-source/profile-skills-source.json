@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "profile": "frontend",
-  "sourceCommit": "26b9be5ff43883bf8b26997b6b158e552684ace1",
-  "sourceState": "working-tree",
+  "sourceCommit": "a3d81b1b43ee0b740d9eb621667c82b1faeb99c0",
+  "sourceState": "committed",
   "configurationPath": ".template-source/profile-skill-sync.json",
-  "configurationHash": "6cb4a8f922c3fa24131ad7a8c0229d57b6e33801ae915621b417c1facb34fc08",
-  "skillsDigest": "ec622bc0a40d418bd2b83eca2140f2537dc4cd183f2cbab0613bc1bbbdb5f84e",
+  "configurationHash": "8b4e207f007d25a2ffcfe499c4fe3b9b5c6ad42bafe3a3ad9c1d245479d971d1",
+  "skillsDigest": "c2b569eb35d9e8def8e9d58c7c53c3b8860210e80accf57e7ea8a41897916d30",
   "generatedRoots": [
     ".agents/skills/archify",
     ".agents/skills/codebase-design",
