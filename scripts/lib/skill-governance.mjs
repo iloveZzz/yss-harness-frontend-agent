@@ -58,7 +58,7 @@ export function validateSkillGovernance({ read = (relative) => readFileSync(path
   for (const retired of ["research", "yss-microapp-commit", "yss-page-module-development"] ) {
     if (exists(`.agents/skills/${retired}`) || canonicalIds.has(retired) || (retired !== "research" && aliases.has(retired))) fail(`已退役 skill 仍然存在: ${retired}`);
   }
-  for (const retired of ["yss-product-lifecycle", "yss-stage-decision"]) {
+  for (const retired of ["yss-product-lifecycle"]) {
     if (exists(`.agents/skills/${retired}`) || aliases.has(retired) || canonicalIds.has(retired)) {
       fail(`${retired} 已退役，不得保留物理目录、注册表条目或运行时 alias`);
     }

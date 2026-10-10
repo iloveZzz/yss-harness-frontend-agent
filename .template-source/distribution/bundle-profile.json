@@ -59,7 +59,8 @@
       "docs/adr",
       "scripts/instantiate-harness",
       "scripts/verify-strategic-handoff-tools-lock",
-      ".work"
+      ".work",
+      "scripts/prepare-skills"
     ],
     "renderPaths": [
       "README.md",

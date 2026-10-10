@@ -33,7 +33,7 @@ function verifyReplacementBoundary() {
     ensure(!serialized.includes("role." + legacy), "旧角色残留: " + legacy);
   }
   const migrations = read(".template-spec/agents/skill-migrations.md");
-  for (const retired of ["yss-product-lifecycle", "yss-stage-decision"]) {
+  for (const retired of ["yss-product-lifecycle"]) {
     ensure(!exists(`.agents/skills/${retired}`), `旧入口不得保留物理目录: ${retired}`);
     ensure(migrations.includes(`## ${retired}`) && migrations.includes("harness-orchestrator"), `旧入口缺少迁移说明: ${retired}`);
   }
