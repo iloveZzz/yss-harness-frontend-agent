@@ -6,7 +6,7 @@ import { spawnSync } from "node:child_process";
 import { ROOT } from "../../scripts/lib/lifecycle-registry.mjs";
 import { generateTaskPackageDefaults, validateTaskPackage, validateTaskPackageSet } from "../../scripts/lib/task-package.mjs";
 
-const scratchDir = "docs/.scratch";
+const scratchDir = ".work";
 const fixtureDir = `${scratchDir}/_verify-task-package`;
 const contractRef = `${fixtureDir}/slice-contract.json`;
 const evidenceRef = `${fixtureDir}/evidence.json`;
@@ -91,7 +91,7 @@ function packageBase(roleId, taskId, workUnitId, kind, contractFields, stageId) 
     contract: { kind, contract_id: kind + "-" + taskId, contract_version: 1, status: "issued", contract_ref: ".template-spec/process/lifecycle-registry.yaml", ...contractFields },
     inputs: ["CONTEXT.md"],
     objective: "执行有界 Harness Agent 工作单元",
-    allowed_write_paths: ["docs/.scratch/"],
+    allowed_write_paths: [".work/"],
     forbidden_actions: ["不得越过 Orchestrator 门禁"],
     expected_outputs: ["结构化工作结果"],
     expected_evidence_files: [evidenceRef],

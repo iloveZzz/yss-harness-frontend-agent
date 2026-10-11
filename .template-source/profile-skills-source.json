@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "profile": "frontend",
-  "sourceCommit": "58066731e1db2e0e6392acbc62991037ad4331dc",
+  "sourceCommit": "64a83e0c0db59eeb7d6d9d4620c7760b72acc3c2",
   "sourceState": "committed",
   "configurationPath": ".template-source/profile-skill-sync.json",
-  "configurationHash": "8ec7fe1bf00eb2e7c45892594b4390010952bc7534a410647f8f6a5c9b17dfba",
-  "skillsDigest": "b4a4f0a6adaeb0e21ea1d355f83acf62ed20b01ff710ad8d5d646b27e6d3cedd",
+  "configurationHash": "b4d4e3eb168c75002dfdd4aafbf59423ebff88ed32f1c13807720bf46416066e",
+  "skillsDigest": "4bab8454ef9e4c13492c729317e67cf927d6ee73d7736d454683cae87ef54f94",
   "generatedRoots": [
     ".agents/skills/codebase-design",
     ".agents/skills/cross-repo-implementation-routing",
