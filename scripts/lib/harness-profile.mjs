@@ -11,6 +11,8 @@ export const TARGET_ROLES = [
   "role.architecture-agent",
   "role.frontend-agent",
   "role.test-agent",
+  "role.requirements-manager",
+  "role.product-manager"
 ];
 export const CONTROL_ROLES = ["role.harness-orchestrator"];
 export const ALLOWED_WORK_UNITS = [
@@ -19,8 +21,23 @@ export const ALLOWED_WORK_UNITS = [
   "work-unit.slice-contract",
   "work-unit.slice-implementation",
   "work-unit.verification",
+  "work-unit.plan-opportunity",
+  "work-unit.plan-requirements",
+  "work-unit.domain-strategy-design",
+  "work-unit.stage-decision",
+  "work-unit.spec-synthesis",
+  "work-unit.prototype-design-v2"
 ];
-export const ALLOWED_STAGES = ["stage.harness-entry", "stage.frontend-engineering-design", "stage.slice-contract", "stage.slice-implementation", "stage.verification"];
+export const ALLOWED_STAGES = [
+  "stage.plan",
+  "stage.spec-architecture",
+  "stage.harness-entry",
+  "stage.frontend-engineering-design",
+  "stage.slice-contract",
+  "stage.slice-implementation",
+  "stage.verification",
+  "stage.product-design"
+];
 export const CONSUMER_CAPABILITIES = ["frontend-engineering-design"];
 export const FORBIDDEN_WORK_UNITS = [
   "work-unit.ssot-update",
@@ -102,6 +119,7 @@ export function validateHarnessProfile(profile = loadHarnessProfile(), {
 
   const stageIds = new Set((lifecycle.stages || []).map((stage) => stage.id));
   const workUnitIds = new Set((lifecycle.work_units || []).map((unit) => unit.id));
+  if (!equalArray([...stageIds].sort(), [...ALLOWED_STAGES].sort())) fail("lifecycle 存在 profile 外活动阶段");
   if (!equalArray(profile.lifecycle?.allowed_work_units, ALLOWED_WORK_UNITS)) {
     fail("lifecycle.allowed_work_units 必须是五阶段开发落地工作单元");
   }
@@ -141,8 +159,8 @@ export function validateHarnessProfile(profile = loadHarnessProfile(), {
   const published=new Set([...(lifecycle.stages || []).map((item)=>item.id), ...(lifecycle.gates || []).map((item)=>item.id), ...(lifecycle.artifacts || []).map((item)=>item.id), ...(lifecycle.work_units || []).map((item)=>item.id)]);
   for (const id of lifecycle.id_policy?.deprecated_ids || []) if (published.has(id)) fail(`deprecated ID 仍在活动注册表: ${id}`);
 
-  if (profile.upstream?.kind !== "approved-spec-or-strategic-design") {
-    fail("upstream.kind 必须为 approved-spec-or-strategic-design");
+  if (profile.upstream?.kind !== "local-business-or-approved-upstream") {
+    fail("upstream.kind 必须为 local-business-or-approved-upstream");
   }
   if (profile.upstream?.discovery_is_default !== false) {
     fail("upstream.discovery_is_default 必须为 false");
@@ -160,7 +178,7 @@ export function validateHarnessProfile(profile = loadHarnessProfile(), {
   }
   if (!equalArray(profile.handoff?.consumer_capabilities, CONSUMER_CAPABILITIES)) fail("handoff.consumer_capabilities 必须为 frontend-engineering-design");
 
-  if (profile.frontend_delivery?.mode !== "conditional-by-route" || profile.frontend_delivery?.strategic_preflight !== "required" || !equalArray(profile.frontend_delivery?.backend_required_when_any, ["api", "backend", "data"])) fail("frontend_delivery 必须采用战略预检与条件化后端接收");
+  if (profile.frontend_delivery?.mode !== "conditional-by-route" || profile.frontend_delivery?.strategic_preflight !== "required-for-upstream-handoff-local-approved-assets-otherwise" || !equalArray(profile.frontend_delivery?.backend_required_when_any, ["api", "backend", "data"])) fail("frontend_delivery 必须采用战略预检与条件化后端接收");
   const instantiation = profile.instantiation || {};
   for (const [field, expected] of Object.entries(INSTANTIATION)) {
     if (Array.isArray(expected)) {

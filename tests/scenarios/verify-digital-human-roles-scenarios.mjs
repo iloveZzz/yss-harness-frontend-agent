@@ -43,8 +43,8 @@ function mustFail(doc, pattern, label) {
 validateDefaultDigitalHumanRoles();
 
 const legacyRole = clone();
-legacyRole.roles[0].id = "role.product-manager";
-mustFail(legacyRole, /v1 必须恰好包含/, "旧角色注入默认集合");
+legacyRole.roles[0].id = "role.unknown";
+mustFail(legacyRole, /v1 必须恰好包含/, "未登记角色注入默认集合");
 
 const grokOverflow = clone();
 grokOverflow.runtimes.find((runtime) => runtime.id === "runtime.grok").overflow = "forbid";
@@ -137,5 +137,5 @@ try {
  const options={root:temp,rolesDoc,registry:loadRegistry(),expected};
  assert.doesNotThrow(()=>validateApprovalRecord(record,options));
  assert.throws(()=>validateApprovalRecord({...record,principal_ref:record.drafter_principal_ref},options),/自签|独立/);
- assert.throws(()=>validateApprovalRecord({...record,gate_id:'gate.spec-baseline-approved'},options),/GATE_POLICY_REQUIRED|未知|未分类/);
+ assert.throws(()=>validateApprovalRecord({...record,gate_id:'gate.unregistered-approval'},options),/GATE_POLICY_REQUIRED|未知|未分类/);
 }finally{rmSync(temp,{recursive:true,force:true});}

@@ -29,13 +29,13 @@ test("digital human roles are runtime-agnostic and grok is only an adapter", asy
   const { loadRegistry } = await import(path.join(repositoryRoot, "scripts/lib/lifecycle-registry.mjs"));
   const { loadSkillRegistry } = await import(path.join(repositoryRoot, "scripts/lib/skill-registry.mjs"));
   const result = validateDefaultDigitalHumanRoles();
-  assert.equal(result.role_count, 4);
+  assert.equal(result.role_count, 6);
   assert.equal(result.runtime_count, 3);
   const lifecycle = loadRegistry();
   const skills = loadSkillRegistry();
   const deps = depsFrom(lifecycle, skills, skillIdsFromRegistry);
   const legacyRole = structuredClone(loadDigitalHumanRoles());
-  legacyRole.roles[0].id = "role.product-manager";
+  legacyRole.roles[0].id = "role.unknown";
   assert.throws(() => validateDigitalHumanRoles(legacyRole, deps), /v1 必须恰好包含/);
   const grokOverflow = structuredClone(loadDigitalHumanRoles());
   grokOverflow.runtimes.find((runtime) => runtime.id === "runtime.grok").overflow = "forbid";
@@ -56,7 +56,7 @@ test("digital human roles are runtime-agnostic and grok is only an adapter", asy
 
 test("approval records reject the wrong signer and approved countersign gates need approval_ref", async () => {
   const { loadDigitalHumanRoles } = await import(path.join(repositoryRoot, "scripts/lib/digital-human-roles.mjs"));
-  const { validateApprovalRecord, assertCheckpointApprovals } = await import(path.join(repositoryRoot, "scripts/lib/approval-record.mjs"));
+  const { validateApprovalRecord, assertCheckpointApprovals, assertApprovedGateHasValidApproval } = await import(path.join(repositoryRoot, "scripts/lib/approval-record.mjs"));
   const rolesDoc = loadDigitalHumanRoles();
   assert.throws(() => validateApprovalRecord({
     schema_version: 1,
@@ -77,13 +77,9 @@ test("approval records reject the wrong signer and approved countersign gates ne
     principal_ref: "instance:qa"
   }, { rolesDoc }), /必须由生物人会签/);
   assert.doesNotThrow(() => assertCheckpointApprovals({ gates: {} }, repositoryRoot));
-  assert.throws(() => assertCheckpointApprovals({
-    gates: {
-      "gate.fresh-verification-passed": {
-        status: "approved",
-        reason: "signed",
-        evidence_refs: []
-      }
-    }
-  }, repositoryRoot), /缺少 approval_ref/);
+  assert.throws(() => assertApprovedGateHasValidApproval("gate.fresh-verification-passed", {
+    status: "approved",
+    reason: "signed",
+    evidence_refs: []
+  }, { root: repositoryRoot, rolesDoc }), /缺少 approval_ref/);
 });
