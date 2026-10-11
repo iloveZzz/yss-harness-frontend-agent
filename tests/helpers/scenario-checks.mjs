@@ -12,7 +12,7 @@ function ensure(condition, message) { if (!condition) throw new TypeError(messag
 function exists(relative) { return existsSync(path.join(root, relative)); }
 function parse(relative) { return parseDocument(read(relative), { uniqueKeys: true }).toJS({ maxAliasCount: 0 }); }
 
-const newRoles = ["role.architecture-agent", "role.frontend-agent", "role.backend-agent", "role.test-agent"];
+const newRoles = ["role.architecture-agent", "role.frontend-agent", "role.backend-agent", "role.test-agent", "role.requirements-manager", "role.product-manager"];
 
 function verifyHarnessContract() {
   const contract = parse(".agents/skills/harness-orchestrator/references/orchestration-contract.yaml");
@@ -29,7 +29,7 @@ function verifyReplacementBoundary() {
   validateDefaultDigitalHumanRoles();
   ensure(JSON.stringify(roles.roles.map((role) => role.id)) === JSON.stringify(newRoles), "旧角色仍然进入默认角色集合");
   const serialized = read(".template-spec/agents/digital-human-roles.yaml");
-  for (const legacy of ["requirements-manager", "product-manager", "business", "project-manager", "frontend-engineer", "backend-engineer", "test-engineer"]) {
+  for (const legacy of ["business", "project-manager", "frontend-engineer", "backend-engineer", "test-engineer"]) {
     ensure(!serialized.includes("role." + legacy), "旧角色残留: " + legacy);
   }
   const migrations = read(".template-spec/agents/skill-migrations.md");
@@ -51,7 +51,7 @@ const profiles = {
   matt: {
     message: "harness-agent 替换边界压力场景验证通过",
     files: [".template-spec/agents/digital-human-roles.yaml", ".template-spec/process/lifecycle-registry.yaml", ".template-spec/agents/skill-migrations.md", ".agents/skills/harness-orchestrator/SKILL.md"],
-    markers: [[".template-spec/agents/digital-human-roles.yaml", "role.architecture-agent"], [".template-spec/process/lifecycle-registry.yaml", "stage.frontend-engineering-design"], [".template-spec/agents/skill-migrations.md", "yss-stage-decision"], [".agents/skills/harness-orchestrator/SKILL.md", "专职 Harness"]]
+    markers: [[".template-spec/agents/digital-human-roles.yaml", "role.architecture-agent"], [".template-spec/process/lifecycle-registry.yaml", "stage.frontend-engineering-design", "stage.plan", "stage.spec-architecture", "stage.product-design"], [".template-spec/agents/skill-migrations.md", "yss-stage-decision"], [".agents/skills/harness-orchestrator/SKILL.md", "专职 Harness"]]
   },
   prototype: {
     message: "DDD 战术设计到实现路由场景验证通过",
@@ -93,7 +93,7 @@ export function runScenario(name, { testAssets = null } = {}) {
     ensure(result.status === 0, result.stderr || result.stdout);
     const registry = parse(".template-spec/process/lifecycle-registry.yaml");
     ensure(registry.status === "active", "新生命周期必须为 active");
-    ensure(JSON.stringify(registry.stages.map((stage) => stage.id)) === JSON.stringify(["stage.harness-entry", "stage.slice-contract", "stage.slice-implementation", "stage.verification", "stage.frontend-engineering-design"]), "生命周期阶段不是五阶段 Frontend Harness 流程");
+    ensure(JSON.stringify(registry.stages.map((stage) => stage.id)) === JSON.stringify(["stage.harness-entry", "stage.slice-contract", "stage.slice-implementation", "stage.verification", "stage.frontend-engineering-design", "stage.plan", "stage.spec-architecture", "stage.product-design"]), "生命周期阶段不符合当前 Frontend Harness 本端业务与交付流程");
     ensure(lifecycleTransitionContract.next_routes["work-unit.slice-contract"].includes("work-unit.slice-implementation"), "Slice Contract 后未允许进入实现");
     ensure(validateNextRoute("work-unit.slice-implementation", "work-unit.verification").result === "allowed", "实现后未允许进入独立验证");
     const flags = ["upstream_inputs_current_and_approved", "frontend_engineering_design_current_and_approved", "api_freeze_or_no_api_impact_recorded", "data_architecture_or_no_data_impact_recorded", "ui_inputs_or_no_ui_impact_recorded", "implementation_repositories_and_commands_registered", "allowed_write_paths_registered", "test_seams_and_acceptance_executable", "task_packages_share_contract_version"];

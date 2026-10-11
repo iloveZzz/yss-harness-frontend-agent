@@ -46,7 +46,12 @@ const releaseBaseline = [
 const release = planTemplateVerification({ profile: "release", changedFiles: [] });
 assert.equal(release.effective_profile, "release");
 const releaseCommands = new Set(release.commands.map((entry) => entry.command));
-assert.deepEqual(releaseBaseline.filter((command) => !releaseCommands.has(command)), [], "release profile 必须保留旧发布门禁的全部行为命令");
+// Historical templates and archived evidence exercise structural compatibility, never current approval.
+const historicalCommands = new Map([
+  ["scripts/verify-approval-record .template-spec/templates/approval-record-template.yaml", "scripts/verify-approval-record --history .template-spec/templates/approval-record-template.yaml"],
+  ["scripts/verify-maintenance-checkpoint .template-source/evidence/maintenance/yss-tactical-design-l3-checkpoint-2026-08-27.yaml", "scripts/verify-maintenance-checkpoint --history .template-source/evidence/maintenance/yss-tactical-design-l3-checkpoint-2026-08-27.yaml"],
+]);
+assert.deepEqual(releaseBaseline.filter((command) => !releaseCommands.has(historicalCommands.get(command) ?? command)), [], "release profile 必须保留旧发布门禁的全部行为命令");
 assert.ok(releaseCommands.has("node scripts/verify-template-verification-scenarios"), "release profile 必须验证三级核验路由本身");
 
 const docsOnly = planTemplateVerification({ profile: "fast", changedFiles: ["docs/plan/example.md"] });

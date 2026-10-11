@@ -10,7 +10,7 @@ const root=path.resolve(import.meta.dirname,'../..');
 const helperRef='tests/scenarios/task-package-counterexample-fixture.mjs';
 try {
   const {values}=parseArgs({options:{output:{type:'string'}},strict:true});
-  assert.equal(values.output,'docs/.scratch/_verify-task-package/counterexamples','only the isolated task-package fixture may receive evidence');
+  assert.equal(values.output,'.work/_verify-task-package/counterexamples','only the isolated task-package fixture may receive evidence');
   const destination=path.join(root,values.output);
   assert.equal(fs.existsSync(destination),false,'preserve an existing counterexample run');
   fs.mkdirSync(destination,{recursive:true});

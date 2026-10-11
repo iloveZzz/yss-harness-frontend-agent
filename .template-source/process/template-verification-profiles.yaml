@@ -56,8 +56,8 @@ required_files:
 - .template-spec/process/templates/scaffold-architecture-decisions-template.yaml
 - .template-spec/templates/subagent-task-package-template.md
 - scripts/repository-mode
-- scripts/implementation-path-policy
-- scripts/repository-scope-policy
+- scripts/lib/implementation-path-policy.mjs
+- scripts/lib/repository-scope-policy.mjs
 - scripts/sync-skills
 - scripts/update-skill-lock
 - scripts/generate-lifecycle-artifacts
@@ -152,6 +152,11 @@ syntax_files:
 - scripts/run-template-verification
 - scripts/verify-template-verification-scenarios
 routing:
+# 工作目录合同影响写入边界和正式证据引用；覆盖真实消费者。
+- patterns: [".template-spec/agents/issue-tracker.md", ".template-spec/process/work-layout.md", "scripts/lib/work-layout.mjs", "scripts/lib/plan-review-control.mjs", "scripts/lib/review-package.mjs", "scripts/verify-frontend-implementation-evidence", "tests/scenarios/verify-frontend-implementation-evidence-scenarios.mjs"]
+  groups: [work-layout]
+- patterns: ["tests/scenarios/task-package-counterexample-fixture.mjs"]
+  groups: [workspace-fixtures]
 - patterns:
   - scripts/*backend-delivery*
   - scripts/*frontend-delivery*
@@ -268,6 +273,10 @@ routing:
   groups:
   - hygiene
 groups:
+  work-layout:
+    commands:
+      - { run: "node --check scripts/lib/work-layout.mjs" }
+      - { run: "node tests/scenarios/verify-frontend-implementation-evidence-scenarios.mjs" }
   frontend-delivery:
     commands:
     - run: node tests/scenarios/verify-frontend-delivery-scenarios.mjs
@@ -309,7 +318,7 @@ groups:
     commands:
     - run: scripts/verify-digital-human-roles
     - run: scripts/verify-digital-human-roles-scenarios
-    - run: scripts/verify-approval-record .template-spec/templates/approval-record-template.yaml
+    - run: scripts/verify-approval-record --history .template-spec/templates/approval-record-template.yaml
   lifecycle:
     commands:
     - run: scripts/verify-lifecycle-registry
@@ -333,7 +342,7 @@ groups:
       when: template-source
   maintenance:
     commands:
-    - run: scripts/verify-maintenance-checkpoint .template-source/evidence/maintenance/yss-tactical-design-l3-checkpoint-2026-08-27.yaml
+    - run: scripts/verify-maintenance-checkpoint --history .template-source/evidence/maintenance/yss-tactical-design-l3-checkpoint-2026-08-27.yaml
       when: template-source
     - run: scripts/verify-maintenance-intensity-scenarios
   implementation:

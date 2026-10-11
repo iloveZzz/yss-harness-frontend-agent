@@ -25,7 +25,11 @@ const allowed = (relative, line) => relative === ".template-spec/agents/skill-mi
   || relative.includes("/.template-source/evidence/")
   || relative.includes("/tests/")
   // The resolver names this retired ID only to reject it and return its replacement.
-  || (relative === "scripts/lib/skill-registry.mjs" && line.includes('const replacementSkill = requestedId === "grill-me"'))
+  || (["scripts/lib/skill-registry.mjs", "tests/fixtures/upstream-source/scripts/lib/skill-registry.mjs"].includes(relative)
+    && line.includes('const replacementSkill = ({ "grill-me":'))
+  // This verbatim source-policy fixture records retirement; it does not route active skills.
+  || (relative === "tests/fixtures/upstream-source/.agents/skills/yss-product-lifecycle/references/orchestration-contract.yaml"
+    && line.includes("retired_shared_skills:"))
   || relative.endsWith("/skills/.yss-skills-manifest.json")
   || relative.endsWith("scripts/verify-retired-skill-ids")
   || relative.endsWith("scripts/lib/skill-supply-chain.mjs")
