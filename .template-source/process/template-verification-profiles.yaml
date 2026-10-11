@@ -318,7 +318,7 @@ groups:
     commands:
     - run: scripts/verify-digital-human-roles
     - run: scripts/verify-digital-human-roles-scenarios
-    - run: scripts/verify-approval-record .template-spec/templates/approval-record-template.yaml
+    - run: scripts/verify-approval-record --history .template-spec/templates/approval-record-template.yaml
   lifecycle:
     commands:
     - run: scripts/verify-lifecycle-registry
@@ -342,7 +342,7 @@ groups:
       when: template-source
   maintenance:
     commands:
-    - run: scripts/verify-maintenance-checkpoint .template-source/evidence/maintenance/yss-tactical-design-l3-checkpoint-2026-08-27.yaml
+    - run: scripts/verify-maintenance-checkpoint --history .template-source/evidence/maintenance/yss-tactical-design-l3-checkpoint-2026-08-27.yaml
       when: template-source
     - run: scripts/verify-maintenance-intensity-scenarios
   implementation:

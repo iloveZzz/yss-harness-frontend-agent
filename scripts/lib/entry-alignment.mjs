@@ -49,6 +49,7 @@ export function checkEntryAlignment(sources = {}) {
   note(["cli_package", "native_profile", "metadata_file", "template_source"].every(field => profile?.instantiation?.[field] === INSTANTIATION[field]), "Harness profile 原生入口来源字段必须与本家族 native 合同一致");
   note(agentsText.includes(nativeCommand) && agentsText.includes(INSTANTIATION.metadata_file), "AGENTS.md 必须声明本家族原生初始化入口与 native metadata");
   if (isTemplateSource(ROOT)) note(readmeText.includes(nativeCommand), "README.md 必须提供本家族原生初始化入口");
+  note(profile.upstream?.discovery_is_default === false, "Discovery 不是默认阶段");
   const profileId = profile?.profile_id;
   const entry = profile?.lifecycle?.entry_work_unit;
   const terminal = profile?.lifecycle?.terminal_work_unit;
