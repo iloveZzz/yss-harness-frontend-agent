@@ -1,13 +1,12 @@
 {
   "schemaVersion": 1,
   "profile": "frontend",
-  "sourceCommit": "a3d81b1b43ee0b740d9eb621667c82b1faeb99c0",
+  "sourceCommit": "58066731e1db2e0e6392acbc62991037ad4331dc",
   "sourceState": "committed",
   "configurationPath": ".template-source/profile-skill-sync.json",
-  "configurationHash": "8b4e207f007d25a2ffcfe499c4fe3b9b5c6ad42bafe3a3ad9c1d245479d971d1",
-  "skillsDigest": "c2b569eb35d9e8def8e9d58c7c53c3b8860210e80accf57e7ea8a41897916d30",
+  "configurationHash": "8ec7fe1bf00eb2e7c45892594b4390010952bc7534a410647f8f6a5c9b17dfba",
+  "skillsDigest": "b4a4f0a6adaeb0e21ea1d355f83acf62ed20b01ff710ad8d5d646b27e6d3cedd",
   "generatedRoots": [
-    ".agents/skills/archify",
     ".agents/skills/codebase-design",
     ".agents/skills/cross-repo-implementation-routing",
     ".agents/skills/diagnosing-bugs",

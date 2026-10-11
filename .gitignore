@@ -41,10 +41,6 @@ Excalidraw
 docs/graphify-out
 
 # Generated shared skills; authority: Spec profile-skill-sync.json
-/.agents/skills/archify/
-/.codex/skills/archify
-/.cursor/skills/archify
-/.pi/skills/archify
 /.agents/skills/codebase-design/
 /.codex/skills/codebase-design
 /.cursor/skills/codebase-design
