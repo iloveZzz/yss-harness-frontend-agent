@@ -56,8 +56,8 @@ required_files:
 - .template-spec/process/templates/scaffold-architecture-decisions-template.yaml
 - .template-spec/templates/subagent-task-package-template.md
 - scripts/repository-mode
-- scripts/implementation-path-policy
-- scripts/repository-scope-policy
+- scripts/lib/implementation-path-policy.mjs
+- scripts/lib/repository-scope-policy.mjs
 - scripts/sync-skills
 - scripts/update-skill-lock
 - scripts/generate-lifecycle-artifacts
