@@ -2,7 +2,7 @@
   "schema_version": 1,
   "target_id": "yss-harness-frontend-agent",
   "source_repository": "yss-spec-project-template",
-  "source_revision": "8b92c3e1dc76c82dc2b0f2d53acfd9dda689b3f8",
+  "source_revision": "6148002c3816c3632647c4d26c71d6e048adad58",
   "source_state": "committed",
   "transformation_set": [
     "identity",
@@ -608,6 +608,6 @@
     "tests/scenarios/verify-strategic-context-import-scenarios.mjs": "sha256:424ccdbb2e91e3619f800efe1aad463be0470716547f5d767215f944611e4b14",
     "tests/scenarios/verify-strategic-handoff-package-scenarios.mjs": "sha256:2674f132a7f3d41797b578ff7bd21c718c3d5b855095f8637716589918347d82",
     ".agents/skills/harness-orchestrator/references/orchestration-contract.yaml": "sha256:fd1b08e6b6a560e9dfe5514b94eca8ef20f49031e9fd51256153a56dc96cbeff",
-    ".template-spec/agents/yss-skill-registry.yaml": "sha256:85ae3bc2f054f923c8516e1a09db675995142831b597a65b456068e2b5da6a69"
+    ".template-spec/agents/yss-skill-registry.yaml": "sha256:ff1e0d782dde58dd141780ab7e37dfce510f8579414e3a0fd7e39e4fcec96782"
   }
 }
